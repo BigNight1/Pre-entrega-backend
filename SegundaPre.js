@@ -1,3 +1,5 @@
+const {writeFileSync, readFileSync } = require('fs');
+
 class ProductManager {
     products;
     static id = 1
@@ -9,6 +11,21 @@ class ProductManager {
         this.thumbnail = thumbnail;
         this.code = code;
         this.stock = stock;
+    }
+    writeFileProduct() {
+        writeFileSync('productos.json', JSON.stringify(this.products)
+            , (err) => {
+                if (err) throw err;
+                console.log("Agregado con exito");
+            }
+        )
+    }
+
+    readFileProduct() {
+        readFileSync('productos.json', 'utf-8', (err, data) => {
+            if (err) throw err;
+            console.log(JSON.parse(data));
+        })
     }
 
     addProduct(product) {
@@ -37,8 +54,8 @@ class ProductManager {
     }
 
     getProducts() {
-        return this.products;
-
+        const data = JSON.parse(readFileSync(`productos.json`, "utf-8"));
+        return data;
     }
 
     getProductsById(id) {
@@ -49,6 +66,38 @@ class ProductManager {
             console.log("error")
         }
     }
+
+    deleteProduct(id) {
+        let arrayVacio = []
+
+        this.products.map((product) => {
+            if (product.id !== id) arrayVacio.push(product)
+            console.log('arrayvacio', arrayVacio)
+            writeFileSync('productos.json', JSON.stringify(arrayVacio)
+                , (err) => {
+                    if (err) throw err;
+                },
+            )
+        })
+    }
+    updateProduct(id, product) {
+
+        const data = JSON.parse(readFileSync(`productos.json`, "utf-8"));
+
+        data.map(element => {
+            if (element.id === id) {
+                element.title = product.title,
+                    element.description = product.description,
+                    element.price = product.price,
+                    element.thumbnail = product.thumbnail,
+                    element.stock = product.stock,
+                    element.id = id
+            }
+        }
+        );
+        writeFileSync('productos.json', JSON.stringify(data))
+    }
+    
 }
 
 const nuevosProductos = new ProductManager();
@@ -76,7 +125,7 @@ const product3 = {
     description: "Pantalon de moda",
     price: 5000,
     thumbnail: "ABC",
-    code: "120", //repite code para forzar error
+    code: "120",
     stock: 11,
 };
 
@@ -105,3 +154,9 @@ nuevosProductos.addProduct(product4);
 nuevosProductos.addProduct(product5);
 
 console.log(nuevosProductos.getProducts())
+
+nuevosProductos.writeFileProduct();
+nuevosProductos.readFileProduct();
+
+nuevosProductos.deleteProduct(2);
+nuevosProductos.updateProduct((2), { title: "nuevo", description: "nuenoo", price: "24", thumbnail: "nuevo", stock: "35" })
