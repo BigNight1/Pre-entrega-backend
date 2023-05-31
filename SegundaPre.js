@@ -159,4 +159,4 @@ nuevosProductos.writeFileProduct();
 nuevosProductos.readFileProduct();
 
 nuevosProductos.deleteProduct(2);
-nuevosProductos.updateProduct((2), { title: "nuevo", description: "nuenoo", price: "24", thumbnail: "nuevo", stock: "35" })
+nuevosProductos.updateProduct((2), { title: "'polera'", description: "nike", price: "2400", thumbnail: "nuevo", stock: "21" })
