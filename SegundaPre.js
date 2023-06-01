@@ -161,7 +161,7 @@ nuevosProductos.writeFileProduct();
 nuevosProductos.readFileProduct();
 
 nuevosProductos.deleteProduct(2);
-nuevosProductos.updateProduct(2, {
+nuevosProductos.updateProduct((2), {
   title: "'polera'",
   description: "nike",
   price: "2400",
