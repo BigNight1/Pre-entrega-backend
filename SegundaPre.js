@@ -13,14 +13,14 @@ class ProductManager {
     this.stock = stock;
   }
   writeFileProduct() {
-    writeFileSync("productos.json", JSON.stringify(this.products), (err) => {
+    writeFileSync('productos.json', JSON.stringify(this.products), (err) => {
       if (err) throw err;
       console.log("Agregado con exito");
     });
   }
 
   readFileProduct() {
-    readFileSync("productos.json", "utf-8", (err, data) => {
+    readFileSync('productos.json', "utf-8", (err, data) => {
       if (err) throw err;
       console.log(JSON.parse(data));
     });
@@ -79,7 +79,7 @@ class ProductManager {
       if (product.id !== id) arrayVacio.push(product);
     });
 
-    writeFileSync("productos.json", JSON.stringify(arrayVacio), (err) => {
+    writeFileSync(`productos.json`, JSON.stringify(arrayVacio), (err) => {
       if (err) throw err;
     });
     console.log("Producto eliminado");
@@ -90,15 +90,15 @@ class ProductManager {
 
     data.map((element) => {
       if (element.id === id) {
-        (element.title = product.title),
+          (element.title = product.title),
           (element.description = product.description),
           (element.price = product.price),
           (element.thumbnail = product.thumbnail),
           (element.stock = product.stock),
-          (element.id = id);
+          (element.id = id)
       }
     });
-    writeFileSync("productos.json", JSON.stringify(data));
+    writeFileSync(`productos.json`, JSON.stringify(data));
   }
 }
 
@@ -160,11 +160,17 @@ console.log(nuevosProductos.getProducts());
 nuevosProductos.writeFileProduct();
 nuevosProductos.readFileProduct();
 
-nuevosProductos.deleteProduct(2);
+nuevosProductos.deleteProduct(2)
 nuevosProductos.updateProduct((2), {
-  title: "'polera'",
+  title: "polera",
   description: "nike",
   price: "2400",
   thumbnail: "nuevo",
   stock: "21",
+  id: 2
 });
+
+
+// module.exports = {
+//   ProductManager : nuevosProductos
+// }
