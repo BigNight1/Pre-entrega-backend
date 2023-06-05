@@ -13,14 +13,14 @@ class ProductManager {
     this.stock = stock;
   }
   writeFileProduct() {
-    writeFileSync('productos.json', JSON.stringify(this.products), (err) => {
+    writeFileSync("productos.json", JSON.stringify(this.products), (err) => {
       if (err) throw err;
       console.log("Agregado con exito");
     });
   }
 
   readFileProduct() {
-    readFileSync('productos.json', "utf-8", (err, data) => {
+    readFileSync("productos.json", "utf-8", (err, data) => {
       if (err) throw err;
       console.log(JSON.parse(data));
     });
@@ -64,7 +64,6 @@ class ProductManager {
   getProductsById(id) {
     const product = JSON.parse(readFileSync(`productos.json`, "utf-8"));
     const productFind = product.find((product) => product.id === id);
-
     if (productFind) {
       console.log(productFind);
     } else {
@@ -74,12 +73,13 @@ class ProductManager {
 
   deleteProduct(id) {
     let arrayVacio = [];
-    this.readFileProduct(); 
+    this.readFileProduct();
+
     this.products.map((product) => {
       if (product.id !== id) arrayVacio.push(product);
     });
 
-    writeFileSync(`productos.json`, JSON.stringify(arrayVacio), (err) => {
+    writeFileSync("productos.json", JSON.stringify(arrayVacio), (err) => {
       if (err) throw err;
     });
     console.log("Producto eliminado");
@@ -90,12 +90,12 @@ class ProductManager {
 
     data.map((element) => {
       if (element.id === id) {
-          (element.title = product.title),
+        (element.title = product.title),
           (element.description = product.description),
           (element.price = product.price),
           (element.thumbnail = product.thumbnail),
           (element.stock = product.stock),
-          (element.id = id)
+          (element.id = id);
       }
     });
     writeFileSync(`productos.json`, JSON.stringify(data));
@@ -122,55 +122,30 @@ const product2 = {
   stock: 8,
 };
 
-const product3 = {
-  title: "Pantalones",
-  description: "Pantalon de moda",
-  price: 5000,
-  thumbnail: "ABC",
-  code: "120",
-  stock: 11,
-};
-
-const product4 = {
-  title: "Short",
-  description: "Short Red",
-  price: 6000,
-  thumbnail: "ABCD",
-  code: "125",
-  stock: 13,
-};
-
-const product5 = {
-  title: "Polo",
-  description: "Polo clasico",
-  price: 7850,
-  thumbnail: "ABCDE",
-  code: "130",
-  stock: 15,
-};
-
+// Paso 1
 nuevosProductos.addProduct(product1);
 nuevosProductos.addProduct(product2);
-nuevosProductos.addProduct(product3);
-nuevosProductos.addProduct(product4);
-nuevosProductos.addProduct(product5);
 
 console.log(nuevosProductos.getProducts());
 
 nuevosProductos.writeFileProduct();
 nuevosProductos.readFileProduct();
 
-nuevosProductos.deleteProduct(2)
-nuevosProductos.updateProduct((2), {
-  title: "polera",
-  description: "nike",
-  price: "2400",
-  thumbnail: "nuevo",
-  stock: "21",
-  id: 2
-});
+// Paso 2 
+// nuevosProductos.deleteProduct(2);
+
+// Paso 3
+// nuevosProductos.updateProduct(2, {
+//   title: "polera",
+//   description: "nike",
+//   price: "2400",
+//   thumbnail: "nuevo",
+//   stock: "21",
+//   id: 2
+// });
 
 
-// module.exports = {
-//   ProductManager : nuevosProductos
-// }
+//  si esta funcionando la funcion de agregar de updateProduct  , lo que no entiendo 
+// es porque se debe de esperar un rato despues de hacer la funcion de deleteProduct
+//  lo comento y pongo el updateproduct y funciona todo no entiendo que mas debo hacer 
+// Profesor 
