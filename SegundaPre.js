@@ -20,10 +20,9 @@ class ProductManager {
   }
 
   readFileProduct() {
-    readFileSync("productos.json", "utf-8", (err, data) => {
-      if (err) throw err;
-      console.log(JSON.parse(data));
-    });
+    const data = readFileSync("productos.json", "utf-8");
+    const parsedData = JSON.parse(data);
+    return parsedData;
   }
 
   addProduct(product) {
