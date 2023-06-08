@@ -1,1 +1,20 @@
-[{"title":"Zapatillas","description":"Zapatillas rojas","price":3200,"thumbnail":"A","code":"110","stock":10,"id":1},{"title":"Guantes","description":"Guantes azules","price":4000,"thumbnail":"AB","code":"115","stock":8,"id":2}]
+[
+  {
+    "title": "Zapatillas",
+    "description": "Zapatillas rojas",
+    "price": 3200,
+    "thumbnail": "A",
+    "code": "110",
+    "stock": 10,
+    "id": 1
+  },
+  {
+    "title": "Guantes",
+    "description": "Guantes azules",
+    "price": 4000,
+    "thumbnail": "AB",
+    "code": "115",
+    "stock": 8,
+    "id": 2
+  }
+]

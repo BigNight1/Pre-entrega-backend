@@ -123,6 +123,9 @@ const product2 = {
   code: "115",
   stock: 8,
 };
+
+module.exports = nuevosProductos;  
+
 // nuevosProductos.readFileProduct();
 //
 
@@ -142,3 +145,4 @@ const product2 = {
 //     stock: "21",
 //   });
   // nuevosProductos.deleteProduct(2);
+
