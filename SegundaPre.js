@@ -20,10 +20,12 @@ class ProductManager {
   }
 
   readFileProduct() {
-    const data = readFileSync("productos.json", "utf-8");
-    const parsedData = JSON.parse(data);
-    return parsedData;
-  }
+    const data = readFileSync('productos.json', 'utf-8');
+    this.products = JSON.parse(data);
+    console.log(this.products);
+}
+
+
 
   addProduct(product) {
     let productoAagregar = {
@@ -63,6 +65,7 @@ class ProductManager {
   getProductsById(id) {
     const product = JSON.parse(readFileSync(`productos.json`, "utf-8"));
     const productFind = product.find((product) => product.id === id);
+
     if (productFind) {
       console.log(productFind);
     } else {
@@ -72,11 +75,11 @@ class ProductManager {
 
   deleteProduct(id) {
     let arrayVacio = [];
-    this.readFileProduct();
-
+    this.readFileProduct(); 
     this.products.map((product) => {
-      if (product.id !== id) arrayVacio.push(product);
+        if (product.id !== id) arrayVacio.push(product);
     });
+    console.log(arrayVacio);
 
     writeFileSync("productos.json", JSON.stringify(arrayVacio), (err) => {
       if (err) throw err;
@@ -97,7 +100,7 @@ class ProductManager {
           (element.id = id);
       }
     });
-    writeFileSync(`productos.json`, JSON.stringify(data));
+    writeFileSync("productos.json", JSON.stringify(data));
   }
 }
 
@@ -120,31 +123,22 @@ const product2 = {
   code: "115",
   stock: 8,
 };
+// nuevosProductos.readFileProduct();
+//
 
-// Paso 1
+//-------------------- PASOS A SEGUIR--------------------------
+
+// 1- DESCOMENTO LAS SIGUIENTES LÍNEAS:
 nuevosProductos.addProduct(product1);
 nuevosProductos.addProduct(product2);
-
-console.log(nuevosProductos.getProducts());
-
 nuevosProductos.writeFileProduct();
-nuevosProductos.readFileProduct();
 
-// Paso 2 
-// nuevosProductos.deleteProduct(2);
-
-// Paso 3
-// nuevosProductos.updateProduct(2, {
-//   title: "polera",
-//   description: "nike",
-//   price: "2400",
-//   thumbnail: "nuevo",
-//   stock: "21",
-//   id: 2
-// });
-
-
-//  si esta funcionando la funcion de agregar de updateProduct  , lo que no entiendo 
-// es porque se debe de esperar un rato despues de hacer la funcion de deleteProduct
-//  lo comento y pongo el updateproduct y funciona todo no entiendo que mas debo hacer 
-// Profesor 
+//2- COMENTO LO ANTERIOR Y DESCOMENTO LO SIGUIENTE DE A UNO Y VAS PROBANDO:
+// nuevosProductos.updateProduct((2), {
+//     title: "'polera'",
+//     description: "nike",
+//     price: "2400",
+//     thumbnail: "nuevo",
+//     stock: "21",
+//   });
+  // nuevosProductos.deleteProduct(2);
