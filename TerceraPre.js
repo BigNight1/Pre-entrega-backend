@@ -129,9 +129,9 @@ const product2 = {
 //-------------------- PASOS A SEGUIR--------------------------
 
 // 1- DESCOMENTO LAS SIGUIENTES LÍNEAS:
-nuevosProductos.addProduct(product1);
-nuevosProductos.addProduct(product2);
-nuevosProductos.writeFileProduct();
+// nuevosProductos.addProduct(product1);
+// nuevosProductos.addProduct(product2);
+// nuevosProductos.writeFileProduct();
 
 //2- COMENTO LO ANTERIOR Y DESCOMENTO LO SIGUIENTE DE A UNO Y VAS PROBANDO:
 // nuevosProductos.updateProduct((2), {
