@@ -1,39 +1,42 @@
-import express from 'express';
-import  ProductManager  from './TerceraPre.js';
+import express from "express";
+import ProductManager from "./TerceraPre.js";
 
-
-const nuevosProductos = new ProductManager
-
+const nuevoProducto = new ProductManager();
 const app = express();
-const port = 8080;
 
-const productos = nuevosProductos.getProducts();
+app.get("/products", async (req, res) => {
+  try {
+    const limit = req.query.limit;
+    const products = await nuevoProducto.getProducts();
 
-console.log(productos)
-
-app.get('/products', (req, res) => {
-    const limite = req.query.limite;
-    if (limite) {
-        console.log(limite)
-        let respuesta = productos;
-        if (limite && !isNaN(Number(limite))) {
-            respuesta = productos.slice(0, limite);
-           
-        }
-        res.send(respuesta);
+    if (limit) {
+      res.json(products.slice(0, limit));
+    } else {
+      res.json(products);
     }
-    
-    res.send(productos);
-})
-
-app.get("/products/:id", (req, res) => {
-
-    const pid = productos.find((e) => e.id === Number(req.params.id));
-    res.send(pid);
-    console.log(pid)
+  } catch (error) {
+    console.error("Error al obtener los productos:", error);
+    res.status(500).json({ error: "Error al obtener los productos" });
+  }
 });
 
 
-app.listen(port, () => {
-    console.log('servidor levantado en el puerto ', port);
+app.get("/products/:id", (req, res) => {
+  try {
+    const productId = parseInt(req.params.id);
+    const product = nuevoProducto.getProductsById(productId);
+
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ error: "Producto no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al obtener el producto:", error);
+    res.status(500).json({ error: "Error al obtener el producto" });
+  }
+});
+
+app.listen(8080, () => {
+  console.log("Servidor en funcionamiento en el puerto 8080");
 });

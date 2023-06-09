@@ -59,10 +59,11 @@ class ProductManager {
   }
   getProductsById(id) {
     const product = JSON.parse(readFileSync(`productos.json`, "utf-8"));
-    const productFind = product.find((product) => product.id === id);
+    const productFind = product.find((p) => p.id === id);
 
     if (productFind) {
-      console.log(productFind);
+      console.log("producto encontrado")
+      return productFind;
     } else {
       console.log("error");
     }
