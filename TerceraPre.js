@@ -1,4 +1,4 @@
-const { writeFileSync, readFileSync } = require("fs");
+import { writeFileSync, readFileSync } from "fs";
 
 class ProductManager {
   products;
@@ -24,9 +24,6 @@ class ProductManager {
     this.products = JSON.parse(data);
     console.log(this.products);
 }
-
-
-
   addProduct(product) {
     let productoAagregar = {
       title: product.title,
@@ -56,12 +53,10 @@ class ProductManager {
       ProductManager.id++;
     }
   }
-
   getProducts() {
     const data = JSON.parse(readFileSync(`productos.json`, "utf-8"));
     return data;
   }
-
   getProductsById(id) {
     const product = JSON.parse(readFileSync(`productos.json`, "utf-8"));
     const productFind = product.find((product) => product.id === id);
@@ -124,7 +119,7 @@ const product2 = {
   stock: 8,
 };
 
-module.exports = nuevosProductos;  
+
 
 // nuevosProductos.readFileProduct();
 //
@@ -146,3 +141,4 @@ module.exports = nuevosProductos;
 //   });
   // nuevosProductos.deleteProduct(2);
 
+export default ProductManager;
