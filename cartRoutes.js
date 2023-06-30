@@ -19,9 +19,7 @@ router.get("/:cid", (req, res) => {
     }
   } catch (error) {
     console.error("Error al obtener los productos del carrito:", error);
-    res
-      .status(500)
-      .json({ error: "Error al obtener los productos del carrito" });
+    res.status(500).json({ error: "Error al obtener los productos del carrito" });
   }
 });
 
@@ -54,3 +52,4 @@ router.post("/:cid/product/:pid", (req, res) => {
 });
 
 export default router;
+

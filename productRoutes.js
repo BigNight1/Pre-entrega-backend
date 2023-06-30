@@ -48,7 +48,6 @@ router.post("/", (req, res) => {
     };
 
     nuevoProducto.addProduct(newProduct);
-    nuevoProducto.writeFileProduct();
 
     res.status(201).json({ message: "Producto agregado con éxito", newProduct });
   } catch (error) {
@@ -67,7 +66,6 @@ router.put("/:pid", (req, res) => {
     }
 
     nuevoProducto.updateProduct(productId, updatedProduct);
-    nuevoProducto.writeFileProduct();
 
     res.json({ message: "Producto actualizado con éxito", updatedProduct });
   } catch (error) {
@@ -81,7 +79,6 @@ router.delete("/:pid", (req, res) => {
     const productId = parseInt(req.params.pid);
 
     nuevoProducto.deleteProduct(productId);
-    nuevoProducto.writeFileProduct();
 
     res.json({ message: "Producto eliminado con éxito", productId });
   } catch (error) {
@@ -91,3 +88,4 @@ router.delete("/:pid", (req, res) => {
 });
 
 export default router;
+
