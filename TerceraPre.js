@@ -92,43 +92,4 @@ class ProductManager {
   }
 }
 
-
 export default ProductManager;
-
-// Prueba para agregar mas productos en POSTMAN  :
-
-// addProduct(products) {
-//   let anyFieldMissing = false; // Variable para verificar si falta algún campo en algún producto
-
-//   products.forEach((product) => {
-//     const existe = this.products.find((p) => p.code === product.code);
-//     if (existe) {
-//       console.log("El código " + product.code + " ya existe");
-//       return;
-//     }
-//     if (
-//       !product.title ||
-//       !product.description ||
-//       !product.price ||
-//       !product.thumbnail ||
-//       !product.code ||
-//       !product.stock
-//     ) {
-//       anyFieldMissing = true; // Actualizar la variable si falta algún campo en algún producto
-//     } else {
-//       const newProduct = {
-//         ...product,
-//         id: ProductManager.id++,
-//       };
-//       this.products.push(newProduct);
-//       console.log("Producto agregado con éxito");
-//     }
-//   });
-
-//   if (anyFieldMissing) {
-//     console.log("Falta llenar un campo");
-//     return;
-//   }
-
-//   this.writeFileProduct();
-// }
