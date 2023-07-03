@@ -7,5 +7,14 @@
     "code": "1331",
     "stock": 20,
     "id": 1
+  },
+  {
+    "title": "chompa",
+    "description": "chompa azul",
+    "price": 12230,
+    "thumbnail": "ABCCC",
+    "code": "1381",
+    "stock": 24,
+    "id": 2
   }
 ]

@@ -77,16 +77,20 @@ class CartManager {
   }
 
   removeFromCart(cartId, productId) {
-    const cart = this.getCartById(cartId);
-    if (cart) {
+    const cartIndex = this.carts.findIndex((cart) => cart.id === cartId);
+    if (cartIndex !== -1) {
+      const cart = this.carts[cartIndex];
       const index = cart.products.indexOf(productId);
       if (index !== -1) {
         cart.products.splice(index, 1);
+        this.carts[cartIndex] = cart; // Actualizar el carrito en la lista de carritos
+        this.updateCartFile(); // Guardar los cambios en el archivo
         return true;
       }
     }
     return false;
   }
+  
 }
 
 export default CartManager;
