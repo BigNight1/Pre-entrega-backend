@@ -1,11 +1,11 @@
 import { writeFileSync, readFileSync, existsSync } from "fs";
-import ProductManager from "../managers/TerceraPre.js";
+import ProductManager from "./TerceraPre.js";
 
 const productManager = new ProductManager();
 
 class CartManager {
   carts;
-  cartFile = "carts.json"; // Nombre del archivo de almacenamiento de los carritos
+  cartFile = "../src/data/carts.json"; // Nombre del archivo de almacenamiento de los carritos
 
   constructor() {
     if (!existsSync(this.cartFile)) {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link type="text/css" rel="stylesheet" href="css/home.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Lista de Productos</h1>
+  <ul>
+    {{#each productos}}
+    <li class="producto">
+      <h2>Producto: {{this.title}}</h2>
+      <p>Descripción: {{this.description}}</p>
+      <p>Precio: ${{this.price}}</p>
+      <p>Thumbnail: <img src="{{this.thumbnail}}" alt="Thumbnail" width="100"></p>
+      <p>Código: {{this.code}}</p>
+      <p>Stock: {{this.stock}}</p>
+      <p>ID: {{this.id}}</p>
+    </li>
+    {{/each}}
+  </ul>
+    <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>
+
+</body>
+</html>

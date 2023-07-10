@@ -1,6 +1,5 @@
 import express from "express";
-import ProductManager from "../managers/TerceraPre.js";
-
+import ProductManager from "../controllers/TerceraPre.js";
 
 const router = express.Router();
 const nuevoProducto = new ProductManager();
@@ -12,6 +11,17 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.error("Error al obtener los productos:", error);
     res.status(500).json({ error: "Error al obtener los productos" });
+  }
+});
+
+router.get("/:productId", (req, res) => {
+  const productId = parseInt(req.params.productId);
+  const product = nuevoProducto.getProductsById(productId);
+
+  if (product) {
+    res.render("productDetails", { product });
+  } else {
+    res.status(404).json({ error: "Producto no encontrado" });
   }
 });
 
@@ -50,7 +60,9 @@ router.post("/", (req, res) => {
 
     nuevoProducto.addProduct(newProduct);
 
-    res.status(201).json({ message: "Producto agregado con éxito", newProduct });
+    res
+      .status(201)
+      .json({ message: "Producto agregado con éxito", newProduct });
   } catch (error) {
     console.error("Error al agregar el producto:", error);
     res.status(500).json({ error: "Error al agregar el producto" });
@@ -62,7 +74,14 @@ router.put("/:pid", (req, res) => {
     const productId = parseInt(req.params.pid);
     const updatedProduct = req.body;
 
-    if (!updatedProduct.title || !updatedProduct.description || !updatedProduct.price || !updatedProduct.thumbnail || !updatedProduct.code || !updatedProduct.stock) {
+    if (
+      !updatedProduct.title ||
+      !updatedProduct.description ||
+      !updatedProduct.price ||
+      !updatedProduct.thumbnail ||
+      !updatedProduct.code ||
+      !updatedProduct.stock
+    ) {
       return res.status(400).json({ error: "Falta llenar un campo" });
     }
 
@@ -89,4 +108,3 @@ router.delete("/:pid", (req, res) => {
 });
 
 export default router;
-

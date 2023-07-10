@@ -5,6 +5,7 @@ class ProductManager {
   static id = 1;
 
   constructor() {
+    this.path = "../src/data/productos.json"
     this.products = this.readFileProduct();
     if (this.products.length > 0) {
       const lastProduct = this.products[this.products.length - 1];
@@ -13,13 +14,13 @@ class ProductManager {
   }
 
   writeFileProduct() {
-    writeFileSync("productos.json", JSON.stringify(this.products));
+    writeFileSync(this.path, JSON.stringify(this.products));
     console.log("Productos guardados con éxito");
   }
 
   readFileProduct() {
     try {
-      const data = readFileSync("productos.json", "utf-8");
+      const data = readFileSync(this.path, "utf-8");
       return JSON.parse(data);
     } catch (error) {
       console.log("Error al leer el archivo productos.json", error);
