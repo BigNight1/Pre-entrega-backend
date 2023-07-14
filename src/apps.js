@@ -7,12 +7,18 @@ import productRoutes from "./routes/productRoutes.js";
 import ProductManager from "./controllers/TerceraPre.js";
 import __dirname from "./utils.js";
 import path from "path";
+import mongoose from "mongoose";
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 const productManager = new ProductManager();
 const productos = productManager.getProducts();
+
+// Conexion a la DB
+
+const connection = mongoose.connect('mongodb+srv://onemid76:1234@ecommerce.gjgde3d.mongodb.net/?retryWrites=true&w=majority')
+console.log(connection)
 
 // estructura codigo Handlebars
 app.engine("handlebars", engine());
