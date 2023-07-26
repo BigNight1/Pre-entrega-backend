@@ -1,60 +1,84 @@
 import express from "express";
-import CartManager from "../controllers/cartManager.js";
-import ProductManager from "../controllers/TerceraPre.js";
+import { productModel } from "../dao/models/productSchema.js";
+import CartManager from "../dao/DB/cartsManager.js";
 
 
 const router = express.Router();
 const cartManager = new CartManager();
-const productManager = new ProductManager();
 
-router.post("/", (req, res) => {
-  const newCart = cartManager.createCart();
-  res.json(newCart);
+router.post("/", async (req, res) => {
+  try {
+    const newCart = await cartManager.create({});
+    res.json(newCart);
+  } catch (error) {
+    console.log("Error al crear el carrito:", error);
+    res.status(500).json({ error: "Error al crear el carrito" });
+  }
 });
 
-// Crear un nuevo carrito
-router.post("/:cartId/products/:productId", (req, res) => {
-  const cartId = parseInt(req.params.cartId);
-  const productId = parseInt(req.params.productId);
+router.post("/:cartId/products/:productId", async (req, res) => {
+  try {
+    const { cartId, productId } = req.params;
 
-  const added = cartManager.addToCart(cartId, productId);
-  if (added) {
-    const product = productManager.getProductsById(productId);
-    if (product) {
-      const cart = cartManager.getCartById(cartId);
-      res.json({
-        message: "Producto agregado al carrito",
-        product,
-        cart,
-      });
-    } else {
-      res.status(404).json({ error: "Producto no encontrado" });
+    const cart = await cartManager.findById(cartId);
+    if (!cart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
     }
-  } else {
-    res.status(404).json({ error: "Carrito no encontrado" });
+
+    const product = await productModel.findById(productId);
+    if (!product) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
+
+    cart.products.push(product);
+    await cart.save();
+
+    res.json({ message: "Producto agregado al carrito", product, cart });
+  } catch (error) {
+    console.log("Error al agregar el producto al carrito:", error);
+    res.status(500).json({ error: "Error al agregar el producto al carrito" });
   }
 });
 
-// Eliminar un producto del carrito
-router.delete("/:cartId/products/:productId", (req, res) => {
-  const cartId = parseInt(req.params.cartId);
-  const productId = parseInt(req.params.productId);
-  const removed = cartManager.removeFromCart(cartId, productId);
-  if (removed) {
+router.delete("/:cartId/products/:productId", async (req, res) => {
+  try {
+    const { cartId, productId } = req.params;
+
+    const cart = await cartManager.findById(cartId);
+    if (!cart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
+
+    const productIndex = cart.products.findIndex(
+      (product) => product.toString() === productId
+    );
+    if (productIndex === -1) {
+      return res.status(404).json({ error: "Producto no encontrado en el carrito" });
+    }
+
+    cart.products.splice(productIndex, 1);
+    await cart.save();
+
     res.json({ message: "Producto eliminado del carrito" });
-  } else {
-    res.status(404).json({ error: "Carrito no encontrado" });
+  } catch (error) {
+    console.log("Error al eliminar el producto del carrito:", error);
+    res.status(500).json({ error: "Error al eliminar el producto del carrito" });
   }
 });
 
-// Obtener información de un carrito específico
-router.get("/:cartId", (req, res) => {
-  const cartId = parseInt(req.params.cartId);
-  const cart = cartManager.getCartById(cartId);
-  if (cart) {
+router.get("/:cartId", async (req, res) => {
+  try {
+    const { cartId } = req.params;
+
+    const cart = await cartManager.findById(cartId).populate("products");
+    if (!cart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
+
     res.json(cart);
-  } else {
-    res.status(404).json({ error: "Carrito no encontrado" });
+  } catch (error) {
+    console.log("Error al obtener el carrito:", error);
+    res.status(500).json({ error: "Error al obtener el carrito" });
   }
 });
 

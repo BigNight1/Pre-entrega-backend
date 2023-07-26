@@ -1,8 +1,6 @@
 import { writeFileSync, readFileSync, existsSync } from "fs";
-import ProductManager from "./TerceraPre.js";
-import mongoose from "mongoose";
-import Cart from '../dao/models/cartSchema.js'
-import Product from '../dao/models/productSchema.js'
+import ProductManager from "../../controller/TerceraPre.js";
+
 
 const productManager = new ProductManager();
 

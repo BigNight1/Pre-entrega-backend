@@ -43,5 +43,23 @@
     "code": "CNON345",
     "stock": 5,
     "id": 5
+  },
+  {
+    "title": "collar",
+    "description": "collar de oro importado de estados unidos",
+    "price": "222",
+    "thumbnail": "AET",
+    "code": "22211",
+    "stock": "10",
+    "id": 6
+  },
+  {
+    "title": "cosas",
+    "description": "222",
+    "price": "2122123",
+    "thumbnail": "acve",
+    "code": "214",
+    "stock": "12",
+    "id": 7
   }
 ]

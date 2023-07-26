@@ -1,32 +1,27 @@
 <html>
+  <head>
     <title>Lista de Productos en Tiempo Real</title>
     <link rel="stylesheet" href="css/realTimeProducts.css" />
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
     <div class="contenedor">
-      
+
       <div class="agregar">
         <h2>Agregar Producto</h2>
         <form>
-          <label for="title">Título:</label>
-          <input type="text" id="title" required />
-          
-          <label for="description">Descripción:</label>
-          <input type="text" id="description" required />
-          
+          <label for="name">Producto:</label>
+          <input type="text" id="name" required />
+
           <label for="price">Precio:</label>
           <input type="number" id="price" required />
-          
-          <label for="thumbnail">Thumbnail:</label>
-          <input type="text" id="thumbnail" required />
-          
-          <label for="code">Código:</label>
-          <input type="text" id="code" required />
-          
-          <label for="stock">Stock:</label>
-          <input type="number" id="stock" required />
-          
+
+          <label for="description">Descripción:</label>
+          <input type="text" id="description" required />
+
+          <label for="category">Category:</label>
+          <input type="text" id="category" />
+
           <button type="button" onclick="createProduct()">Agregar Producto</button>
         </form>
       </div>
@@ -34,21 +29,29 @@
       <div class="eliminar">
         <h2>Eliminar Producto</h2>
         <form>
-          <label for="productId">ID del Producto:</label>
-          <input type="number" id="productId" required />
+          <label for="productName">Nombre del Producto:</label>
+          <input type="text" id="productName" required />
           <br />
           <button
             type="button"
-            onclick="deleteProduct(parseInt(document.getElementById('productId').value))"
-          >Eliminar Producto</button>
+            onclick="deleteProduct(document.getElementById('productName').value)"
+          >
+            Eliminar Producto
+          </button>
         </form>
       </div>
+
       <div class="titulo">
         <h2>Lista de Productos en Tiempo Real</h2>
-        <ol></ol>
+        <ol>
+          {{#each productos}}
+            <li>{{name}}</li>
+          {{/each}}
+
+        </ol>
       </div>
       <button><a href="/">Volver</a></button>
     </div>
-    <script type="text/javascript" src="realTimeProducts.js"></script>
+    <script type="text/javascript" src="js/realTimeProducts.js"></script>
   </body>
 </html>

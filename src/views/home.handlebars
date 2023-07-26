@@ -11,17 +11,16 @@
   <ul>
     {{#each productos}}
     <li class="producto">
-      <h2>Producto: {{this.title}}</h2>
-      <p>Descripción: {{this.description}}</p>
-      <p>Precio: ${{this.price}}</p>
-      <p>Thumbnail: <img src="{{this.thumbnail}}" alt="Thumbnail" width="100"></p>
-      <p>Código: {{this.code}}</p>
-      <p>Stock: {{this.stock}}</p>
-      <p>ID: {{this.id}}</p>
+      <h2>Producto: {{producto}}</h2>
+      <!-- Aquí puedes mostrar otras propiedades del producto si lo deseas -->
+      <!-- Por ejemplo: -->
+      <p>price: {{price}}</p>
+      <p>description: {{description}}</p>
+      <p>category: {{category}}</p>
     </li>
     {{/each}}
   </ul>
-    <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>
-
+  <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>
+  <button class="custom-button"><a href="/chat">Ir al Chat</a></button>
 </body>
 </html>
