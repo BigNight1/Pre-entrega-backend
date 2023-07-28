@@ -36,9 +36,12 @@ body {
     color: #666;
     margin: 0;
     margin-bottom: 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
   }
 
   .custom-button {
+    color: #fff;
     display: inline-block;
     background-color: #007bff;
     padding: 10px 20px;

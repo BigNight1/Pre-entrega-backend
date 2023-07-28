@@ -17,12 +17,14 @@ socket.on("realTimeProducts", (productos) => {
 });
 
 function createProduct() {
+  const id = document.getElementById("id").value;
   const name = document.getElementById("name").value;
   const price = document.getElementById("price").value;
   const description = document.getElementById("description").value;
   const category = document.getElementById("category").value;
 
   const product = {
+    id,
     name,
     price,
     description,
@@ -30,8 +32,21 @@ function createProduct() {
   };
 
   socket.emit("createProduct", product);
+  
+  // Esperar la respuesta del servidor
+  socket.once("productResponse", (response) => {
+    const errorMessage = document.getElementById("errorMessage");
+
+    if (response.error) {
+      errorMessage.textContent = response.error;
+      errorMessage.style.display = "block"; // Mostrar el mensaje de error
+    } else {
+      errorMessage.style.display = "none"; // Ocultar el mensaje de error si no hay errores
+    }
+  });
 }
 
 function deleteProduct(productName) {
   socket.emit("deleteProduct", productName);
 }
+

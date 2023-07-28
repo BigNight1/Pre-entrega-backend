@@ -1,26 +1,31 @@
 import express from "express";
-import { engine } from "express-handlebars";
 import http from "http";
+import { engine } from "express-handlebars";
 import { Server } from "socket.io";
-import cartRoutes from "./routes/cartRoutes.js";
-import productRoutes from "./routes/productRoutes.js";
-import ProductManager from "./dao/DB/productoManager.js";
 import __dirname from "./utils.js";
 import path from "path";
 import mongoose from "mongoose";
+import cartRoutes from "./routes/cartRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import ProductManager from "./dao/DB/productoManager.js";
+import CartManager from "./dao/DB/cartsManager.js";
 import MessageManager from "./dao/DB/messagesManager.js";
+import { productModel } from "./dao/models/productSchema.js";
+import dotenv from "dotenv";
+
+// configuracion de dotevn
+dotenv.config({ path: "../.env" });
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+const cartManager = new CartManager();
 const productManager = new ProductManager();
 const messageManager = new MessageManager();
-const DB_ECOMMERCE =
-  "mongodb+srv://onemid76:1234@ecommerce.gjgde3d.mongodb.net/Ecommerce?retryWrites=true&w=majority";
 
 // Conexion a la DB
 mongoose
-  .connect(DB_ECOMMERCE)
+  .connect(process.env.DB_ECOMMERCE)
   .then(() => {
     console.log("Conectado con exito a la DB");
   })
@@ -28,55 +33,65 @@ mongoose
     console.log("Error al conectar a la base de datos:", error);
   });
 
-// estructura codigo Handlebars
+// estructura codigo Handlebars y archivo Estatico
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", path.resolve(__dirname + "/views"));
-
-// Archivos Estaticos
 app.use("/realtimeproducts", express.static(path.join(__dirname + "/public")));
 app.use("/", express.static(path.join(__dirname + "/public")));
 
-// Rutas del grupo /api/products
+// Rutas del grupo
 app.use("/api/products", productRoutes);
-
-// Rutas del grupo /api/carts
 app.use("/api/carts", cartRoutes);
 
-// Ruta de la vista home
+// Rutas de Visualización 
 app.get("/", async (req, res) => {
   const productos = await productManager.getAllProducts();
   res.render("home", { productos });
 });
-
-// Ruta de la vista de productos en tiempo real
 app.get("/realtimeproducts", async (req, res) => {
   const productos = await productManager.getAllProducts();
   res.render("realTimeProducts", { productos });
 });
-
-//  Ruta de la vista de Chat
-app.get("/chat", async (req,res)=>{
+app.get("/chat", async (req, res) => {
   const messages = await messageManager.getMessages();
-  res.render("chat", {messages});
+  res.render("chat", { messages });
+});
+app.get("/cart", async(req,res)=>{
+  res.render("cart")
 })
 
 // Configuración del WebSocket
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
 
-  // Enviar lista de productos en tiempo real al cliente
+  const cartId = "your-cart-id";
+  socket.emit("cartId", cartId);  
+
   socket.emit("realTimeProducts", productManager.getAllProducts());
 
-  // Escuchar evento para crear un nuevo producto
   socket.on("createProduct", async (product) => {
-    const newProduct = await productManager.createProduct(product);
-    if (newProduct) {
-      io.emit("realTimeProducts", await productManager.getAllProducts());
-    }    
+    try {
+      const existingProduct = await productModel.findOne({ id: product.id });
+      if (existingProduct) {
+        socket.emit("productResponse", {
+          error: "El ID del producto ya existe",
+        });
+      } else {
+        const newProduct = await productManager.createProduct(product);
+        if (newProduct) {
+          io.emit("realTimeProducts", await productManager.getAllProducts());
+        }
+      }
+    } catch (error) {
+      console.log("Error al crear el producto:", error);
+
+      socket.emit("productResponse", {
+        error: "Error al crear el producto",
+      });
+    }
   });
 
-  // Escuchar evento para eliminar un producto
   socket.on("deleteProduct", async (productId) => {
     const deletedProduct = await productManager.deleteProduct(productId);
     if (deletedProduct) {
@@ -84,25 +99,33 @@ io.on("connection", (socket) => {
     }
   });
 
-  // Escuchar eventos de Socket.IO para enviar y recibir mensajes
   socket.on("sendMessage", async (data) => {
     const { sender, content } = data;
 
-    // Guardar el mensaje en la base de datos utilizando el administrador
     await messageManager.saveMessage(sender, content);
 
-    // Enviar el mensaje recibido a todos los clientes conectados, incluyendo el remitente
     io.emit("receiveMessage", { sender, content });
   });
 
-  // Configurar el evento para desconectar un usuario
+  socket.on("addToCart", async ({ cartId , productId }) => {
+    
+    const addedToCart = await cartManager.addToCart(cartId, productId);
+
+    if (addedToCart) {
+      socket.emit("addToCartResponse", { success: true });
+    } else {
+      socket.emit("addToCartResponse", {
+        error: "No se pudo agregar el producto al carrito",
+      });
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log("Un usuario se ha desconectado");
   });
 });
 
 // Iniciar el servidor
-const port = 8080;
-server.listen(port, () => {
-  console.log(`Servidor en funcionamiento en el puerto ${port}`);
+server.listen(process.env.port, () => {
+  console.log(`Servidor en funcionamiento en el puerto ${process.env.port}`);
 });
