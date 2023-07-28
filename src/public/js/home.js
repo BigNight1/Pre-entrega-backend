@@ -5,3 +5,5 @@ function addToCart(productId) {
   const cartId = "your-cart-id"
   socket.on("addToCart", {cartId,productId});
 }
+
+
