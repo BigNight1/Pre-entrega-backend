@@ -4,8 +4,7 @@ import { productModel } from "../models/productSchema.js";
 class CartManager {
   async createCart() {
     try {
-      const newCart = await cartModel.create({});
-      return newCart;
+      return await cartModel.create({});
     } catch (error) {
       console.log("Error al crear el carrito:", error);
       return null;
@@ -14,8 +13,7 @@ class CartManager {
 
   async getCartById(cartId) {
     try {
-      const cart = await cartModel.findById(cartId).populate("products");
-      return cart;
+      return await cartModel.findById(cartId).populate("products");
     } catch (error) {
       console.log("Error al obtener el carrito:", error);
       return null;
@@ -25,12 +23,9 @@ class CartManager {
   async addToCart(cartId, productId) {
     try {
       const cart = await cartModel.findById(cartId);
-      if (!cart) {
-        return false;
-      }
-
       const product = await productModel.findById(productId);
-      if (!product) {
+
+      if (!cart || !product) {
         return false;
       }
 
@@ -46,14 +41,13 @@ class CartManager {
 
   async deleteCart(cartId) {
     try {
-      const deletedCart = await cartModel.findByIdAndDelete(cartId);
-      return deletedCart;
+      return await cartModel.findByIdAndDelete(cartId);
     } catch (error) {
       console.log("Error al eliminar el carrito:", error);
       return null;
     }
   }
-  
+
   async removeFromCart(cartId, productId) {
     try {
       const cart = await cartModel.findById(cartId);
@@ -62,8 +56,9 @@ class CartManager {
       }
 
       const productIndex = cart.products.findIndex(
-        (product) => product.toString() === productId
+        (product) => product._id.toString() === productId
       );
+
       if (productIndex === -1) {
         return false;
       }
@@ -77,7 +72,6 @@ class CartManager {
       return null;
     }
   }
-
 }
 
 export default CartManager;

@@ -6,7 +6,7 @@ const productManager = new ProductManager();
 
 class CartManager {
   carts;
-  cartFile = "../src/data/carts.json"; // Nombre del archivo de almacenamiento de los carritos
+  cartFile = "../src/data/carts.json"; 
 
   constructor() {
     if (!existsSync(this.cartFile)) {
@@ -70,8 +70,8 @@ class CartManager {
     if (cartIndex !== -1) {
       const cart = this.carts[cartIndex];
       cart.products.push(productId);
-      this.carts[cartIndex] = cart; // Actualizar el carrito en la lista de carritos
-      this.updateCartFile(); // Guardar los cambios en el archivo
+      this.carts[cartIndex] = cart; 
+      this.updateCartFile(); 
       return true;
     }
     return false;
@@ -84,8 +84,8 @@ class CartManager {
       const index = cart.products.indexOf(productId);
       if (index !== -1) {
         cart.products.splice(index, 1);
-        this.carts[cartIndex] = cart; // Actualizar el carrito en la lista de carritos
-        this.updateCartFile(); // Guardar los cambios en el archivo
+        this.carts[cartIndex] = cart; 
+        this.updateCartFile(); 
         return true;
       }
     }

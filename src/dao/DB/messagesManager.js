@@ -7,7 +7,7 @@ class MessageManager {
         sender,
         content,
       });
-      console.log("Mensaje guardado en la base de datos:", newMessage);
+      // console.log("Mensaje guardado en la base de datos:", newMessage);
       return newMessage;
     } catch (error) {
       console.log("Error al guardar el mensaje en la base de datos:", error);
@@ -17,7 +17,7 @@ class MessageManager {
 
   async getMessages() {
     try {
-      const messages = await messageModel.find().sort({ createdAt: 1 });
+      const messages = await messageModel.find().lean();
       return messages;
     } catch (error) {
       console.log("Error al obtener los mensajes:", error);
