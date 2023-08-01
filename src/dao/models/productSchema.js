@@ -3,11 +3,6 @@ import mongoose from 'mongoose';
 const productCollection = 'products'
 
 const productSchema = new mongoose.Schema({
-  id:{
-    type:String,
-    required:true,
-    unique:[true,'Product ID already exists']
-  },
   name: {
     type: String,
     required: true

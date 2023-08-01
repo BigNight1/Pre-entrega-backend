@@ -10,11 +10,10 @@ import productRoutes from "./routes/productRoutes.js";
 import ProductManager from "./dao/DB/productoManager.js";
 import CartManager from "./dao/DB/cartsManager.js";
 import MessageManager from "./dao/DB/messagesManager.js";
-import { productModel } from "./dao/models/productSchema.js";
 import dotenv from "dotenv";
 
 // configuracion de dotevn
-dotenv.config({ path: "../.env" });
+dotenv.config({ path: ".env" });
 
 const app = express();
 const server = http.createServer(app);
@@ -65,32 +64,22 @@ app.get("/cart", async(req,res)=>{
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
 
-  const cartId = "your-cart-id";
-  socket.emit("cartId", cartId);  
-
   socket.emit("realTimeProducts", productManager.getAllProducts());
 
   socket.on("createProduct", async (product) => {
     try {
-      const existingProduct = await productModel.findOne({ id: product.id });
-      if (existingProduct) {
-        socket.emit("productResponse", {
-          error: "El ID del producto ya existe",
-        });
-      } else {
-        const newProduct = await productManager.createProduct(product);
-        if (newProduct) {
-          io.emit("realTimeProducts", await productManager.getAllProducts());
-        }
+      const newProduct = await productManager.createProduct(product);
+      if (newProduct) {
+        io.emit("realTimeProducts", await productManager.getAllProducts());
       }
     } catch (error) {
       console.log("Error al crear el producto:", error);
-
       socket.emit("productResponse", {
         error: "Error al crear el producto",
       });
     }
   });
+  
 
   socket.on("deleteProduct", async (productId) => {
     const deletedProduct = await productManager.deleteProduct(productId);

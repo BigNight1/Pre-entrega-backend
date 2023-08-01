@@ -44,6 +44,16 @@ class CartManager {
     }
   }
 
+  async deleteCart(cartId) {
+    try {
+      const deletedCart = await cartModel.findByIdAndDelete(cartId);
+      return deletedCart;
+    } catch (error) {
+      console.log("Error al eliminar el carrito:", error);
+      return null;
+    }
+  }
+  
   async removeFromCart(cartId, productId) {
     try {
       const cart = await cartModel.findById(cartId);
@@ -67,6 +77,7 @@ class CartManager {
       return null;
     }
   }
+
 }
 
 export default CartManager;
