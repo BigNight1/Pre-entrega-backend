@@ -1,5 +1,6 @@
 import express from "express";
 import ProductManager from "../dao/DB/productoManager.js";
+import  {productModel}  from "../dao/models/productSchema.js";
 
 const router = express.Router();
 const productManager = new ProductManager();
@@ -7,14 +8,33 @@ const productManager = new ProductManager();
 router.use(express.json());
 
 router.get("/", async (req, res) => {
-  try {
-    const products = await productManager.getAllProducts();
-    res.json(products);
-  } catch (error) {
-    console.log("Error al obtener los productos:", error);
-    res.status(500).json({ error: "Error al obtener los productos" });
-  }
+   const limit = parseInt(req.query.limit) || 10
+   const page = parseInt(req.query.page)|| 1
+   const sort = req.query.sort || null
+   const category = req.query.category || null
+   try {
+    const result = await productModel.paginate({category: category}, { limit, page, sort: { price: sort } });
+
+    const response = {
+       status: "success",
+       payload: result.docs, // Los productos
+       totalPages: result.totalPages,
+       prevPage: result.prevPage,
+       nextPage: result.nextPage,
+       page: result.page,
+       hasPrevPage: result.hasPrevPage,
+       hasNextPage: result.hasNextPage,
+       prevLink: result.hasPrevPage ? `/api/products?page=${result.prevPage}` : null,
+       nextLink: result.hasNextPage ? `/api/products?page=${result.nextPage}` : null
+    };
+
+    res.json(response);
+ } catch (error) {
+    console.error("Error al obtener los productos:", error);
+    res.status(500).json({ status: "error", message: "Error al obtener los productos" });
+ }
 });
+
 
 router.get("/:productId", async (req, res) => {
   try {
@@ -65,8 +85,7 @@ router.put("/:productId", async (req, res) => {
       !updatedProduct.name ||
       !updatedProduct.price ||
       !updatedProduct.description ||
-      !updatedProduct.category ||
-      !updatedProduct.createdAt
+      !updatedProduct.category 
     ) {
       return res.status(400).json({ error: "Falta llenar un campo" });
     }

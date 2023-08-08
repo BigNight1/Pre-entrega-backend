@@ -4,14 +4,8 @@ const cartCollection = "carts";
 
 const cartSchema = mongoose.Schema({
   products: [
-    {
-      name: String,
-      price: Number,
-      description: String,
-      category: String,
-      createdAt: Date,
-      quantity: Number,
-    },
+    { type: mongoose.Schema.Types.ObjectId, 
+      ref: "products" }
   ],
 });
 

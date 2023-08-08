@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
+<html>
+<head> 
   <link type="text/css" rel="stylesheet" href="css/home.css">
+  <title>Productos</title>
   <script src="/socket.io/socket.io.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
 </head>
 <body>
   <h1>Lista de Productos</h1>
+  <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>
+  <button class="custom-button"><a href="/chat">Ir al Chat</a></button>
+  <button class="custom-button"><a href="/cart">Ir al Carrito</a></button>
   <ul>
-    {{#each productos}}
+    {{#each products}}
     <li class="producto">
       <h2>Producto: {{name}}</h2>
-      <!-- Aquí puedes mostrar otras propiedades del producto si lo deseas -->
-      <!-- Por ejemplo: -->
       <p>price: {{price}}</p>
       <p>description: {{description}}</p>
       <p>category: {{category}}</p>
@@ -22,10 +21,15 @@
     </li>
     {{/each}}
   </ul>
-  <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>
-  <button class="custom-button"><a href="/chat">Ir al Chat</a></button>
-  <button class="custom-button"><a href="/cart">Ir al Carrito</a></button>
 
-   <script type="text/javascript" src="js/home.js"></script>
+  {{#if hasPrevPage}}
+    <a href="/products?page={{prevPage}}"><button class="custom-button">Anterior</button></a>
+  {{/if}}
+
+  {{#if hasNextPage}}
+    <a href="/products?page={{nextPage}}"><button class="custom-button">Siguiente</button></a>
+  {{/if}}
+  <br>
 </body>
 </html>
+

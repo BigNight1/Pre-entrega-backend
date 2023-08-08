@@ -31,6 +31,8 @@ class ProductManager {
     }
   }
 
+// tengo que configurar paginate a mi proyecto 
+  
   async updateProduct(productId, updatedData) {
     try {
       const updatedProduct = await productModel.findByIdAndUpdate(

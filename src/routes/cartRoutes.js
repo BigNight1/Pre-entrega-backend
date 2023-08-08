@@ -5,6 +5,61 @@ import CartManager from "../dao/DB/cartsManager.js";
 const router = express.Router();
 const cartManager = new CartManager();
 
+router.get("/", async (req, res) => {
+  try {
+    const limit = req.query.limit;
+    res.send(await cartManager.getCarts(limit));
+  } catch (err) {
+    res.status(500).send(err.message);
+    const error = err.message;
+    console.log(error);
+  }
+});
+
+router.get("/:cartId", async (req, res) => {
+  const { cartId } = req.params;
+  const cart = await cartManager.getCartById(cartId).populate("products");
+
+  if (!cart) {
+    return res.status(404).json({ error: "Carrito no encontrado" });
+  }
+
+  res.json(cart);
+});
+
+router.put("/:cartId", async (req, res) => {
+  try {
+    const cartId = req.params.cartId;
+    const products = req.body;
+    await cartManager.updateCart(cartId, products);
+    res.status(200).send({
+      message: "Cart products updated",
+      products,
+    });
+  } catch (err) {
+    res.status(500).send(err.message);
+    const error = err.message;
+    console.log(error);
+  }
+});
+
+router.put("/:cartId/products/:productId", async(req,res)=>{
+  try{
+    const cartId = req.params.cartId
+    const productId = req.params.productId
+    const quantity= req.body.quantity
+    const result = await cartManager.updateProductQuantity(cartId,productId,quantity)
+    res.status(200).send({
+      message:"Producto actualizado en la lista de compras",
+      acknowledged : result.acknowledged
+    })
+  }catch(err){
+    res.status(500).send(err.message);
+    const error = err.message;
+    console.log(error);
+  }
+})
+
 router.post("/", async (req, res) => {
   try {
     const newCart = await cartManager.createCart({});
@@ -34,17 +89,6 @@ router.post("/:cartId/products/:productId", async (req, res) => {
   res.json({ message: "Producto agregado al carrito", product, cart });
 });
 
-router.get("/:cartId", async (req, res) => {
-  const { cartId } = req.params;
-  const cart = await cartManager.getCartById(cartId);
-
-  if (!cart) {
-    return res.status(404).json({ error: "Carrito no encontrado" });
-  }
-
-  res.json(cart);
-});
-
 router.delete("/:cartId/products/:productId", async (req, res) => {
   const { cartId, productId } = req.params;
   const cart = await cartManager.getCartById(cartId);
@@ -55,7 +99,9 @@ router.delete("/:cartId/products/:productId", async (req, res) => {
   }
 
   if (!productExists) {
-    return res.status(404).json({ error: "Producto no encontrado en el carrito" });
+    return res
+      .status(404)
+      .json({ error: "Producto no encontrado en el carrito" });
   }
 
   res.json({ message: "Producto eliminado del carrito" });
@@ -74,4 +120,3 @@ router.delete("/:cartId", async (req, res) => {
 });
 
 export default router;
-
