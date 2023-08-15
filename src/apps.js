@@ -2,7 +2,7 @@ import express from "express";
 import http from "http";
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
-import __dirname from "./utils.js";
+import {__dirname} from "./utils.js";
 import path from "path";
 import cartRoutes from "./routes/cartRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
