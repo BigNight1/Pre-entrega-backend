@@ -1,35 +1,45 @@
-<!DOCTYPE html>
 <html>
-<head> 
-  <link type="text/css" rel="stylesheet" href="css/home.css">
-  <title>Productos</title>
-  <script src="/socket.io/socket.io.js"></script>
-</head>
-<body>
-  <h1>Lista de Productos</h1>
-  <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>
-  <button class="custom-button"><a href="/chat">Ir al Chat</a></button>
-  <button class="custom-button"><a href="/cart">Ir al Carrito</a></button>
-  <ul>
-    {{#each products}}
-    <li class="producto">
-      <h2>Producto: {{name}}</h2>
-      <p>price: {{price}}</p>
-      <p>description: {{description}}</p>
-      <p>category: {{category}}</p>
-      <button class="custom-button" onclick="addToCart('{{id}}')">Agregar al carrito</button>
-    </li>
-    {{/each}}
-  </ul>
+  <head>
+    <link type="text/css" rel="stylesheet" href="css/home.css" />
+    <title>Productos</title>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div class="Space">
+    <button class="custom-button"><a href="/login">Login</a></button>
+    {{#if isAuthenticated}}
+    <button id="logoutButton" class="custom-button">Logout</button>
+    {{/if}}
+    </div>
+    <h1>Lista de Productos</h1>
+    <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>
+    <button class="custom-button"><a href="/chat">Ir al Chat</a></button>
+    <button class="custom-button"><a href="/cart">Ir al Carrito</a></button>
+    <ul>
+      {{#each products}}
+        <li class="producto">
+          <h2>Producto: {{name}}</h2>
+          <p>price: {{price}}</p>
+          <p>description: {{description}}</p>
+          <p>category: {{category}}</p>
+          {{!-- <button class="custom-button" onclick="addToCart('{{cartId}}', '{{_id}}')">Agregar al carrito</button> --}}
+          {{! tengo que ver el error }}
+        </li>
+      {{/each}}
+    </ul>
 
-  {{#if hasPrevPage}}
-    <a href="/products?page={{prevPage}}"><button class="custom-button">Anterior</button></a>
-  {{/if}}
+    {{#if hasPrevPage}}
+      <a href="/products?page={{prevPage}}"><button
+          class="custom-button"
+        >Anterior</button></a>
+    {{/if}}
 
-  {{#if hasNextPage}}
-    <a href="/products?page={{nextPage}}"><button class="custom-button">Siguiente</button></a>
-  {{/if}}
-  <br>
-</body>
+    {{#if hasNextPage}}
+      <a href="/products?page={{nextPage}}"><button
+          class="custom-button"
+        >Siguiente</button></a>
+    {{/if}}
+    <br />
+    <script type="text/javascript" src="js/home.js"></script>
+  </body>
 </html>
-

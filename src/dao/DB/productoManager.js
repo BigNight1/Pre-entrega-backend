@@ -16,7 +16,7 @@ class ProductManager {
       const product = await productModel.findById(productId);
       return product;
     } catch (error) {
-      console.log("Error al obtener el producto:", error);
+      ("Error al obtener el producto:", error);
       return null;
     }
   }

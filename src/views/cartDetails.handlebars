@@ -7,13 +7,13 @@
 </head>
 <body>
   <h1>Detalles del Carrito</h1>
-  <h2>Carrito ID: {{ cart._id }}</h2>
+  <h2>Carrito ID: {{ cart.id }}</h2>
   
   <h3>Productos:</h3>
   <ul>
-    {{#each carts.products}}
+    {{#each cart.products}}
       <li>
-        <strong>{{ name }}</strong> - Precio: {{ price }} - Categoría: {{ category }}
+        {{ @index }}.<strong>{{ this.name }}</strong> - Precio: {{ this.price }} - Categoría: {{ this.category }}
       </li>
     {{/each}}
   </ul>

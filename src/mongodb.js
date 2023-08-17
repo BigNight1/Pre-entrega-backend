@@ -5,7 +5,10 @@ dotenv.config({ path: ".env" });
 
 export const dbConnect = async()=>{
 mongoose
-.connect(process.env.DB_ECOMMERCE)
+.connect(process.env.DB_ECOMMERCE,{
+  useNewUrlParser:true,
+  useUnifiedTopology : true,
+})
 .then(() => {
   console.log("Conectado con exito a la DB");
 })

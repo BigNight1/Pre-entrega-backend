@@ -43,22 +43,26 @@ router.put("/:cartId", async (req, res) => {
   }
 });
 
-router.put("/:cartId/products/:productId", async(req,res)=>{
-  try{
-    const cartId = req.params.cartId
-    const productId = req.params.productId
-    const quantity= req.body.quantity
-    const result = await cartManager.updateProductQuantity(cartId,productId,quantity)
+router.put("/:cartId/products/:productId", async (req, res) => {
+  try {
+    const cartId = req.params.cartId;
+    const productId = req.params.productId;
+    const quantity = req.body.quantity;
+    const result = await cartManager.updateProductQuantity(
+      cartId,
+      productId,
+      quantity
+    );
     res.status(200).send({
-      message:"Producto actualizado en la lista de compras",
-      acknowledged : result.acknowledged
-    })
-  }catch(err){
+      message: "Producto actualizado en la lista de compras",
+      acknowledged: result.acknowledged,
+    });
+  } catch (err) {
     res.status(500).send(err.message);
     const error = err.message;
     console.log(error);
   }
-})
+});
 
 router.post("/", async (req, res) => {
   try {
