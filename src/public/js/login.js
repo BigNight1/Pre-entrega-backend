@@ -21,5 +21,8 @@ form.addEventListener("submit",async (e) => {
       window.location.replace("/products");
       alert(`Bienvenido ${name}`)
     }
+    if(response.status === 400){
+      alert("Datos Invalidos")
+    }
   })
 

@@ -39,7 +39,7 @@ app.set("view engine", "handlebars");
 app.set("views", path.resolve(__dirname + "/views"));
 app.use("/realtimeproducts", express.static(path.join(__dirname + "/public")));
 app.use("/", express.static(path.join(__dirname + "/public")));
-app.use(express.json());
+
 app.use(
   session({
     store: new MongoStore({
@@ -60,6 +60,8 @@ app.use("/api/sessions", sessionRouter);
 
 // Conectarse A servidor
 dbConnect();
+
+// Inicializa Passport con tu estrategia de autenticación
 
 // Rutas de Visualización
 app.get("/products", async (req, res) => {
@@ -146,8 +148,7 @@ io.on("connection", (socket) => {
   //       error: "No se pudo agregar el producto al carrito",
   //     });
   //   }
-    
-    
+
   // });
   // falta arreglar este codigo quiero  saber porque el id del carrito no esta llegando
 
