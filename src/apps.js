@@ -14,8 +14,9 @@ import CartManager from "./dao/DB/cartsManager.js";
 import MessageManager from "./dao/DB/messagesManager.js";
 import { productModel } from "./dao/models/productSchema.js";
 import { dbConnect } from "./mongodb.js";
-import MongoStore from "connect-mongo";
 import session from "express-session";
+import passport from "passport";
+import initPassport from "./config/passport.config.js";
 
 // configuracion de dotevn
 const app = express();
@@ -39,24 +40,22 @@ app.set("view engine", "handlebars");
 app.set("views", path.resolve(__dirname + "/views"));
 app.use("/realtimeproducts", express.static(path.join(__dirname + "/public")));
 app.use("/", express.static(path.join(__dirname + "/public")));
+app.use(session({
+  secret :"Coder",
+  resave: true, saveUninitialized: true 
+}))
+app.use(express.json())
+app.use(passport.initialize())
+initPassport()
+app.use(passport.session())
 
-app.use(
-  session({
-    store: new MongoStore({
-      mongoUrl: process.env.DB_ECOMMERCE,
-      ttl: 3600,
-    }),
-    secret: "CoderSecretSHHHHH",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+
 
 // Rutas del grupo
 app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/", viewRouter);
-app.use("/api/sessions", sessionRouter);
+app.use("/api/session", sessionRouter);
 
 // Conectarse A servidor
 dbConnect();
@@ -105,9 +104,7 @@ app.get("/carts/:cartId", async (req, res) => {
 // Configuración del WebSocket
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
-
   socket.emit("realTimeProducts", productManager.getAllProducts());
-
   socket.on("createProduct", async (product) => {
     try {
       const newProduct = await productManager.createProduct(product);
@@ -131,9 +128,7 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", async (data) => {
     const { sender, content } = data;
-
     await messageManager.saveMessage(sender, content);
-
     io.emit("receiveMessage", { sender, content });
   });
 
@@ -151,7 +146,6 @@ io.on("connection", (socket) => {
 
   // });
   // falta arreglar este codigo quiero  saber porque el id del carrito no esta llegando
-
   socket.on("disconnect", () => {
     console.log("Un usuario se ha desconectado");
   });

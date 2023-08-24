@@ -1,7 +1,7 @@
 const logoutButton = document.getElementById("logoutButton")
 
 logoutButton.addEventListener("click",()=>{
-    fetch("api/sessions/logout",{
+    fetch("api/session/logout",{
         method: "POST",
     })
     .then(response => response.json())
