@@ -16,8 +16,13 @@ router.post('/register', async (req, res) => {
     age,
     password: createHast(password),
   };
-  let result = await userModel.create(user);
-  res.send({ status: "success", message: "User Registered" });
+  try {
+    const result = await userModel.create(user);
+    res.send({ status: "success", message: "User Registered" });
+  } catch (error) {
+    console.error("Error creating user:", error);
+    res.status(500).send({ status: "error", error: "Internal Server Error" });
+  }
 });
 
 router.get(

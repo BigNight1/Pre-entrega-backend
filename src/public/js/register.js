@@ -15,5 +15,12 @@ form.addEventListener("submit", (e) => {
     },
   })
     .then((result) => result.json())
-    .then((json) => console.log(json));
+    .then((json) => {
+      if (json.status === "success") {
+        alert("Usuario Creado");
+      }
+    })
+    .catch((error) => {
+      console.log("Error", error);
+    });
 });
