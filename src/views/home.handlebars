@@ -6,10 +6,12 @@
   </head>
   <body>
     <div class="Space">
-    <button class="custom-button"><a href="/login">Login</a></button>
-    {{#if isAuthenticated}}
-    <button id="logoutButton" class="custom-button">Logout</button>
-    {{/if}}
+      {{#if isAuthenticated}}
+        <button class="custom-button"><a href="/profile">Profile</a></button>
+        <button id="logoutButton" class="custom-button">Logout</button>
+      {{else}}
+        <button class="custom-button"><a href="/login">Login</a></button>
+      {{/if}}
     </div>
     <h1>Lista de Productos</h1>
     <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>

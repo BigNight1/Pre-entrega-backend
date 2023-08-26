@@ -10,28 +10,26 @@ const initPassport = () => {
     "github",
     new GitHubStrategy(
       {
-        clientID: process.env.clientID,
-        clientSecret: process.env.clientSecret,
-        callbackURL: "http://localhost:8080/api/session/githubcallback",
+        clientID: "Iv1.5e07bb792c8a3b76",
+        clientSecret: "b76779a99cb40930302f4e6ff5a9a8cc31dfda44",
+        callbackURL: "http://localhost:8080/api/session/github/callback",
       },
       async (accessToken, refreshToken, profile, cb) => {
-        // console.log("GitHub Profile:", profile);
-        const githubUser = await GithubUserModel.findOne({
+        const existingUser = await GithubUserModel.findOne({
           accountId: profile.id,
           provider: "github",
         });
-        if (!githubUser) {
-          console.log("Adding new github user to DB...");
-          const githubUser = new User({
+        if (!existingUser) {
+          const newUser = new GithubUserModel({
             accountId: profile.id,
             name: profile.username,
             provider: profile.provider,
           });
-          await githubUser.save();
-          return db(null, profile);
+          await newUser.save();
+          return cb(null, newUser);
         } else {
           console.log("Github user already exist in DB..");
-          return cb(null, profile);
+          return cb(null, existingUser);
         }
       }
     )
@@ -43,7 +41,13 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  let user = await GithubUserModel.findById(id);
+  try {
+    const user = await GithubUserModel.findById(id);
+    done(null, user);
+  } catch (error) {
+    console.error("Deserialization Error:", error);
+    done(error, null);
+  }
 });
 
 export default initPassport;

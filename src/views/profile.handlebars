@@ -1,11 +1,16 @@
-<div>
+<head>
+  <link rel="stylesheet" href="css/profile.css" />
+</head>
 
-    <h1>Tu perfil (sin datos sensibles)</h1>
+<div class="card">
+  <div class="title">
+    <h1>Tu perfil</h1>
+  </div>
+  <div class="data_user">
+    <p>Nombre de usuario: {{user.name}}</p>
+    <p>ID: {{user.accountId}}</p>
+    <p>Provider: <span class="provider">{{user.provider}}</span> </p>
 
-    <p>{{user.name}}</p>
-
-    <p>{{user.email}}</p>
-
-    <p>{{user.age}}</p>
-
+    <button><a href="/products">Volver a Productos</a></button>
+  </div>
 </div>

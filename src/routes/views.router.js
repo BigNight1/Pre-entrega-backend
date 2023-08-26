@@ -17,11 +17,12 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.get("/", (req, res) => {
+router.get("/profile", (req, res) => {
   res.render("profile", {
     user: req.user,
   });
 });
+
 
 router.get("/restartpassword",(req,res)=>{
   res.render("restartpassword")
@@ -30,7 +31,7 @@ router.get("/restartpassword",(req,res)=>{
 router.get("/products", async (req, res) => {
   const isAuthenticated = req.session.user ? true : false;
   const page = req.query.page || 1;
-  const limit = req.query.limit || 3;
+  const limit = req.query.limit || 4;
   const { docs, hasPrevPage, hasNextPage, nextPage, prevPage } =
     await productModel.paginate({}, { limit, page, lean: true });
   const products = docs;

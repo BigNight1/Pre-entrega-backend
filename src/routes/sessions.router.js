@@ -25,27 +25,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.get(
-  "/register/github",
-  passport.authenticate("github", { scope: ["user:email"] })
-);
-
-router.get(
-  "/register/github/callback",
-  passport.authenticate("github", {
-    failureRedirect: "/register",
-  }),
-  async (req, res) => {
-    const { accountId, name, provider } = req.user; // Obtener los campos necesarios
-    req.session.user = {
-      accountId,
-      name,
-      provider,
-    };
-    res.redirect("/");
-  }
-);
-
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
@@ -75,27 +54,6 @@ router.post("/login", async (req, res) => {
     message: "Logueado",
   });
 });
-
-router.get(
-  "/login/github",
-  passport.authenticate("github", { scope: ["user:email"] })
-);
-
-router.get(
-  "/login/github/callback",
-  passport.authenticate("github", {
-    failureRedirect: "/login",
-  }),
-  async (req, res) => {
-    const { id, username, provider } = req.user; // Obtener los campos necesarios
-    req.session.user = {
-      accountId: id,
-      name: username,
-      provider,
-    };
-    res.redirect("/");
-  }
-);
 
 router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
@@ -127,25 +85,17 @@ router.post("/restartpassword", async (req, res) => {
   res.send({ status: "success", message: "Contraseña restaurada" });
 });
 
-router.get(
-  "/github",
-  passport.authenticate("github", { scope: ["user:email"] }),
-  async (req, res) => {}
-);
+router.get('/github',
+  passport.authenticate('github', { scope: [ 'user:email' ] }));
 
-router.get(
-  "/githubcallback",
-  passport.authenticate("github", { failureRedirect: "/login" }),
-  async (req, res) => {
-    const { id, username, provider } = req.user; // Solo selecciona los campos esenciales
-    req.user = {
-      accountId: id,
-      name: username,
-      provider: provider,
-    };
-    res.redirect("/");
-  }
-);
+router.get('/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Agregar los datos del perfil de Github
+    req.session.user = req.user
+
+    res.redirect('/profile');
+  });
 
 
 export default router;
