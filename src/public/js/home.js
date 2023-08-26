@@ -15,23 +15,3 @@ logoutButton.addEventListener("click",()=>{
     })
 })
 
-
-
-// const socket = io();
-
-// function addToCart(cartId, productId) {
-//   console.log("Enviando addToCart:",  cartId);
-//   console.log("Enviando productid:",  productId);
-//   socket.emit("addToCart", { cartId, productId });
-  
-//   socket.on("addToCartResponse", (response) => {
-//     if (response.success) {
-//       console.log("Producto agregado al carrito exitosamente");
-//     } else {
-//       console.log("No se pudo agregar el producto al carrito");
-//     }
-//   });
-// }
-
-// revisar codigo 
-

@@ -68,32 +68,6 @@ class CartManager {
    return productById
   }
 
-  // async addToCart(cartId, productId) {
-  //   try {
-
-  //     console.log("addToCart - cartId:", cartId);
-  //     console.log("addToCart - productId:", productId);
-  //     const validCartId = new mongoose.Types.ObjectId(cartId);
-  //     const validProductId = new mongoose.Types.ObjectId(productId);
-  
-  //     const cart = await cartModel.findById(validCartId).populate('products');
-  //     const product = await productModel.findById(validProductId);
-  
-  //     if (!cart || !product) {
-  //       return false;
-  //     }
-  //     cart.products.push(product._id);
-  //     await cart.save();
-  
-  //     return true;
-  //   } catch (error) {
-  //     console.log("Error al agregar el producto al carrito:", error);
-  //     return null;
-  //   }
-  // }
-// falta arreglar este codigo 
-  
-  
   async deleteCart(cartId) {
     try {
       return await cartModel.findByIdAndDelete(cartId);

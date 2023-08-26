@@ -37,20 +37,7 @@ const setupWebSocket = (server) => {
       io.emit("receiveMessage", { sender, content });
     });
 
-    // socket.on("addToCart", async ({ cartId, productId }) => {
-    //   console.log("Recibiendo addToCart:", cartId, productId);
-    //   const addedToCart = await cartManager.addToCart(cartId, productId);
-
-    //   if (addedToCart) {
-    //     socket.emit("addToCartResponse", { success: true });
-    //   } else {
-    //     socket.emit("addToCartResponse", {
-    //       error: "No se pudo agregar el producto al carrito",
-    //     });
-    //   }
-
-    // });
-    // falta arreglar este codigo quiero  saber porque el id del carrito no esta llegando
+    
     socket.on("disconnect", () => {
       console.log("Un usuario se ha desconectado");
     });

@@ -7,7 +7,6 @@ class MessageManager {
         sender,
         content,
       });
-      // console.log("Mensaje guardado en la base de datos:", newMessage);
       return newMessage;
     } catch (error) {
       console.log("Error al guardar el mensaje en la base de datos:", error);

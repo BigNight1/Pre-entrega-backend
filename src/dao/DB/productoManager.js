@@ -30,8 +30,6 @@ class ProductManager {
       return null;
     }
   }
-
-// tengo que configurar paginate a mi proyecto 
   
   async updateProduct(productId, updatedData) {
     try {

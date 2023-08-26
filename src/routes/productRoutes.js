@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 
     const response = {
        status: "success",
-       payload: result.docs, // Los productos
+       payload: result.docs, 
        totalPages: result.totalPages,
        prevPage: result.prevPage,
        nextPage: result.nextPage,

@@ -23,10 +23,9 @@ router.get("/profile", (req, res) => {
   });
 });
 
-
-router.get("/restartpassword",(req,res)=>{
-  res.render("restartpassword")
-})
+router.get("/restartpassword", (req, res) => {
+  res.render("restartpassword");
+});
 
 router.get("/products", async (req, res) => {
   const isAuthenticated = req.session.user ? true : false;

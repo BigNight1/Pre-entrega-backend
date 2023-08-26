@@ -5,7 +5,7 @@ import userModel from "../dao/models/userSchema.js";
 
 const router = Router();
 
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   const { first_name, last_name, email, age, password } = req.body;
   if (!first_name || !last_name || !email || !age)
     return res.status(400).send({ status: "error", error: "Error User" });
@@ -85,17 +85,19 @@ router.post("/restartpassword", async (req, res) => {
   res.send({ status: "success", message: "Contraseña restaurada" });
 });
 
-router.get('/github',
-  passport.authenticate('github', { scope: [ 'user:email' ] }));
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] })
+);
 
-router.get('/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Agregar los datos del perfil de Github
-    req.session.user = req.user
+router.get(
+  "/github/callback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  function (req, res) {
+    req.session.user = req.user;
 
-    res.redirect('/profile');
-  });
-
+    res.redirect("/profile");
+  }
+);
 
 export default router;
