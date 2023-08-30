@@ -5,8 +5,8 @@
   "main": "Primerapre.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/apps.js",
-    "dev": "nodemon src/apps.js"
+    "start": "node src/apps.js",
+    "dev": "node src/apps.js"
   },
   "keywords": [],
   "author": "",
