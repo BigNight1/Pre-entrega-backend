@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@10..48,500&display=swap");
+
+body {
+  font-family: "Bricolage Grotesque", sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.cardlogin {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+}
+
+.cardlogin h1 {
+  margin-top: 0;
+  color: #333;
+}
+
+.cardlogin label {
+  display: block;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.cardlogin input {
+  width: 100%;
+  padding: 10px 0;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.cardlogin input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.cardlogin input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.cardlogin a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.cardlogin a:hover {
+  color: #0056b3;
+}
+
+.cardlogin p {
+  margin-top: 20px;
+  color: #777;
+}
+
+.github-button {
+  background-color: #333;
+  font-size: 1.3rem;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.github-button:hover {
+  background-color: #555;
+}
+
+.boton {
+  display: flex;
+  justify-content: center;
+}

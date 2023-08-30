@@ -1,0 +1,27 @@
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<div class="cardlogin">
+  <h1>Login</h1>
+  <form id="loginForm">
+    <label>Email</label>
+    <input name="email" />
+    <br />
+    <label>Contraseña</label>
+    <input type="password" name="password" />
+    <input type="submit" />
+  </form>
+  <div class="boton">
+    <button class="github-button">
+      <a href="/api/session/github">
+        <i class="fab fa-github"></i>
+        GitHub
+      </a>
+    </button></div>
+  <p>¿No estás registrado? <a href="/register">Regístrate aquí</a></p>
+</div>
+<script src="/js/login.js"></script>
