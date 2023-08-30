@@ -5,9 +5,8 @@
   "main": "Primerapre.js",
   "type": "module",
   "scripts": {
-    "start": "npm run build && node dist/apps.js",
-    "dev": "npm run build && node dist/apps.js",
-    "build": "babel src -d dist"
+    "start": "nodemon src/apps.js",
+    "dev": "nodemon src/apps.js"
   },
   "keywords": [],
   "author": "",
@@ -29,10 +28,5 @@
   },
   "engines": {
     "node": ">=18.16.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.22.10",
-    "@babel/core": "^7.22.11",
-    "@babel/preset-env": "^7.22.14"
   }
 }
