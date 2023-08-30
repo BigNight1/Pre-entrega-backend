@@ -5,8 +5,9 @@
   "main": "Primerapre.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/apps.js",
-    "dev": "nodemon src/apps.js"
+    "start": "npm run build && node dist/apps.js",
+    "dev": "npm run build && node dist/apps.js",
+    "build": "babel src -d dist"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +27,12 @@
     "passport-github2": "^0.1.12",
     "socket.io": "^4.7.1"
   },
-  "engines": {"node": ">=18.16.0"}
-
-
+  "engines": {
+    "node": ">=18.16.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.10",
+    "@babel/core": "^7.22.11",
+    "@babel/preset-env": "^7.22.14"
+  }
 }
