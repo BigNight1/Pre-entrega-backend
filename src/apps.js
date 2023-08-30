@@ -57,8 +57,8 @@ const startServer = (app) => {
   app.use("/", viewRouter);
   app.use("/api/session", sessionRouter);
 
-  server.listen(8080, () => {
-    console.log(`Servidor en funcionamiento en el puerto ${8080}`);
+  server.listen(process.env.port, () => {
+    console.log(`Servidor en funcionamiento en el puerto ${process.env.port}`);
   });
 };
 

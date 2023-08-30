@@ -5,7 +5,7 @@ dotenv.config({ path: ".env" });
 
 export const dbConnect = async () => {
   mongoose
-    .connect("mongodb+srv://onemid76:1234@ecommerce.gjgde3d.mongodb.net/Ecommerce?retryWrites=true&w=majority", {
+    .connect(process.env.DB_ECOMMERCE, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
