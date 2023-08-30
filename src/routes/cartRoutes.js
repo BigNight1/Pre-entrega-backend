@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:cartId", async (req, res) => {
   const { cartId } = req.params;
-  const cart = await cartManager.getCartById(cartId).populate("products");
+  const cart = await cartManager.getCartById(cartId);
 
   if (!cart) {
     return res.status(404).json({ error: "Carrito no encontrado" });
