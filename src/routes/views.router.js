@@ -23,6 +23,10 @@ router.get("/profile", (req, res) => {
   });
 });
 
+router.get("/",(req,res)=>{
+  res.redirect("/products")
+})
+
 router.get("/restartpassword", (req, res) => {
   res.render("restartpassword");
 });
