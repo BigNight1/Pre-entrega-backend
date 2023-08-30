@@ -5,6 +5,7 @@
   "main": "Primerapre.js",
   "type": "module",
   "scripts": {
+    "start": "nodemon src/apps.js",
     "dev": "nodemon src/apps.js"
   },
   "keywords": [],
