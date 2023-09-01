@@ -65,5 +65,6 @@ const startServer = (app) => {
 const app = configureExpress();
 configurePassport(app);
 startServer(app);
+console.log(process.version)
 // Iniciar el servidor
 dbConnect();
