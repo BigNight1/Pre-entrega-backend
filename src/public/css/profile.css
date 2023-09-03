@@ -37,6 +37,9 @@ body {
     text-transform: uppercase;
 }
 
+.role{
+    text-transform: uppercase;
+}
 p {
     font-size: 1.5rem;
 }

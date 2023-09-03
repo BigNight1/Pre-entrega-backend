@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { productModel } from "../dao/models/productSchema.js";
-import ProductManager from "../dao/DB/productoManager.js";
-import MessageManager from "../dao/DB/messagesManager.js";
-import CartManager from "../dao/DB/cartsManager.js";
+import ProductManager from "../dao/controllers/productoManager.js";
+import MessageManager from "../dao/controllers/messagesManager.js";
+import CartManager from "../dao/controllers/cartsManager.js";
 
 const router = Router();
 const cartManager = new CartManager();
@@ -10,15 +10,15 @@ const productManager = new ProductManager();
 const messageManager = new MessageManager();
 
 router.get("/register", (req, res) => {
-  res.render("register");
+  res.render("session/register");
 });
 
 router.get("/login", (req, res) => {
-  res.render("login");
+  res.render("session/login");
 });
 
 router.get("/profile", (req, res) => {
-  res.render("profile", {
+  res.render("session/profile", {
     user: req.user,
   });
 });
@@ -28,8 +28,13 @@ router.get("/",(req,res)=>{
 })
 
 router.get("/restartpassword", (req, res) => {
-  res.render("restartpassword");
+  res.render("session/restartpassword");
 });
+
+router.get("/", (req,res)=>{
+  res.redirect("/products")
+})
+
 
 router.get("/products", async (req, res) => {
   const isAuthenticated = req.session.user ? true : false;
