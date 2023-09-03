@@ -21,7 +21,6 @@
     "mongo": "^0.1.0",
     "mongoose": "^7.3.2",
     "mongoose-paginate-v2": "^1.7.31",
-    "node": "^20.5.1",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "socket.io": "^4.7.1"
