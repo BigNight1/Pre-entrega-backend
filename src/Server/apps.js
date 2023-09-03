@@ -7,14 +7,16 @@ import session from "express-session";
 import passport from "passport";
 
 // Importaciones Locales
-import cartRoutes from "./routes/cartRoutes.js";
-import productRoutes from "./routes/productRoutes.js";
-import sessionRouter from "./routes/sessions.router.js";
-import viewRouter from "./routes/views.router.js";
-import setupWebSocket from "./routes/websocket.js";
-import initPassport from "./middleware/passport.config.js";
-import { dbConnect } from "./mongodb.js";
-import { __dirname } from "./utils.js";
+import cartRoutes from "../routes/cartRoutes.js";
+import productRoutes from "../routes/productRoutes.js";
+import sessionRouter from "../routes/sessions.router.js";
+import viewRouter from "../routes/views.router.js";
+import setupWebSocket from "../routes/websocket.js";
+import initPassport from "../middleware/passport.config.js";
+import { dbConnect } from "../DataBase/mongodb.js";
+import { __dirname } from "../utils.js";
+
+
 
 const configureExpress = () => {
   const app = express();
@@ -65,6 +67,5 @@ const startServer = (app) => {
 const app = configureExpress();
 configurePassport(app);
 startServer(app);
-console.log(process.version)
 // Iniciar el servidor
 dbConnect();

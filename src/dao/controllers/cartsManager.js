@@ -1,6 +1,4 @@
 import { cartModel } from "../models/cartSchema.js";
-import { productModel } from "../models/productSchema.js";
-import mongoose from "mongoose";
 
 class CartManager {
   async createCart() {
