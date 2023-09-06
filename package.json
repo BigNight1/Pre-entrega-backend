@@ -5,7 +5,9 @@
   "main": "src/Server/apps.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/apps.js"
+    "dev": "node app.js",
+    "start": "node app.js",
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",
