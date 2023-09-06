@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node app.js",
     "start": "node app.js",
-    "build": "npm install"
+    "build": "nodemon --exec ./node_modules/.bin/ts-node app"
   },
   "keywords": [],
   "author": "",
