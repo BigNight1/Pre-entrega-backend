@@ -5,8 +5,8 @@
   "main": "src/Server/apps.js",
   "type": "module",
   "scripts": {
-    "dev": "node app.js",
-    "start": "node app.js",
+    "dev": "node src/app.js",
+    "start": "node src/app.js",
     "build": "node --exec ./node_modules/.bin/ts-node app"
   },
   "keywords": [],
