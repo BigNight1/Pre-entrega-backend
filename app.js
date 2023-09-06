@@ -12,7 +12,7 @@ import productRoutes from "./src/routes/productRoutes.js";
 import sessionRouter from "./src/routes/sessions.router.js";
 import viewRouter from "./src/routes/views.router.js";
 import setupWebSocket from "./src/routes/websocket.js";
-import initPassport from "./src/middleware/passport.config.js";
+// import initPassport from "./src/middleware/passport.config.js";
 import { dbConnect } from "./src/DataBase/mongodb.js";
 import { __dirname } from "./src/utils.js";
 
