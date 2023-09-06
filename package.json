@@ -5,7 +5,7 @@
   "main": "src/Server/apps.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/Server/apps.js"
+    "dev": "nodemon src/apps.js"
   },
   "keywords": [],
   "author": "",

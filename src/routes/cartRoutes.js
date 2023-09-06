@@ -1,6 +1,6 @@
 import express from "express";
 import { productModel } from "../dao/models/productSchema.js";
-import CartManager from "../dao/controllers/cartsManager.js";
+import CartManager from "../dao/Controller/cartController.js";
 
 const router = express.Router();
 const cartManager = new CartManager();
@@ -76,6 +76,8 @@ router.post("/", async (req, res) => {
 
 router.post("/:cartId/products/:productId", async (req, res) => {
   const { cartId, productId } = req.params;
+  const quantityToAdd = req.body.quantity || 1
+
   const cart = await cartManager.getCartById(cartId);
   const product = await productModel.findById(productId);
 
@@ -87,7 +89,16 @@ router.post("/:cartId/products/:productId", async (req, res) => {
     return res.status(404).json({ error: "Producto no encontrado" });
   }
 
-  cart.products.push(product);
+  const existingProduct = cart.products.find(
+    (cartProduct) => cartProduct.product.toString() === productId
+  );
+
+  if (existingProduct) {
+    existingProduct.quantity += quantityToAdd;
+  } else {
+    cart.products.push({ product: productId, quantity: quantityToAdd });
+  }
+
   await cart.save();
 
   res.json({ message: "Producto agregado al carrito", product, cart });

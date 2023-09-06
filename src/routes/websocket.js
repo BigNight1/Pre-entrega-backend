@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
-import ProductManager from "../dao/controllers/productoManager.js";
-import MessageManager from "../dao/controllers/messagesManager.js";
+import ProductManager from "../dao/Controller/productoController.js";
+import MessageManager from "../dao/Controller/messagesController.js";
 
 const setupWebSocket = (server) => {
   const io = new Server(server);
