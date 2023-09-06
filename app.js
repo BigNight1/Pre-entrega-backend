@@ -41,11 +41,11 @@ const configureExpress = () => {
   return app;
 };
 
-const configurePassport = (app) => {
-  app.use(passport.initialize());
-  initPassport();
-  app.use(passport.session());
-};
+// const configurePassport = (app) => {
+//   app.use(passport.initialize());
+//   initPassport();
+//   app.use(passport.session());
+// };
 
 const startServer = (app) => {
   const server = http.createServer(app);
