@@ -51,3 +51,6 @@
 // });
 
 // export default initPassport;
+
+// ver despues porque esta fallando el passport.config.js  porque no puedo 
+// deployar con passport
