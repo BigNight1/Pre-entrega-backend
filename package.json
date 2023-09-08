@@ -2,10 +2,12 @@
   "name": "pre-entrega-1",
   "version": "1.0.0",
   "description": "",
-  "main": "Primerapre.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/Server/apps.js"
+    "dev": "node app.js",
+    "start": "node app.js",
+    "build": "node --exec ./node_modules/.bin/ts-node app"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,9 @@
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "socket.io": "^4.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
   
 }

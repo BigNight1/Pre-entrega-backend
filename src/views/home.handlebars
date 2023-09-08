@@ -1,6 +1,7 @@
 <html>
   <head>
     <link type="text/css" rel="stylesheet" href="css/home.css" />
+    <link type="text/css" rel="stylesheet" href="css/output.css" />
     <title>Productos</title>
     <script src="/socket.io/socket.io.js"></script>
   </head>
@@ -17,18 +18,18 @@
     <button class="custom-button"><a href="/realtimeproducts">Crear Producto</a></button>
     <button class="custom-button"><a href="/chat">Ir al Chat</a></button>
     <button class="custom-button"><a href="/cart">Ir al Carrito</a></button>
-    <ul>
+
+    
+    <div class="products">
       {{#each products}}
-        <li class="producto">
-          <h2>Producto: {{name}}</h2>
-          <p>price: {{price}}</p>
-          <p>description: {{description}}</p>
-          <p>category: {{category}}</p>
-          {{!-- <button class="custom-button" onclick="addToCart('{{cartId}}', '{{_id}}')">Agregar al carrito</button> --}}
-          {{! tengo que ver el error }}
-        </li>
+        <div class="producto">
+          <h3>Producto: {{name}}</h3>
+          <p>Price: {{price}}</p>
+          <p>Description: {{description}}</p>
+          <p>Category: {{category}}</p>
+        </div>
       {{/each}}
-    </ul>
+    </div>
 
     {{#if hasPrevPage}}
       <a href="/products?page={{prevPage}}"><button

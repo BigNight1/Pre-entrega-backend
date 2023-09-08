@@ -4,17 +4,17 @@ import http from "http";
 import { engine } from "express-handlebars";
 import path from "path";
 import session from "express-session";
-import passport from "passport";
+// import passport from "passport";
 
 // Importaciones Locales
-import cartRoutes from "../routes/cartRoutes.js";
-import productRoutes from "../routes/productRoutes.js";
-import sessionRouter from "../routes/sessions.router.js";
-import viewRouter from "../routes/views.router.js";
-import setupWebSocket from "../routes/websocket.js";
-import initPassport from "../middleware/passport.config.js";
-import { dbConnect } from "../DataBase/mongodb.js";
-import { __dirname } from "../utils.js";
+import cartRoutes from "./src/routes/cartRoutes.js";
+import productRoutes from "./src/routes/productRoutes.js";
+import sessionRouter from "./src/routes/sessions.router.js";
+import viewRouter from "./src/routes/views.router.js";
+import setupWebSocket from "./src/routes/websocket.js";
+// import initPassport from "./src/middleware/passport.config.js";
+import { dbConnect } from "./src/DataBase/mongodb.js";
+import { __dirname } from "./src/utils.js";
 
 
 
@@ -41,11 +41,11 @@ const configureExpress = () => {
   return app;
 };
 
-const configurePassport = (app) => {
-  app.use(passport.initialize());
-  initPassport();
-  app.use(passport.session());
-};
+// const configurePassport = (app) => {
+//   app.use(passport.initialize());
+//   initPassport();
+//   app.use(passport.session());
+// };
 
 const startServer = (app) => {
   const server = http.createServer(app);
@@ -65,7 +65,7 @@ const startServer = (app) => {
 };
 
 const app = configureExpress();
-configurePassport(app);
+// configurePassport(app);
 startServer(app);
 // Iniciar el servidor
 dbConnect();
