@@ -1,7 +1,8 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
-import GithubUserModel from "../dao/models/githubUserschema.js";
 import dotenv from "dotenv";
+import GithubUser from "../dao/models/githubUserschema.js";
+
 
 dotenv.config({ path: ".env" });
 
@@ -15,7 +16,7 @@ const initPassport = () => {
         callbackURL: "http://localhost:8080/api/session/github/callback",
       },
       async (accessToken, refreshToken, profile, cb) => {
-        const existingUser = await GithubUserModel.findOne({
+        const existingUser = await GithubUser.findOne({
           accountId: profile.id,
           provider: "github",
         });
@@ -42,7 +43,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await GithubUserModel.findById(id);
+    const user = await GithubUser.findById(id);
     done(null, user);
   } catch (error) {
     console.error("Deserialization Error:", error);
