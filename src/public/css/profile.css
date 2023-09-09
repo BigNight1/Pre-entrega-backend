@@ -22,6 +22,9 @@ body {
 }
 
 .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 5px;
     border-radius: 10px 10px 0 0;
     width: 100%;
@@ -51,4 +54,13 @@ a{
 
 button{
     border-radius: 20px;
+}
+
+.small-icon{
+    height: 3rem;
+}
+
+.button-products{
+    display: flex;
+    justify-content: center;
 }
