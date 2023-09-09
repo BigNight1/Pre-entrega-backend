@@ -1,7 +1,7 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import dotenv from "dotenv";
-import GithubUser from "../dao/models/githubserSchema.js";
+import GithubUser from "../dao/models/githubuserSchema.js";
 
 
 dotenv.config({ path: ".env" });
@@ -21,7 +21,7 @@ const initPassport = () => {
           provider: "github",
         });
         if (!existingUser) {
-          const newUser = new GithubUserModel({
+          const newUser = new GithubUser({
             accountId: profile.id,
             name: profile.username,
             provider: profile.provider,
