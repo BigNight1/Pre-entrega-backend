@@ -39,7 +39,7 @@ router.get("/products", async (req, res) => {
   const { docs, hasPrevPage, hasNextPage, nextPage, prevPage } =
     await productModel.paginate({}, { limit, page, lean: true });
   const products = docs;
-  res.render("home", {
+  res.render("product", {
     isAuthenticated,
     products,
     hasPrevPage,
