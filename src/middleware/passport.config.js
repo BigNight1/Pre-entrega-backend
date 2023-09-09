@@ -13,7 +13,7 @@ const initPassport = () => {
       {
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
-        callbackURL: "/api/session/github/callback",
+        callbackURL: "https://backend-en-arreglo.onrender.com/api/session/github/callback",
       },
       async (accessToken, refreshToken, profile, cb) => {
         const existingUser = await GithubUser.findOne({
