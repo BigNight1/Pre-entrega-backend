@@ -1,6 +1,10 @@
 import express from "express";
 import ProductManager from "../dao/Controller/productoController.js";
-import  {productModel}  from "../dao/models/productSchema.js";
+import { productModel } from "../dao/schemas/productSchema.js";
+// DTOs
+import ProductDTO from "../dtos/ProductDTOs/ProductDTO.js";
+import ProductUpdateDTO from "../dtos/Productdtos/ProductUpdateDTO.js";
+import ProductQueryDTO from "../dtos/ProductDTOs/ProductQueryDTO.js";
 
 const router = express.Router();
 const productManager = new ProductManager();
@@ -8,33 +12,45 @@ const productManager = new ProductManager();
 router.use(express.json());
 
 router.get("/", async (req, res) => {
-   const limit = parseInt(req.query.limit) || 10
-   const page = parseInt(req.query.page)|| 1
-   const sort = req.query.sort || null
-   const category = req.query.category || null
-   try {
-    const result = await productModel.paginate({category: category}, { limit, page, sort: { price: sort } });
+  try {
+    const { limit, page, sort, category } = req.query;
+
+    const queryDTO = new ProductQueryDTO(limit, page, sort, category);
+
+    const result = await productModel.paginate(
+      { category: queryDTO.category },
+      {
+        limit: queryDTO.limit,
+        page: queryDTO.page,
+        sort: { price: queryDTO.sort },
+      }
+    );
 
     const response = {
-       status: "success",
-       payload: result.docs, 
-       totalPages: result.totalPages,
-       prevPage: result.prevPage,
-       nextPage: result.nextPage,
-       page: result.page,
-       hasPrevPage: result.hasPrevPage,
-       hasNextPage: result.hasNextPage,
-       prevLink: result.hasPrevPage ? `/api/products?page=${result.prevPage}` : null,
-       nextLink: result.hasNextPage ? `/api/products?page=${result.nextPage}` : null
+      status: "success",
+      payload: result.docs,
+      totalPages: result.totalPages,
+      prevPage: result.prevPage,
+      nextPage: result.nextPage,
+      page: result.page,
+      hasPrevPage: result.hasPrevPage,
+      hasNextPage: result.hasNextPage,
+      prevLink: result.hasPrevPage
+        ? `/api/products?page=${result.prevPage}`
+        : null,
+      nextLink: result.hasNextPage
+        ? `/api/products?page=${result.nextPage}`
+        : null,
     };
 
     res.json(response);
- } catch (error) {
+  } catch (error) {
     console.error("Error al obtener los productos:", error);
-    res.status(500).json({ status: "error", message: "Error al obtener los productos" });
- }
+    res
+      .status(500)
+      .json({ status: "error", message: "Error al obtener los productos" });
+  }
 });
-
 
 router.get("/:productId", async (req, res) => {
   try {
@@ -55,19 +71,10 @@ router.get("/:productId", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { name, price, description, category } = req.body;
-    const createdAt = new Date();
-    if (!name || !price || !description || !category || !createdAt) {
-      return res.status(400).json({ error: "Falta llenar un campo" });
-    }
-    const newProduct = {
-      name,
-      price,
-      description,
-      category,
-      createdAt,
-    };
 
-    const product = await productManager.createProduct(newProduct);
+    const productData = new ProductDTO(name, price, description, category);
+
+    const product = await productManager.createProduct(productData);
 
     res.status(201).json({ message: "Producto agregado con éxito", product });
   } catch (error) {
@@ -79,22 +86,20 @@ router.post("/", async (req, res) => {
 router.put("/:productId", async (req, res) => {
   try {
     const productId = req.params.productId;
-    const updatedProduct = req.body;
 
-    if (
-      !updatedProduct.name ||
-      !updatedProduct.price ||
-      !updatedProduct.description ||
-      !updatedProduct.category 
-    ) {
-      return res.status(400).json({ error: "Falta llenar un campo" });
-    }
+    const { name, price, description, category } = req.body;
+
+    const updateProductData = new ProductUpdateDTO(
+      name,
+      price,
+      description,
+      category
+    );
 
     const product = await productManager.updateProduct(
       productId,
-      updatedProduct
+      updateProductData
     );
-
     res.json({ message: "Producto actualizado con éxito", product });
   } catch (error) {
     console.log("Error al actualizar el producto:", error);

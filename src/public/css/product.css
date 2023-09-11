@@ -22,7 +22,8 @@ p {
   color: #666;
   margin: 0;
   margin-bottom: 5px;
-  font-size: 1.1rem;
+  opacity: 50%;
+  font-size: 1rem;
   font-weight: 600;
 }
 

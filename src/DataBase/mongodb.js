@@ -1,11 +1,9 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-
-dotenv.config({ path: ".env" });
+import CONFIG from "../config/config.js";
 
 export const dbConnect = async () => {
   mongoose
-    .connect(process.env.DB_ECOMMERCE, {
+    .connect(CONFIG.DB_ECOMMERCE, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })

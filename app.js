@@ -15,12 +15,12 @@ import setupWebSocket from "./src/routes/websocket.js";
 import initPassport from "./src/middleware/passport.config.js";
 import { dbConnect } from "./src/DataBase/mongodb.js";
 import { __dirname } from "./src/utils.js";
-
-
+import CONFIG from "./src/config/config.js";
 
 const configureExpress = () => {
   const app = express();
-  app.engine("handlebars",
+  app.engine(
+    "handlebars",
     engine({
       runtimeOptions: {
         allowProtoPropertiesByDefault: true,
@@ -33,11 +33,14 @@ const configureExpress = () => {
   app.use(express.json());
 
   // Rutas estáticas
-  app.use("/realtimeproducts",express.static(path.join(__dirname + "/public")));
+  app.use(
+    "/realtimeproducts",
+    express.static(path.join(__dirname + "/public"))
+  );
   app.use("/", express.static(path.join(__dirname + "/public")));
 
   //Configuracion de la sesión
-  app.use(session({secret: "Coder",resave: true,saveUninitialized: true,}));
+  app.use(session({ secret: "Coder", resave: true, saveUninitialized: true }));
   return app;
 };
 
@@ -51,7 +54,7 @@ const startServer = (app) => {
   const server = http.createServer(app);
 
   // Configurar WebSocket
-  setupWebSocket(server)
+  setupWebSocket(server);
 
   // Rutas del grupo
   app.use("/api/products", productRoutes);
@@ -59,8 +62,8 @@ const startServer = (app) => {
   app.use("/", viewRouter);
   app.use("/api/session", sessionRouter);
 
-  server.listen(process.env.port, () => {
-    console.log(`Servidor en funcionamiento en el puerto ${process.env.port}`);
+  server.listen(CONFIG.port, () => {
+    console.log(`Servidor en funcionamiento en el puerto ${CONFIG.port}`);
   });
 };
 

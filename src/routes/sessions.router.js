@@ -1,27 +1,42 @@
 import { Router } from "express";
 import passport from "passport";
-import { createHast, isValidPassword } from "../utils.js";
-import userModel from "../dao/models/userSchema.js";
+import { createHash, isValidPassword } from "../utils.js";
+import userModel from "../dao/schemas/userSchema.js";
+import RegisterDTO from "../dtos/sessionDTOs/RegisterDTO.js";
 
 const router = Router();
 
 router.post("/register", async (req, res) => {
-  const { first_name, last_name, email, age, password } = req.body;
-  if (!first_name || !last_name || !email || !age)
-    return res.status(400).send({ status: "error", error: "Error User" });
-  const user = {
-    first_name,
-    last_name,
-    email,
-    age,
-    password: createHast(password),
-  };
   try {
-    const result = await userModel.create(user);
-    res.send({ status: "success", message: "User Registered" });
+    const { first_name, last_name, email, age, password } = req.body;
+    const hashedPassword = createHash(password);
+    const registerDTO = new RegisterDTO(
+      first_name,
+      last_name,
+      email,
+      age,
+      hashedPassword
+    );
+
+    if (
+      !registerDTO.first_name ||
+      !registerDTO.last_name ||
+      !registerDTO.email ||
+      !registerDTO.age
+    ) {
+      return res
+        .status(400)
+        .json({ status: "error", error: "Datos incompletos" });
+    }
+
+    const result = await userModel.create(registerDTO);
+
+    res.send({ status: "success", message: "Usuario registrado" });
   } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(500).send({ status: "error", error: "Internal Server Error" });
+    console.error("Error al crear usuario:", error);
+    res
+      .status(500)
+      .send({ status: "error", error: "Error interno del servidor" });
   }
 });
 
@@ -40,17 +55,17 @@ router.post("/login", async (req, res) => {
   if (!isValidPassword(user, password))
     return res.status(400).send({ status: "error", error: "Error credential" });
   if (user.role === "admin") {
-    req.session.isAdmin = true;
+    req.isAdmin = true;
   }
 
-  req.session.user = {
+  req.user = {
     name: `${user.first_name} ${user.last_name}`,
     email: user.email,
     age: user.age,
   };
   res.send({
     status: "success",
-    payload: req.session.user,
+    payload: req.user,
     message: "Logueado",
   });
 });
@@ -76,7 +91,7 @@ router.post("/restartpassword", async (req, res) => {
   const user = await userModel.findOne({ email });
   if (!user)
     return res.status(404).send({ status: "error", error: "Not user found" });
-  const newHashedPassword = createHast(password);
+  const newHashedPassword = createHash(password);
   await userModel.updateOne(
     { _id: user._id },
     { $set: { password: newHashedPassword } }

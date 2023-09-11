@@ -1,7 +1,7 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import dotenv from "dotenv";
-import GithubUser from "../dao/models/githubuserSchema.js";
+import GithubUser from "../dao/schemas/githubuserSchema.js";
 
 
 dotenv.config({ path: ".env" });

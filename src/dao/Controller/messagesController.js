@@ -1,4 +1,4 @@
-import { messageModel } from "../models/messagesSchema.js";
+import { messageModel } from "../schemas/messagesSchema.js";
 
 class MessageManager {
   async saveMessage(sender, content) {

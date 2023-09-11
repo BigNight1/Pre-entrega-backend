@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"
 
 const SECRET_KEY= "top-secret-51"
 
-export const createHast = password=> bcrypt.hashSync(password,bcrypt.genSaltSync(10))
+export const createHash = password=> bcrypt.hashSync(password,bcrypt.genSaltSync(10))
 export const isValidPassword = (user,password) =>bcrypt.compareSync(password,user.password)
 
 export const generateToken = (user) => {
