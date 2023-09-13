@@ -3,6 +3,8 @@ import { productModel } from "../dao/schemas/productSchema.js";
 import ProductManager from "../dao/Controller/productoController.js";
 import MessageManager from "../dao/Controller/messagesController.js";
 import CartManager from "../dao/Controller/cartController.js";
+import isAuthenticated from "../middleware/autenticacion.js";
+import checkUserRole from "../middleware/roles.js";
 
 const router = Router();
 const cartManager = new CartManager();
@@ -19,7 +21,7 @@ router.get("/login", (req, res) => {
 
 router.get("/profile", (req, res) => {
   res.render("session/profile", {
-    user: req.user,
+    user: req.session.user,
   });
 });
 
@@ -34,6 +36,7 @@ router.get("/", (req,res)=>{
 
 router.get("/products", async (req, res) => {
   const isAuthenticated = req.session.user ? true : false;
+  const isAdmin = req.session.isAdmin || false; // Agregar isAdmin
   const page = req.query.page || 1;
   const limit = req.query.limit || 6;
   const { docs, hasPrevPage, hasNextPage, nextPage, prevPage } =
@@ -41,6 +44,7 @@ router.get("/products", async (req, res) => {
   const products = docs;
   res.render("product", {
     isAuthenticated,
+    isAdmin,
     products,
     hasPrevPage,
     hasNextPage,
@@ -48,7 +52,7 @@ router.get("/products", async (req, res) => {
     prevPage,
   });
 });
-router.get("/realtimeproducts", async (req, res) => {
+router.get("/realtimeproducts", isAuthenticated, checkUserRole("admin"), async (req, res) => {
   const productos = await productManager.getAllProducts();
   res.render("realTimeProducts", { productos });
 });

@@ -7,27 +7,46 @@
     <script src="/socket.io/socket.io.js"></script>
   </head>
   <body>
-    <div class="Space">
-      {{#if isAuthenticated}}
-        <a href="/profile" class="custom-button">Profile</a>
-        
-      {{else}}
-        <a href="/login" class="custom-button">Login</a>
-      {{/if}}
+    <div class="config">
+      <div class="create-product">
+        {{#if isAdmin}}
+          <a href="/realtimeproducts" class="custom-button">Crear Producto</a>
+        {{/if}}
+      </div>
+
+      <div class="Space">
+
+        {{#if isAuthenticated}}
+          <a href="/cart" class="custom-button">Ir al Carrito</a>
+          <a href="/profile" class="custom-button">Profile</a>
+
+        {{else}}
+          <a href="/login" class="custom-button">Login</a>
+        {{/if}}
+      </div>
     </div>
 
     <h1>Lista de Productos</h1>
-    <a href="/realtimeproducts" class="custom-button">Crear Producto</a>
+
     <a href="/chat" class="custom-button">Ir al Chat</a>
-    <a href="/cart" class="custom-button">Ir al Carrito</a>
 
     <div class="products">
       {{#each products}}
+
         <div class="producto">
+          <div class="producto-img">
+            <img
+              src="https://res.cloudinary.com/dviah6ohx/image/upload/v1683161571/Polos/Polo_de_Star_War_iwfhog.webp"
+              alt="Producto"
+            />
+          </div>
           <h3>Producto: {{name}}</h3>
           <span>S/ {{price}}</span>
           {{!-- <p>Description: {{description}}</p> --}}
           <p>Category: {{category}}</p>
+          <div class="add-button">
+            <button>Agregar al Carrito</button>
+          </div>
         </div>
       {{/each}}
     </div>

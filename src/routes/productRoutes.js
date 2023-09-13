@@ -1,4 +1,5 @@
-import express from "express";
+import express  from "express";
+import {Router} from "express";
 import ProductManager from "../dao/Controller/productoController.js";
 import { productModel } from "../dao/schemas/productSchema.js";
 // DTOs
@@ -6,7 +7,7 @@ import ProductDTO from "../dtos/ProductDTOs/ProductDTO.js";
 import ProductUpdateDTO from "../dtos/Productdtos/ProductUpdateDTO.js";
 import ProductQueryDTO from "../dtos/ProductDTOs/ProductQueryDTO.js";
 
-const router = express.Router();
+const router = Router();
 const productManager = new ProductManager();
 
 router.use(express.json());
@@ -14,9 +15,7 @@ router.use(express.json());
 router.get("/", async (req, res) => {
   try {
     const { limit, page, sort, category } = req.query;
-
     const queryDTO = new ProductQueryDTO(limit, page, sort, category);
-
     const result = await productModel.paginate(
       { category: queryDTO.category },
       {
@@ -25,7 +24,6 @@ router.get("/", async (req, res) => {
         sort: { price: queryDTO.sort },
       }
     );
-
     const response = {
       status: "success",
       payload: result.docs,
@@ -71,9 +69,7 @@ router.get("/:productId", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { name, price, description, category } = req.body;
-
     const productData = new ProductDTO(name, price, description, category);
-
     const product = await productManager.createProduct(productData);
 
     res.status(201).json({ message: "Producto agregado con éxito", product });
@@ -86,16 +82,13 @@ router.post("/", async (req, res) => {
 router.put("/:productId", async (req, res) => {
   try {
     const productId = req.params.productId;
-
     const { name, price, description, category } = req.body;
-
     const updateProductData = new ProductUpdateDTO(
       name,
       price,
       description,
       category
     );
-
     const product = await productManager.updateProduct(
       productId,
       updateProductData
@@ -110,7 +103,6 @@ router.put("/:productId", async (req, res) => {
 router.delete("/:productId", async (req, res) => {
   try {
     const productId = req.params.productId;
-
     const deletedProduct = await productManager.deleteProduct(productId);
     if (deletedProduct) {
       res.json({ message: "Producto eliminado con éxito", productId });

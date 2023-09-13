@@ -47,25 +47,38 @@ router.post("/login", async (req, res) => {
 
   const user = await userModel.findOne(
     { email: email },
-    { email: 1, first_name: 1, last_name: 1, password: 1 }
+    {
+      email: 1,
+      first_name: 1,
+      last_name: 1,
+      password: 1,
+      role: 1,
+      age: 1,
+      provider: 1,
+    }
   );
 
   if (!user)
     return res.status(400).send({ status: "error", message: "Error User" });
   if (!isValidPassword(user, password))
     return res.status(400).send({ status: "error", error: "Error credential" });
+
   if (user.role === "admin") {
-    req.isAdmin = true;
+    req.session.isAdmin = true;
+  } else {
+    req.session.isAdmin = false;
   }
 
-  req.user = {
+  req.session.user = {
     name: `${user.first_name} ${user.last_name}`,
     email: user.email,
     age: user.age,
+    role: user.role,
+    provider: user.provider,
   };
   res.send({
     status: "success",
-    payload: req.user,
+    payload: req.session.user,
     message: "Logueado",
   });
 });
@@ -110,6 +123,11 @@ router.get(
   passport.authenticate("github", { failureRedirect: "/login" }),
   function (req, res) {
     req.session.user = req.user;
+    if (req.user && req.user.role === "admin") {
+      req.session.isAdmin = true;
+    } else {
+      req.session.isAdmin = false;
+    }
 
     res.redirect("/profile");
   }

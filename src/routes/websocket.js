@@ -41,6 +41,7 @@ const setupWebSocket = (server) => {
     socket.on("disconnect", () => {
       console.log("Un usuario se ha desconectado");
     });
+    
   });
 };
 

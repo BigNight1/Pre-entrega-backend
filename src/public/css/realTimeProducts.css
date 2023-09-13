@@ -12,7 +12,8 @@ body {
 
 .agregar,
 .eliminar,
-.titulo {
+.titulo,
+.actualizar {
   background-color: #fff;
   padding: 20px;
   margin-bottom: 20px;

@@ -41,6 +41,21 @@
         </form>
       </div>
 
+      <div class="actualizar">
+        <h2>Actualizar Producto</h2>
+        <form>
+          <label for="updateProductName">Nombre del Producto a Actualizar:</label>
+          <input type="text" id="updateProductName" required />
+          <label for="updateProductPrice">Nuevo Precio:</label>
+          <input type="number" id="updateProductPrice" required />
+          <label for="updateProductDescription">Nueva Descripción:</label>
+          <input type="text" id="updateProductDescription" required />
+          <button
+            type="button"
+            onclick="updateProduct('{{name}}')"
+          >Actualizar</button></form>
+          </div>
+
       <div class="titulo">
         <h2>Lista de Productos en Tiempo Real</h2>
         <ol>

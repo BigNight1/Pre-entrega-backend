@@ -30,3 +30,4 @@ function createProduct() {
 function deleteProduct(productName) {
   socket.emit("deleteProduct", productName);
 }
+
