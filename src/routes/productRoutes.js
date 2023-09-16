@@ -89,7 +89,7 @@ router.put("/:productId", async (req, res) => {
       description,
       category
     );
-    const product = await productManager.updateProduct(
+    const product = await productManager.updateProductId(
       productId,
       updateProductData
     );

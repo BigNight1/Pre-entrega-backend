@@ -3,8 +3,10 @@ import passport from "passport";
 import { createHash, isValidPassword } from "../utils.js";
 import userModel from "../dao/schemas/userSchema.js";
 import RegisterDTO from "../dtos/sessionDTOs/RegisterDTO.js";
+import CartManager from "../dao/Controller/cartController.js";
 
 const router = Router();
+const cartManager = new CartManager();
 
 router.post("/register", async (req, res) => {
   try {
@@ -29,9 +31,22 @@ router.post("/register", async (req, res) => {
         .json({ status: "error", error: "Datos incompletos" });
     }
 
-    const result = await userModel.create(registerDTO);
+    const user = await userModel.create(registerDTO);
 
-    res.send({ status: "success", message: "Usuario registrado" });
+    // Crear un carrito de compras vacío y asociarlo al usuario
+    const newCart = await cartManager.createCart(user._id);
+    if (newCart) {
+      // Asociar el carrito al usuario recién registrado
+      user.cart = newCart._id;
+      await user.save();
+      console.log(`Carrito creado y asociado a usuario: ${user._id}`);
+    }
+
+    res.send({
+      status: "success",
+      message: "Usuario registrado",
+      cart: newCart,
+    });
   } catch (error) {
     console.error("Error al crear usuario:", error);
     res
@@ -55,6 +70,7 @@ router.post("/login", async (req, res) => {
       role: 1,
       age: 1,
       provider: 1,
+      cart: 1,
     }
   );
 
@@ -75,7 +91,22 @@ router.post("/login", async (req, res) => {
     age: user.age,
     role: user.role,
     provider: user.provider,
+    cart: user.cart,
   };
+  // Comprueba si el usuario tiene un carrito asociado
+  if (!user.cart) {
+    console.log("El usuario no tiene un carrito existente. Creando uno nuevo...");
+    // Si no tiene un carrito, crea uno y asígnalo al usuario
+    const newCart = await cartManager.createCart(user._id);
+    if (newCart) {
+      user.cart = newCart._id;
+      await user.save();
+      console.log("Carrito creado y asignado al usuario:", newCart);
+    } else {
+      console.log("No se pudo crear el carrito para el usuario");
+    }
+  }
+
   res.send({
     status: "success",
     payload: req.session.user,

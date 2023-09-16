@@ -31,3 +31,21 @@ function deleteProduct(productName) {
   socket.emit("deleteProduct", productName);
 }
 
+function updateProduct() {
+  const updateProductName = document.getElementById("updateProductName").value;
+  const newProductName = document.getElementById("updateProductNewName").value;
+  const updateProductPrice =
+    document.getElementById("updateProductPrice").value;
+  const updateProductDescription = document.getElementById(
+    "updateProductDescription"
+  ).value;
+
+  const updatedProduct = {
+    name: updateProductName,
+    newProductName: newProductName,
+    price: updateProductPrice,
+    description: updateProductDescription,
+  };
+
+  socket.emit("updateProduct", updatedProduct);
+}

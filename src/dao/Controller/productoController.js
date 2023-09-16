@@ -16,7 +16,7 @@ class ProductManager {
       const product = await productModel.findById(productId);
       return product;
     } catch (error) {
-      ("Error al obtener el producto:", error);
+      "Error al obtener el producto:", error;
       return null;
     }
   }
@@ -30,8 +30,8 @@ class ProductManager {
       return null;
     }
   }
-  
-  async updateProduct(productId, updatedData) {
+
+  async updateProductId(productId, updatedData) {
     try {
       const updatedProduct = await productModel.findByIdAndUpdate(
         productId,
@@ -45,16 +45,32 @@ class ProductManager {
     }
   }
 
+  async updateProduct(updatedProductData) {
+    try {
+      const { name, newProductName, price, description } = updatedProductData;
+      const updatedProduct = await productModel.findOneAndUpdate(
+        { name },
+        { $set: { name: newProductName, price, description } },
+        { new: true }
+      );
+      return updatedProduct;
+    } catch (error) {
+      console.log("Error al actualizar el producto:", error);
+      return null;
+    }
+  }
+
   async deleteProduct(productName) {
     try {
-      const product = await productModel.findOneAndDelete({ name: productName });
+      const product = await productModel.findOneAndDelete({
+        name: productName,
+      });
       return product;
     } catch (error) {
       console.log("Error al eliminar el producto:", error);
       return null;
     }
   }
-  
 }
 
 export default ProductManager;

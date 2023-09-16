@@ -1,6 +1,4 @@
 Para Iniciar ahora es "npm run dev " 
 ya no nodemon apps.js
 
-
-hacer despues :Implementar el patrón Repository para trabajar 
-               con el DAO en la lógica de negocio.
+me falta avanzar con realTimeProducts.handlebars para actualizar los productos

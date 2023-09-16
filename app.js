@@ -3,8 +3,8 @@ import express from "express";
 import http from "http";
 import { engine } from "express-handlebars";
 import path from "path";
-import session from "express-session";
 import passport from "passport";
+import session from "express-session";
 
 // Importaciones Locales
 import cartRoutes from "./src/routes/cartRoutes.js";
@@ -32,6 +32,14 @@ const configureExpress = () => {
   app.set("views", path.resolve(__dirname + "/views"));
   app.use(express.json());
 
+  // Configura express-session
+  app.use(
+    session({
+      secret: "Holaaa",
+      resave: false,
+      saveUninitialized: false,
+    })
+  );
   // Rutas estáticas
   app.use(
     "/realtimeproducts",
@@ -39,8 +47,6 @@ const configureExpress = () => {
   );
   app.use("/", express.static(path.join(__dirname + "/public")));
 
-  //Configuracion de la sesión
-  app.use(session({ secret: "Coder", resave: true, saveUninitialized: true }));
   return app;
 };
 

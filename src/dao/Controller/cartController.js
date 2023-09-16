@@ -1,9 +1,10 @@
 import { cartModel } from "../schemas/cartSchema.js";
 
 class CartManager {
-  async createCart() {
+  async createCart(userId) {
+    console.log("Creando un nuevo carrito...");
     try {
-      return await cartModel.create({});
+      return await cartModel.create({user: userId, products: []});
     } catch (error) {
       console.log("Error al crear el carrito:", error);
       return null;

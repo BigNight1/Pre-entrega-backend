@@ -10,12 +10,18 @@
   <h2>Carrito ID: {{ cart.id }}</h2>
   
   <h3>Productos:</h3>
-  <ul>
+<ul>
+  {{#if cart.products.length}}
     {{#each cart.products}}
       <li>
-        {{ @index }}.<strong>{{ this.name }}</strong> - Precio: {{ this.price }} - Categoría: {{ this.category }}
+        {{ @index }}.<strong>{{ name }}</strong> - Precio: {{ this.price }} - Categoría: {{ this.category }}
       </li>
     {{/each}}
+  {{else}}
+    <li>No hay productos en el carrito.</li>
+  {{/if}}
+</ul>
+
   </ul>
 </body>
 </html>

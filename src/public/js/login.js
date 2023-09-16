@@ -20,11 +20,15 @@ form.addEventListener("submit", async (e) => {
     console.log(responseData);
 
     if (responseData.payload && responseData.payload) {
-      const { name } = responseData.payload;
+      const { name, cart } = responseData.payload;
+      // Cuando el usuario inicia sesión y obtienes el ID del carrito, guárdalo en el localStorage
+      localStorage.setItem("cartId", cart);
       window.location.replace("/products");
-      alert(`Bienvenido ${name}`);
+      alert(`Bienvenido ${name}y tu carrito es ${cart}`);
     } else {
-      alert("Inicio de sesión exitoso, pero no se pudo obtener el nombre del usuario.");
+      alert(
+        "Inicio de sesión exitoso, pero no se pudo obtener el nombre del usuario."
+      );
     }
   } else if (response.status === 400) {
     alert("Datos Inválidos");

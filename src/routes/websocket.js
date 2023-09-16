@@ -24,6 +24,20 @@ const setupWebSocket = (server) => {
       }
     });
 
+    socket.on("updateProduct", async (updatedProduct) => {
+      try {
+        const updated = await productManager.updateProduct(updatedProduct);
+        if (updated) {
+          io.emit("realTimeProducts", await productManager.getAllProducts());
+        }
+      } catch (error) {
+        console.log("Error al actualizar el producto:", error);
+        socket.emit("productResponse", {
+          error: "Error al actualizar el producto",
+        });
+      }
+    });
+
     socket.on("deleteProduct", async (productId) => {
       const deletedProduct = await productManager.deleteProduct(productId);
       if (deletedProduct) {
@@ -37,11 +51,9 @@ const setupWebSocket = (server) => {
       io.emit("receiveMessage", { sender, content });
     });
 
-    
     socket.on("disconnect", () => {
       console.log("Un usuario se ha desconectado");
     });
-    
   });
 };
 

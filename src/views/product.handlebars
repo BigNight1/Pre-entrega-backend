@@ -40,12 +40,12 @@
               alt="Producto"
             />
           </div>
-          <h3>Producto: {{name}}</h3>
-          <span>S/ {{price}}</span>
-          {{!-- <p>Description: {{description}}</p> --}}
+          <h3> {{name}}</h3>
+          <span>S/{{price}}</span>
           <p>Category: {{category}}</p>
           <div class="add-button">
-            <button>Agregar al Carrito</button>
+            <button class="add-to-cart-button" data-product-id="{{_id}}" >Agregar
+              al Carrito</button>
           </div>
         </div>
       {{/each}}
@@ -62,6 +62,6 @@
             class="custom-button"
           >Siguiente</button></a>
       {{/if}}</div>
-
+    <script type="text/javascript" src="js/addproduct.js"></script>
   </body>
 </html>
