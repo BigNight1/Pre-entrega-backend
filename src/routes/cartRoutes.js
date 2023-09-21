@@ -120,8 +120,7 @@ router.post("/:cartId/purchase", async (req, res) => {
     if (!cart) {
       return res.status(404).json({ error: "Carrito no encontrado" });
     }
-
-    console.log("Comenzando la iteración del carrito");
+    const totalAmount = await TicketController.calculateTotalAmount(cart);
 
     for (const cartProduct of cart.products) {
       const { product, quantity } = cartProduct;
@@ -140,10 +139,11 @@ router.post("/:cartId/purchase", async (req, res) => {
     cart.products = [];
 
     const purchaser = cart.user;
-    console.log("usuario", purchaser)
 
-    const ticket =  await TicketController.createTicket(cart, purchaser )
-    console.log("Ticket generado y guardado con éxito");
+    const ticket = await TicketController.createTicket(
+      purchaser,
+      totalAmount
+    );
 
     await cart.save();
     console.log("Compra finalizada con éxito");
@@ -151,7 +151,7 @@ router.post("/:cartId/purchase", async (req, res) => {
     res.json({
       message: "Compra finalizada con éxito",
       cart,
-      ticket
+      ticket,
     });
   } catch (error) {
     console.error("Error en la compra:", error.stack);

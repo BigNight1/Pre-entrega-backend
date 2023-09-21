@@ -1,33 +1,52 @@
-import { v4 as uuidv4 } from 'uuid';
-import { TicketModel } from '../schemas/TicketSchema.js';
+import { v4 as uuidv4 } from "uuid";
+import { TicketModel } from "../schemas/TicketSchema.js";
+import ProductManager from "./productoController.js";
+
+const productmanager = new ProductManager();
 
 export const TicketController = {
   generateUniqueCode: () => {
-    return uuidv4(); 
+    return uuidv4();
   },
 
-  calculateTotalAmount: (cart) => {
+  calculateTotalAmount: async (cart) => {
     let totalAmount = 0;
+
     for (const cartProduct of cart.products) {
       const { product, quantity } = cartProduct;
-      // Recupera el precio del producto de alguna manera (depende de tu estructura de datos)
-      const productPrice = getProductPrice(product);
+      const productObject = await productmanager.getProductById(product);
+
+      if (!productObject || productObject.stock <= quantity) {
+        throw new Error(`No hay suficiente stock para: ${productObject?.name}`);
+      }
+
+      const productPrice = productObject.price;
       totalAmount += productPrice * quantity;
+
+      // Actualiza el stock del producto
+      productObject.stock -= quantity;
+      await productObject.save();
     }
+
     return totalAmount;
   },
 
-  createTicket: async (cart, purchaser) => {
+  createTicket: async (purchaser, totalAmount) => {
     const code = TicketController.generateUniqueCode();
-    const amount = TicketController.calculateTotalAmount(cart);
 
     const ticket = new TicketModel({
       code,
-      amount,
+      amount: totalAmount,
       purchaser,
     });
 
-    await ticket.save();
+    try {
+      await ticket.save();
+      console.log("Ticket guardado con éxito:", ticket);
+    } catch (error) {
+      console.error("Error al guardar el ticket:", error);
+      throw error;
+    }
 
     return ticket;
   },
