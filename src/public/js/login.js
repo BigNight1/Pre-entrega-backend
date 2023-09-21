@@ -24,7 +24,7 @@ form.addEventListener("submit", async (e) => {
       // Cuando el usuario inicia sesión y obtienes el ID del carrito, guárdalo en el localStorage
       localStorage.setItem("cartId", cart);
       window.location.replace("/products");
-      alert(`Bienvenido ${name}y tu carrito es ${cart}`);
+      alert(`Bienvenido ${name} y tu carrito es ${cart}`);
     } else {
       alert(
         "Inicio de sesión exitoso, pero no se pudo obtener el nombre del usuario."

@@ -1,9 +1,12 @@
 import express from "express";
-import { productModel } from "../dao/schemas/productSchema.js";
 import CartManager from "../dao/Controller/cartController.js";
+import ProductManager from "../dao/Controller/productoController.js";
+import requireAuth from "../middleware/requireAuth.js";
+import { TicketController } from "../dao/Controller/TicketController.js";
 
 const router = express.Router();
 const cartManager = new CartManager();
+const productmanager = new ProductManager();
 
 router.get("/", async (req, res) => {
   try {
@@ -74,34 +77,86 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/:cartId/products/:productId", async (req, res) => {
-  const { cartId, productId } = req.params;
-  const quantityToAdd = req.body.quantity || 1
+router.post("/:cartId/products/:productId", requireAuth, async (req, res) => {
+  try {
+    const { cartId, productId } = req.params;
+    const quantityToAdd = req.body.quantity || 1;
 
-  const cart = await cartManager.getCartById(cartId);
-  const product = await productModel.findById(productId);
+    const cart = await cartManager.getCartById(cartId);
+    const product = await productmanager.getProductById(productId);
 
-  if (!cart) {
-    return res.status(404).json({ error: "Carrito no encontrado" });
+    if (!cart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
+
+    if (!product) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
+
+    const existingProductIndex = cart.products.findIndex(
+      (cartProduct) => cartProduct.product.toString() === productId
+    );
+
+    if (existingProductIndex !== -1) {
+      cart.products[existingProductIndex].quantity += quantityToAdd;
+    } else {
+      cart.products.push({ product: productId, quantity: quantityToAdd });
+    }
+
+    await cart.save();
+
+    res.json({ message: "Producto agregado al carrito", product, cart });
+  } catch (error) {
+    console.error("Error al agregar producto al carrito:", error.stack);
+    res.status(500).json({ error: "Error al agregar producto al carrito" });
   }
+});
 
-  if (!product) {
-    return res.status(404).json({ error: "Producto no encontrado" });
+router.post("/:cartId/purchase", async (req, res) => {
+  try {
+    const { cartId } = req.params;
+    const cart = await cartManager.getCartById(cartId);
+
+    if (!cart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
+
+    console.log("Comenzando la iteración del carrito");
+
+    for (const cartProduct of cart.products) {
+      const { product, quantity } = cartProduct;
+      const productObject = await productmanager.getProductById(product);
+
+      if (productObject && productObject.stock >= quantity) {
+        productObject.stock -= quantity;
+        await productObject.save();
+      } else {
+        return res.status(400).json({
+          error: `No hay suficiente stock para: ${productObject.name}`,
+        });
+      }
+    }
+    // Después de completar la compra, elimina todos los productos del carrito
+    cart.products = [];
+
+    const purchaser = cart.user;
+    console.log("usuario", purchaser)
+
+    const ticket =  await TicketController.createTicket(cart, purchaser )
+    console.log("Ticket generado y guardado con éxito");
+
+    await cart.save();
+    console.log("Compra finalizada con éxito");
+
+    res.json({
+      message: "Compra finalizada con éxito",
+      cart,
+      ticket
+    });
+  } catch (error) {
+    console.error("Error en la compra:", error.stack);
+    res.status(500).json({ error: "Error en la compra" });
   }
-
-  const existingProduct = cart.products.find(
-    (cartProduct) => cartProduct.product.toString() === productId
-  );
-
-  if (existingProduct) {
-    existingProduct.quantity += quantityToAdd;
-  } else {
-    cart.products.push({ product: productId, quantity: quantityToAdd });
-  }
-
-  await cart.save();
-
-  res.json({ message: "Producto agregado al carrito", product, cart });
 });
 
 router.delete("/:cartId/products/:productId", async (req, res) => {

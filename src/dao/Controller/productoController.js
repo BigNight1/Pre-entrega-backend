@@ -47,10 +47,10 @@ class ProductManager {
 
   async updateProduct(updatedProductData) {
     try {
-      const { name, newProductName, price, description } = updatedProductData;
+      const { name, newProductName, price, description,category,stock  } = updatedProductData;
       const updatedProduct = await productModel.findOneAndUpdate(
         { name },
-        { $set: { name: newProductName, price, description } },
+        { $set: { name: newProductName, price, description, category, stock } },
         { new: true }
       );
       return updatedProduct;

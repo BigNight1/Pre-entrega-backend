@@ -95,7 +95,9 @@ router.post("/login", async (req, res) => {
   };
   // Comprueba si el usuario tiene un carrito asociado
   if (!user.cart) {
-    console.log("El usuario no tiene un carrito existente. Creando uno nuevo...");
+    console.log(
+      "El usuario no tiene un carrito existente. Creando uno nuevo..."
+    );
     // Si no tiene un carrito, crea uno y asígnalo al usuario
     const newCart = await cartManager.createCart(user._id);
     if (newCart) {

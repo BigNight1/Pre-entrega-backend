@@ -18,6 +18,7 @@ async function addToCart(event) {
     alert(
       "No se encontró el ID del carrito en el botón. Asegúrate de que el usuario esté logeado."
     );
+    window.location.href = "/login"; // Redirige al usuario a la página de inicio de sesión
     return;
   }
 
@@ -34,9 +35,31 @@ async function addToCart(event) {
       alert("Producto agregado al carrito correctamente");
     } else {
       // Error al agregar el producto al carrito
-      alert("Error al agregar el producto al carrito");
+      alert("Tienes que estar Logeado ");
+      window.location.href = "/login"; // Redirige al usuario a la página de inicio de sesión
+      
     }
   } catch (error) {
     console.error("Error al agregar el producto al carrito:", error);
+  }
+}
+
+ // Agrega un evento clic al enlace "Ir al Carrito"
+ const carritoLink = document.getElementById("carritoid");
+ carritoLink.addEventListener("click", redirectToCart);
+    
+ // Función para redirigir al carrito
+function redirectToCart(event) {
+  // Evita que el enlace funcione como una URL normal
+  event.preventDefault();
+  
+  const cartId = localStorage.getItem('cartId');
+  
+  if (!cartId) {
+    // Si el ID del carrito no se encuentra en el localStorage, muestra un mensaje de error
+    alert("No se encontró el ID del carrito. Asegúrate de que el usuario esté logeado.");
+  } else {
+    const cartUrl = `carts/${cartId}`;
+    window.location.href = cartUrl;
   }
 }

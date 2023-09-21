@@ -5,6 +5,7 @@ import MessageManager from "../dao/Controller/messagesController.js";
 import CartManager from "../dao/Controller/cartController.js";
 import isAuthenticated from "../middleware/autenticacion.js";
 import checkUserRole from "../middleware/roles.js";
+import requireAuth from "../middleware/requireAuth.js";
 
 const router = Router();
 const cartManager = new CartManager();
@@ -61,7 +62,7 @@ router.get("/chat", async (req, res) => {
   res.render("chat", { messages });
 });
 
-router.get("/carts/:cartId", async (req, res) => {
+router.get("/carts/:cartId",requireAuth, async (req, res) => {
   const { cartId } = req.params;
   const cart = await cartManager.getCartById(cartId);
 
@@ -70,7 +71,6 @@ router.get("/carts/:cartId", async (req, res) => {
     return res.status(404).send("Carrito no encontrado");
   }
 
-  console.log(cart);
   res.render("cartDetails", { cart });
 });
 

@@ -1,8 +1,10 @@
 <html>
   <head>
     <link type="text/css" rel="stylesheet" href="css/product.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    />
     <title>Productos</title>
     <script src="/socket.io/socket.io.js"></script>
   </head>
@@ -17,7 +19,9 @@
       <div class="Space">
 
         {{#if isAuthenticated}}
-          <a href="/cart" class="custom-button">Ir al Carrito</a>
+          <div class="cart">
+            <i class="fas fa-shopping-cart icon-cart" id="carritoid"></i>
+          </div>
           <a href="/profile" class="custom-button">Profile</a>
 
         {{else}}
@@ -25,33 +29,40 @@
         {{/if}}
       </div>
     </div>
+    <div>
+      <h1>Lista de Productos</h1>
 
-    <h1>Lista de Productos</h1>
 
+    <div class="container-fluid text-center">
     <a href="/chat" class="custom-button">Ir al Chat</a>
-
-    <div class="products">
-      {{#each products}}
-
-        <div class="producto">
-          <div class="producto-img">
-            <img
-              src="https://res.cloudinary.com/dviah6ohx/image/upload/v1683161571/Polos/Polo_de_Star_War_iwfhog.webp"
-              alt="Producto"
-            />
-          </div>
-          <h3> {{name}}</h3>
-          <span>S/{{price}}</span>
-          <p>Category: {{category}}</p>
-          <div class="add-button">
-            <button class="add-to-cart-button" data-product-id="{{_id}}" >Agregar
-              al Carrito</button>
-          </div>
+  <div class="row">
+    {{#each products}}
+    <div class="col-md-4 producto-medium col-sm-6 ">
+      <div class="producto"> 
+        <div class="producto-img">
+          <img
+            class="img-fluid"
+            src="https://res.cloudinary.com/dviah6ohx/image/upload/v1683161571/Polos/Polo_de_Star_War_iwfhog.webp"
+            alt="Producto"
+          />
         </div>
-      {{/each}}
+        <h5>{{name}}</h5>
+        <span>S/{{price}}</span>
+        <p>Category: {{category}}</p>
+        <div class="add-button">
+          <button class="add-to-cart-button" data-product-id="{{_id}}">Agregar al Carrito</button>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
     </div>
 
-    <div class="botton-following">{{#if hasPrevPage}}
+    
+        
+
+    <div class="botton-following p-3">{{#if hasPrevPage}}
         <a href="/products?page={{prevPage}}"><button
             class="custom-button"
           >Anterior</button></a>

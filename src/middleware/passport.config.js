@@ -29,7 +29,7 @@ const initPassport = () => {
           await newUser.save();
           return cb(null, newUser);
         } else {
-          console.log("Github user already exist in DB..");
+          // console.log("Github user already exist in DB..");
           return cb(null, existingUser);
         }
       }
