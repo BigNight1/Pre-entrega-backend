@@ -20,6 +20,16 @@ class ProductManager {
       return null;
     }
   }
+  async getProductsByIds(productIds) {
+    try {
+      const products = await productModel.find({ _id: { $in: productIds } }).lean();
+      return products;
+    } catch (error) {
+      console.log("Error al obtener los productos por IDs:", error);
+      return null;
+    }
+  }
+  
 
   async getAllProducts() {
     try {

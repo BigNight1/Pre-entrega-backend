@@ -1,0 +1,114 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex; /* Usar flexbox para alinear elementos horizontalmente */
+  align-items: center; /* Centrar verticalmente los elementos dentro del encabezado */
+  justify-content: space-between; /* Distribuir el espacio entre los elementos */
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+/* Estilos para la lista de productos */
+.product-list {
+  margin: 20px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.product-items {
+  list-style: none;
+  padding: 0;
+}
+
+.product-item {
+  margin: 0 0 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-info h4 {
+  margin: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.product-category {
+  margin-top: 10px;
+  color: #777;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #008000; /* Color verde para el precio */
+}
+
+.product-quantity {
+  margin-top: 10px;
+  color: #555;
+}
+
+.empty-cart-message {
+  text-align: center;
+  font-size: 18px;
+  color: #777;
+}
+
+/* Estilos para el pie de página (footer) */
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+}
+
+/* Estilos para enlaces */
+a {
+  color: #008000; /* Color verde para enlaces */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.volver{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.volver a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 20px; /* Espacio entre el enlace y el título */
+}
+
+.titulo {
+  flex-grow: 1; /* El título ocupará todo el espacio disponible */
+  font-size: 28px;
+  text-align: center; /* Centrar el texto horizontalmente */
+}

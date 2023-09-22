@@ -1,27 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalles del Carrito</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="/css/carritoEstilos.css"/>
+    <title>Detalles del Carrito</title>
 </head>
 <body>
-  <h1>Detalles del Carrito</h1>
-  <h2>Carrito ID: {{ cart.id }}</h2>
-  
-  <h3>Productos:</h3>
-<ul>
-  {{#if cart.products.length}}
-    {{#each cart.products}}
-      <li>
-        {{ @index }}.<strong>{{ name }}</strong> - Precio: {{ this.price }} - Categoría: {{ this.category }}
-      </li>
-    {{/each}}
-  {{else}}
-    <li>No hay productos en el carrito.</li>
-  {{/if}}
-</ul>
+    <header>
+    <div class="volver">
+        <a href="/products">Volver a la tienda</a>
+    </div>
+    <h1 class="titulo">Detalles del Carrito</h1>
+</header>
 
-  </ul>
+
+    <section class="product-list">
+        <h3>Productos en el carrito:</h3>
+        <ul class="product-items">
+            {{#if productDetails.length}}
+                {{#each productDetails}}
+                    <li class="product-item">
+                        <div class="product-info">
+                            <h4>{{productDetails.name}}</h4>
+                            <p class="product-category">{{productDetails.category}}</p>
+                            <p class="product-price">$ {{productDetails.price}}</p>
+                            <p class="product-quantity">Cantidad: {{quantity}}</p>
+                        </div>
+                    </li>
+                {{/each}}
+            {{else}}
+                <li class="empty-cart-message">No hay productos en el carrito.</li>
+            {{/if}}
+        </ul>
+    </section>
+
+    
 </body>
 </html>

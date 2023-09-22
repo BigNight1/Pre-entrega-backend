@@ -30,10 +30,9 @@ router.get("/restartpassword", (req, res) => {
   res.render("session/restartpassword");
 });
 
-router.get("/", (req,res)=>{
-  res.redirect("/products")
-})
-
+router.get("/", (req, res) => {
+  res.redirect("/products");
+});
 
 router.get("/products", async (req, res) => {
   const isAuthenticated = req.session.user ? true : false;
@@ -53,16 +52,21 @@ router.get("/products", async (req, res) => {
     prevPage,
   });
 });
-router.get("/realtimeproducts", isAuthenticated, checkUserRole("admin"), async (req, res) => {
-  const productos = await productManager.getAllProducts();
-  res.render("realTimeProducts", { productos });
-});
+router.get(
+  "/realtimeproducts",
+  isAuthenticated,
+  checkUserRole("admin"),
+  async (req, res) => {
+    const productos = await productManager.getAllProducts();
+    res.render("realTimeProducts", { productos });
+  }
+);
 router.get("/chat", async (req, res) => {
   const messages = await messageManager.getMessages();
   res.render("chat", { messages });
 });
 
-router.get("/carts/:cartId",requireAuth, async (req, res) => {
+router.get("/carts/:cartId", requireAuth, async (req, res) => {
   const { cartId } = req.params;
   const cart = await cartManager.getCartById(cartId);
 
@@ -71,7 +75,21 @@ router.get("/carts/:cartId",requireAuth, async (req, res) => {
     return res.status(404).send("Carrito no encontrado");
   }
 
-  res.render("cartDetails", { cart });
+  // Obtener detalles de los productos en el carrito, incluyendo la cantidad
+  const productDetailsPromises = cart.products.map(async (cartItem) => {
+    const product = await productManager.getProductById(cartItem.product);
+    return {
+      ...cartItem,
+      productDetails: product, // Cambiamos 'details' a 'productDetails'
+      quantity: cartItem.quantity, // Agregar el campo 'quantity'
+    };
+  });
+
+  const productDetails = await Promise.all(productDetailsPromises);
+
+  console.log("Datos que se pasan a la vista:", { cart, productDetails });
+  res.render("cartDetails", { cart, productDetails });
 });
+
 
 export default router;
