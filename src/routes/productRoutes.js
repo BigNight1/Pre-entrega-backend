@@ -4,7 +4,7 @@ import ProductManager from "../dao/Controller/productoController.js";
 import { productModel } from "../dao/schemas/productSchema.js";
 // DTOs
 import ProductDTO from "../dtos/ProductDTOs/ProductDTO.js";
-import ProductUpdateDTO from "../dtos/Productdtos/ProductUpdateDTO.js";
+import ProductUpdateDTO from "../dtos/ProductDTOs/ProductUpdateDTO.js";
 import ProductQueryDTO from "../dtos/ProductDTOs/ProductQueryDTO.js";
 
 const router = Router();
