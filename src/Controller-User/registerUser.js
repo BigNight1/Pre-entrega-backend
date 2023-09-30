@@ -2,6 +2,7 @@ import { createHash } from "../utils.js";
 import CartManager from "../dao/Controller/cartController.js";
 import userModel from "../dao/schemas/userSchema.js";
 import RegisterDTO from "../dtos/sessionDTOs/RegisterDTO.js";
+import { RegisterError } from "../Error/registerError.js";
 
 const cartManager = new CartManager();
 
@@ -23,9 +24,7 @@ export const registerUser = async (req, res) => {
       !registerDTO.email ||
       !registerDTO.age
     ) {
-      return res
-        .status(400)
-        .json({ status: "error", error: "Datos incompletos" });
+      throw new RegisterError("Datos incompletos"); // Lanza el error personalizado
     }
 
     const user = await userModel.create(registerDTO);
@@ -45,9 +44,16 @@ export const registerUser = async (req, res) => {
       cart: newCart,
     });
   } catch (error) {
-    console.error("Error al crear usuario:", error);
-    res
-      .status(500)
-      .send({ status: "error", error: "Error interno del servidor" });
+    if (error instanceof RegisterError) {
+      // Manejar el error de registro personalizado aquí
+      console.error("Error de registro:", error.message);
+      return res.status(400).json({ status: "error", error: error.message });
+    } else {
+      // Manejar otros errores (por defecto, Error interno)
+      console.error("Error al crear usuario:", error);
+      return res
+        .status(500)
+        .json({ status: "error", error: "Error interno del servidor" });
+    }
   }
 };

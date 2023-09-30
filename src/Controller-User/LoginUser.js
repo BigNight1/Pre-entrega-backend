@@ -5,7 +5,7 @@ import CartManager from "../dao/Controller/cartController.js";
 import userModel from "../dao/schemas/userSchema.js";
 import { isValidPassword } from "../utils.js";
 
-const cartManager = new CartManager()
+const cartManager = new CartManager();
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
