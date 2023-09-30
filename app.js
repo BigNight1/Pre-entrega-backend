@@ -16,6 +16,8 @@ import initPassport from "./src/middleware/passport.config.js";
 import { dbConnect } from "./src/DataBase/mongodb.js";
 import { __dirname } from "./src/utils.js";
 import CONFIG from "./src/config/config.js";
+import mockingRoutes from "./src/routes/mockingRoutes.js";
+import error from "./src/middleware/errors.js";
 
 const configureExpress = () => {
   const app = express();
@@ -31,16 +33,12 @@ const configureExpress = () => {
   app.set("view engine", "handlebars");
   app.set("views", path.resolve(__dirname + "/views"));
   app.use(express.json());
-
   // Configura express-session
   app.use(
-    session({
-      secret: "Holaaa",
-      resave: false,
-      saveUninitialized: false,
-    })
+    session({ secret: "Holaaa", resave: false, saveUninitialized: false })
   );
   // Rutas estáticas
+  app.use(error)  //Probando Middleware de Errores
   app.use(
     "/realtimeproducts",
     express.static(path.join(__dirname + "/public"))
@@ -58,11 +56,11 @@ const configurePassport = (app) => {
 
 const startServer = (app) => {
   const server = http.createServer(app);
-
   // Configurar WebSocket
   setupWebSocket(server);
 
   // Rutas del grupo
+  app.use("/api/mock", mockingRoutes);
   app.use("/api/products", productRoutes);
   app.use("/api/carts", cartRoutes);
   app.use("/", viewRouter);

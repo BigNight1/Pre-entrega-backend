@@ -75,13 +75,12 @@ router.get("/carts/:cartId", requireAuth, async (req, res) => {
     return res.status(404).send("Carrito no encontrado");
   }
 
-  // Obtener detalles de los productos en el carrito, incluyendo la cantidad
   const productDetailsPromises = cart.products.map(async (cartItem) => {
     const product = await productManager.getProductById(cartItem.product);
     return {
       ...cartItem,
-      productDetails: product, // Cambiamos 'details' a 'productDetails'
-      quantity: cartItem.quantity, // Agregar el campo 'quantity'
+      productDetails: product, 
+      quantity: cartItem.quantity, 
     };
   });
 

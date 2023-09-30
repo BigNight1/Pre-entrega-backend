@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import CONFIG from "../config/config.js";
+import {createDBError} from "../Error/dbError.js"
 
 export const dbConnect = async () => {
   mongoose
@@ -11,6 +12,6 @@ export const dbConnect = async () => {
       console.log("Conectado con exito a la DB");
     })
     .catch((error) => {
-      console.log("Error al conectar a la base de datos:", error);
+      throw createDBError("Error al conectar a la base de datos:", error);
     });
 };

@@ -11,6 +11,16 @@ class ProductManager {
     }
   }
 
+  async bulkInsertProducts(productsData) {
+    try {
+      const insertedProducts = await productModel.insertMany(productsData);
+      return insertedProducts;
+    } catch (error) {
+      console.log("Error al insertar productos en masa:", error);
+      return null;
+    }
+  }
+
   async getProductById(productId) {
     try {
       const product = await productModel.findById(productId);
