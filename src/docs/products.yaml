@@ -1,0 +1,98 @@
+paths:
+  /api/products:
+    get:
+      summary: Obtiene los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los Productos fueron consultados correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Products'
+        "500":
+          description: No pudo Entregar la informacion
+    post:
+      summary: Obtiene los productos
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los Productos fueron consultados correctamente
+        "500":
+          description: No pudo Entregar la informacion
+  /api/products/{ProductId}:
+    get:
+      summary: Obtiene un producto expecifico
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto que desea buscar
+          schema:
+            $type: String  
+      responses:
+        "200":
+          description: Los Productos fueron consultados correctamente
+        "404":
+          description: No pudo Entregar la informacion  por ese Id
+        "500":
+          description: No pudo Entregar la informacion
+    put:
+      summary: Actualizar un Product
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Se realizo la actualizacion del Producto
+        "400":
+          description: Nos envio informacion errada
+        "404":
+          description: No encontro el Id del user para actualizar
+        "500":
+          description: No pudo entregar la informacion ISE
+    delete:
+      summary: Actualizar un Product
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Se realizo el borrado del Producto
+        "400":
+          description: Nos envio informacion errada
+        "404":
+          description: No encontro el Id para eliminar
+        "500":
+          description: No pudo entregar la informacion ISE
+
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        name:
+          type: string
+          description: el nombre del producto
+        price:
+          type: number
+          description: el precio del producto
+        description:
+          type: string
+          description: el description del producto
+        category:
+          type: string
+          description: la categoria del producto
+        stock:
+          type: number
+          description: la cantidad del producto
+      example:
+        name: "Ejemplo de Producto"
+        price: 19.99
+        description: "Este es un producto de ejemplo."
+        category: "Electrónica"
+        stock: 100

@@ -18,6 +18,8 @@ import { __dirname } from "./src/utils.js";
 import CONFIG from "./src/config/config.js";
 import mockingRoutes from "./src/routes/mockingRoutes.js";
 import error from "./src/middleware/errors.js";
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express"
 
 const configureExpress = () => {
   const app = express();
@@ -48,6 +50,24 @@ const configureExpress = () => {
   return app;
 };
 
+const swaggerOptions = {
+  definition:{
+    openapi: '3.0.0',
+    info:{
+      title:'Documentacion de las APIs',
+      description : 'Informacion de los Productos',
+      version: '1.0.0',
+      contact:{
+        name : "Edu Armas",
+        url:'https://www.linkedin.com/in/edu-armas-1a4b16260/'
+      }
+    }
+  },
+  apis:['./src/docs/*.yaml']
+}
+
+const spec = swaggerJsDoc(swaggerOptions)
+
 const configurePassport = (app) => {
   app.use(passport.initialize());
   initPassport();
@@ -65,6 +85,7 @@ const startServer = (app) => {
   app.use("/api/carts", cartRoutes);
   app.use("/", viewRouter);
   app.use("/api/session", sessionRouter);
+  app.use("/apidocs", swaggerUiExpress.serve,swaggerUiExpress.setup(spec))
 
   server.listen(CONFIG.port, () => {
     console.log(`Servidor en funcionamiento en el puerto ${CONFIG.port}`);

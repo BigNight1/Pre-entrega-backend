@@ -1,0 +1,99 @@
+paths:
+  /api/carts:
+    get:
+      summary: Obtiene los carritos
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Los carritos fueron consultados correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Cart'
+        "500":
+          description: No pudo Entregar la informacion
+    post:
+      summary: Obtiene los carritos
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Los carritos fueron consultados correctamente
+        "500":
+          description: No pudo Entregar la informacion     
+  /api/carts/{cartId}:
+    get:
+      summary: Obtiene un carritos expecifico
+      tags:
+        - Carts
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: id del producto que desea buscar
+          schema:
+            $type: String   
+      responses:
+        "200":
+          description: Los carritos fueron consultados correctamente
+          
+        "404":
+          description: No pudo Entregar la informacion  por ese Id
+        "500":
+          description: No pudo Entregar la informacion
+    put:
+      summary: Actualizar un carrito 
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Se realizo la actualizacion del carrito
+        "400":
+          description: Nos envio informacion errada
+        "404":
+          description: No encontro el Id del cart para actualizar
+        "500":
+          description: No pudo entregar la informacion ISE
+    delete:
+      summary: Actualizar un cart 
+      tags:
+        - Carts
+      responses:
+        "200":
+          description: Se realizo el borrado del cart
+        "400":
+          description: Nos envio informacion errada
+        "404":
+          description: No encontro el Id para eliminar
+        "500":
+          description: No pudo entregar la informacion ISE
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        user:
+          type: string
+          description: ID del usuario asociado al carrito
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID del producto en el carrito
+              quantity:
+                type: integer
+                description: Cantidad del producto en el carrito
+      example:
+        user: "user123"
+        products:
+          - product: "product1"
+            quantity: 2
+          - product: "product2"
+            quantity: 1
