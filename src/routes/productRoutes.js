@@ -68,8 +68,8 @@ router.get("/:productId", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { name, price, description, category } = req.body;
-    const productData = new ProductDTO(name, price, description, category);
+    const { name, price, description, category,stock } = req.body;
+    const productData = new ProductDTO(name, price, description, category,stock);
     const product = await productManager.createProduct(productData);
 
     res.status(201).json({ message: "Producto agregado con éxito", product });

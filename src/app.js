@@ -7,19 +7,19 @@ import passport from "passport";
 import session from "express-session";
 
 // Importaciones Locales
-import cartRoutes from "./src/routes/cartRoutes.js";
-import productRoutes from "./src/routes/productRoutes.js";
-import sessionRouter from "./src/routes/sessions.router.js";
-import viewRouter from "./src/routes/views.router.js";
-import setupWebSocket from "./src/routes/websocket.js";
-import initPassport from "./src/middleware/passport.config.js";
-import { dbConnect } from "./src/DataBase/mongodb.js";
-import { __dirname } from "./src/utils.js";
-import CONFIG from "./src/config/config.js";
-import mockingRoutes from "./src/routes/mockingRoutes.js";
-import error from "./src/middleware/errors.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import sessionRouter from "./routes/sessions.router.js";
+import viewRouter from "./routes/views.router.js";
+import setupWebSocket from "./routes/websocket.js";
+import initPassport from "./middleware/passport.config.js";
+import { dbConnect } from "./DataBase/mongodb.js";
+import { __dirname } from "./utils.js";
+import CONFIG from "./config/config.js";
+import mockingRoutes from "./routes/mockingRoutes.js";
+import error from "./middleware/errors.js";
 import swaggerJsDoc from "swagger-jsdoc";
-import swaggerUiExpress from "swagger-ui-express"
+import swaggerUiExpress from "swagger-ui-express";
 
 const configureExpress = () => {
   const app = express();
@@ -40,7 +40,7 @@ const configureExpress = () => {
     session({ secret: "Holaaa", resave: false, saveUninitialized: false })
   );
   // Rutas estáticas
-  app.use(error)  //Probando Middleware de Errores
+  app.use(error); //Probando Middleware de Errores
   app.use(
     "/realtimeproducts",
     express.static(path.join(__dirname + "/public"))
@@ -51,22 +51,22 @@ const configureExpress = () => {
 };
 
 const swaggerOptions = {
-  definition:{
-    openapi: '3.0.0',
-    info:{
-      title:'Documentacion de las APIs',
-      description : 'Informacion de los Productos',
-      version: '1.0.0',
-      contact:{
-        name : "Edu Armas",
-        url:'https://www.linkedin.com/in/edu-armas-1a4b16260/'
-      }
-    }
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Documentacion de las APIs",
+      description: "Informacion de los Productos",
+      version: "1.0.0",
+      contact: {
+        name: "Edu Armas",
+        url: "https://www.linkedin.com/in/edu-armas-1a4b16260/",
+      },
+    },
   },
-  apis:['./src/docs/*.yaml']
-}
+  apis: ["./src/docs/*.yaml"],
+};
 
-const spec = swaggerJsDoc(swaggerOptions)
+const spec = swaggerJsDoc(swaggerOptions);
 
 const configurePassport = (app) => {
   app.use(passport.initialize());
@@ -85,7 +85,7 @@ const startServer = (app) => {
   app.use("/api/carts", cartRoutes);
   app.use("/", viewRouter);
   app.use("/api/session", sessionRouter);
-  app.use("/apidocs", swaggerUiExpress.serve,swaggerUiExpress.setup(spec))
+  app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
 
   server.listen(CONFIG.port, () => {
     console.log(`Servidor en funcionamiento en el puerto ${CONFIG.port}`);
@@ -97,3 +97,6 @@ configurePassport(app);
 startServer(app);
 // Iniciar el servidor
 dbConnect();
+
+
+export default app

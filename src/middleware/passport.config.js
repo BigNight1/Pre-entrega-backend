@@ -1,18 +1,16 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
-import dotenv from "dotenv";
 import GithubUser from "../dao/schemas/githubuserSchema.js";
+import CONFIG from "../config/config.js";
 
-
-dotenv.config({ path: ".env" });
 
 const initPassport = () => {
   passport.use(
     "github",
     new GitHubStrategy(
       {
-        clientID: process.env.clientID,
-        clientSecret: process.env.clientSecret,
+        clientID: CONFIG.clientID,
+        clientSecret: CONFIG.clientSecret,
         callbackURL: "http://localhost:8080/api/session/github/callback",
       },
       async (accessToken, refreshToken, profile, cb) => {

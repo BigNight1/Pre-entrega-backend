@@ -79,8 +79,8 @@ router.get("/carts/:cartId", requireAuth, async (req, res) => {
     const product = await productManager.getProductById(cartItem.product);
     return {
       ...cartItem,
-      productDetails: product, 
-      quantity: cartItem.quantity, 
+      productDetails: product,
+      quantity: cartItem.quantity,
     };
   });
 
@@ -89,6 +89,5 @@ router.get("/carts/:cartId", requireAuth, async (req, res) => {
   console.log("Datos que se pasan a la vista:", { cart, productDetails });
   res.render("cartDetails", { cart, productDetails });
 });
-
 
 export default router;
