@@ -1,54 +1,36 @@
-import mongoose from "mongoose";
-import CartManager from "../dao/Controller/cartController.js";
-import Assert from "assert";
+// Dependencias
 import { expect } from "chai";
-import app from "../../app.js";
 import supertest from "supertest";
 
-mongoose.connect(
-  "mongodb+srv://onemid76:1234@ecommerce.gjgde3d.mongodb.net/Ecommerce?retryWrites=true&w=majority"
-);
+// Importaciones Locales
+import app from "../app.js";
 
-const api = supertest(app)
+const api = supertest(app);
 
-describe("Cart Route", () => {
-  before(function () {
-    this.Cartproduct = new CartManager();
+describe("Session Route", () => {
+  it("[POST] Login Test", async () => {
+    // Probando el Login
+    const UserLogin = {
+      email: "edu_armas11@hotmail.com",
+      password: "123456",
+    };
+    const response = await api.post("/api/session/login").send(UserLogin);
+    expect(response.statusCode).to.be.eql(200);
   });
 
-  it("Get Carts", async function () {
-
-    // Aca estoy haciendo el Test con Mocha 
-    Assert.ok(this.Cartproduct);
-
-    const result = await this.Cartproduct.getCarts();
-
-    // console.log(result);
-    Assert.strictEqual(Array.isArray(result), true);
+  it("[POST] Register Test", async () => {
+    const CreatedUserTest = {
+      first_name: "UserTest",
+      last_name: "UserTest",
+      email: "UserTest@test.tt",
+      age: "17",
+      password: "123456",
+    };
+    const response = await api
+      .post("/api/session/register")
+      .send(CreatedUserTest);
+    console.log(response.body);
+    expect(response.statusCode).to.be.eql(200);
   }).timeout(5000);
 
-  it("Create Cart", async function () {
-    // Aca estoy haciendo el Test con Chai
-    Assert.ok(this.Cartproduct);
-
-    const CarritoTest = {
-      _id: new mongoose.Types.ObjectId(),
-      user: new mongoose.Types.ObjectId(),
-      products: [],
-    };
-
-    const createCart = await this.Cartproduct.createCart(CarritoTest);
-
-    expect(createCart).to.not.be.null;
-  });
-
-  it("testing SuperTest",async ()=>{
-    await api
-    .get('/api/carts')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-  })
-
-  // tengo que preguntar a la profesora porque tengo problemas probando el test 
-  //  no esta reconociendo mi .env 
 });

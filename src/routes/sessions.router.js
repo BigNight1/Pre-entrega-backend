@@ -3,20 +3,19 @@ import passport from "passport";
 import { Router } from "express";
 
 // Importaciones Locales
-import { loginUser } from "../Controller-User/loginUser.js";
-import { registerUser } from "../Controller-User/registerUser.js";
-import { logoutUser } from "../Controller-User/LogoutUser.js";
-import { restartpassword } from "../Controller-User/restartUser.js";
+import UserManager from "../dao/Controller/userController.js";
 
+// Controladores
+const userManager = new UserManager();
 const router = Router();
 
-router.post("/register", registerUser);
+router.post("/register", userManager.registerUser);
 
-router.post("/login", loginUser);
+router.post("/login", userManager.loginUser);
 
-router.post("/logout", logoutUser);
+router.post("/logout", userManager.logoutUser);
 
-router.post("/restartpassword", restartpassword); 
+router.post("/restartpassword", userManager.restartpassword);
 
 router.get(
   "/github",

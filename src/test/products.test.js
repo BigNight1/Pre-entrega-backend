@@ -1,9 +1,12 @@
+// Dependencias
 import mongoose from "mongoose";
-import ProductManager from "../dao/Controller/productoController.js";
 import Assert from "assert";
 import { expect } from "chai";
-import app from "../app.js";
 import supertest from "supertest";
+
+// Importaciones
+import app from "../app.js";
+import ProductManager from "../dao/Controller/productoController.js";
 
 mongoose.connect(
   "mongodb+srv://onemid76:1234@ecommerce.gjgde3d.mongodb.net/Ecommerce?retryWrites=true&w=majority"
@@ -11,7 +14,7 @@ mongoose.connect(
 
 const api = supertest(app);
 
-describe("Cart Route", () => {
+describe("Product Route", () => {
   before(function () {
     this.Product = new ProductManager();
   });
