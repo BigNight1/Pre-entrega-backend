@@ -5,8 +5,8 @@ import CustomError from "../../Error/customError.js";
 import EErrors from "../../Error/enums.js";
 import { generateUserErrorInfo } from "../../Error/info.js";
 import { RegisterError } from "../../Error/registerError.js";
-import { createHash } from "../../utils.js";
-import { isValidPassword } from "../../utils.js";
+import { createHash } from "../../middleware/security.js";
+import { isValidPassword } from "../../middleware/security.js";
 
 const cartManager = new CartManager();
 
@@ -33,16 +33,15 @@ class UserManager {
       }
 
       const user = await userModel.create(registerDTO);
-
       // Crear un carrito de compras vacío y asociarlo al usuario
       const newCart = await cartManager.createCart(user._id);
       if (newCart) {
         // Asociar el carrito al usuario recién registrado
         user.cart = newCart._id;
         await user.save();
-        console.log(`Carrito creado y asociado a usuario: ${user._id}`);
+        req.logger.info(`Carrito creado y asociado a usuario: ${user._id}`);
       }
-
+      req.logger.info("Usuario Creado Con exito y se le asigno un carrito")
       res.send({
         status: "success",
         message: "Usuario registrado",
@@ -112,7 +111,7 @@ class UserManager {
       };
       // Comprueba si el usuario tiene un carrito asociado
       if (!user.cart) {
-        console.log(
+        req.logger.debug(
           "El usuario no tiene un carrito existente. Creando uno nuevo..."
         );
         // Si no tiene un carrito, crea uno y asígnalo al usuario
@@ -120,9 +119,9 @@ class UserManager {
         if (newCart) {
           user.cart = newCart._id;
           await user.save();
-          console.log("Carrito creado y asignado al usuario:", newCart);
+          req.logger.info("Carrito creado y asignado al usuario:", newCart);
         } else {
-          console.log("No se pudo crear el carrito para el usuario");
+          req.logger.debug("No se pudo crear el carrito para el usuario");
         }
       }
 
@@ -140,7 +139,7 @@ class UserManager {
   async logoutUser(req, res) {
     req.session.destroy((err) => {
       if (err) {
-        console.log("Error in logging out", err);
+        req.logger.info("Error in logging out", err);
         return res
           .status(500)
           .send({ status: "error", message: "Error al Cerrar la sesión" });

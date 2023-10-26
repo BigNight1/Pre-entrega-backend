@@ -5,7 +5,7 @@ import { engine } from "express-handlebars";
 import path from "path";
 import passport from "passport";
 import session from "express-session";
-
+import cors from "cors"
 // Importaciones Locales
 import cartRoutes from "./routes/cartRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
@@ -14,12 +14,14 @@ import viewRouter from "./routes/views.router.js";
 import setupWebSocket from "./routes/websocket.js";
 import initPassport from "./middleware/passport.config.js";
 import { dbConnect } from "./DataBase/mongodb.js";
-import { __dirname } from "./utils.js";
 import CONFIG from "./config/config.js";
 import mockingRoutes from "./routes/mockingRoutes.js";
 import error from "./middleware/errors.js";
 import swaggerJsDoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
+import { addLogger } from "./middleware/logger.js";
+import { __dirname } from "./dirname.js";
+
 
 const configureExpress = () => {
   const app = express();
@@ -32,8 +34,8 @@ const configureExpress = () => {
       },
     })
   );
-  app.set("view engine", "handlebars");
   app.set("views", path.resolve(__dirname + "/views"));
+  app.set("view engine", "handlebars");
   app.use(express.json());
   // Configura express-session
   app.use(
@@ -46,7 +48,8 @@ const configureExpress = () => {
     express.static(path.join(__dirname + "/public"))
   );
   app.use("/", express.static(path.join(__dirname + "/public")));
-
+  app.use(addLogger(CONFIG.NODE_ENV))//Usando Pruebas de errores con Logger
+  app.use(cors())//Usando restricciones con Cors 
   return app;
 };
 
@@ -95,7 +98,6 @@ const startServer = (app) => {
 const app = configureExpress();
 configurePassport(app);
 startServer(app);
-// Iniciar el servidor
 dbConnect();
 
 

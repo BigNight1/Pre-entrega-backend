@@ -11,8 +11,6 @@ async function addToCart(event) {
   // Obtén el ID del carrito desde el localStorage
   const cartId = localStorage.getItem("cartId");
 
-  console.log("ID del producto:", productId);
-  console.log("ID del carrito:", cartId);
   if (!cartId) {
     // Si el ID del carrito no se encuentra en el botón, puedes manejarlo aquí
     alert(

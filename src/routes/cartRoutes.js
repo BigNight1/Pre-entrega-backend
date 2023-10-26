@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
   } catch (err) {
     res.status(500).send(err.message);
     const error = err.message;
-    console.log(error);
+    req.logger.debug(error);
   }
 });
 
@@ -42,7 +42,7 @@ router.put("/:cartId", async (req, res) => {
   } catch (err) {
     res.status(500).send(err.message);
     const error = err.message;
-    console.log(error);
+    req.logger.debug(error);
   }
 });
 
@@ -63,7 +63,7 @@ router.put("/:cartId/products/:productId", async (req, res) => {
   } catch (err) {
     res.status(500).send(err.message);
     const error = err.message;
-    console.log(error);
+    req.logger.debug(error);
   }
 });
 
@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
     const newCart = await cartManager.createCart({});
     res.json(newCart);
   } catch (error) {
-    console.log("Error al crear el carrito:", error);
+    req.logger.debug("Error al crear el carrito:", error);
     res.status(500).json({ error: "Error al crear el carrito" });
   }
 });
@@ -146,6 +146,7 @@ router.post("/:cartId/purchase", async (req, res) => {
     );
 
     await cart.save();
+    req.logger.info("Compra finalizada con éxito")
     console.log("Compra finalizada con éxito");
 
     res.json({

@@ -17,7 +17,6 @@ form.addEventListener("submit", async (e) => {
 
   if (response.status === 200) {
     const responseData = await response.json();
-    console.log(responseData);
 
     if (responseData.payload && responseData.payload) {
       const { name, cart } = responseData.payload;

@@ -6,6 +6,7 @@ import CartManager from "../dao/Controller/cartController.js";
 import isAuthenticated from "../middleware/autenticacion.js";
 import checkUserRole from "../middleware/roles.js";
 import requireAuth from "../middleware/requireAuth.js";
+import { addLogger } from "../middleware/logger.js";
 
 const router = Router();
 const cartManager = new CartManager();
@@ -71,7 +72,7 @@ router.get("/carts/:cartId", requireAuth, async (req, res) => {
   const cart = await cartManager.getCartById(cartId);
 
   if (!cart) {
-    console.log("Carrito no encontrado");
+    req.logger.info("Carrito no encontrado");
     return res.status(404).send("Carrito no encontrado");
   }
 
@@ -86,8 +87,13 @@ router.get("/carts/:cartId", requireAuth, async (req, res) => {
 
   const productDetails = await Promise.all(productDetailsPromises);
 
-  console.log("Datos que se pasan a la vista:", { cart, productDetails });
   res.render("cartDetails", { cart, productDetails });
+});
+
+router.get("/loggerTest", (req, res) => {
+  res.send({ message: "estamos Probando loggerTest " });
+  req.logger.debug("Este es un mensaje de debug de prueba");
+  req.logger.info("Este es un mensaje de info de prueba"); 
 });
 
 export default router;

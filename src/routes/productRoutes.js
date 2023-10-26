@@ -61,7 +61,7 @@ router.get("/:productId", async (req, res) => {
       res.status(404).json({ error: "Producto no encontrado" });
     }
   } catch (error) {
-    console.log("Error al obtener el producto:", error);
+    req.logger.info("Error al obtener el producto:", error);
     res.status(500).json({ error: "Error al obtener el producto" });
   }
 });
@@ -74,7 +74,7 @@ router.post("/", async (req, res) => {
 
     res.status(201).json({ message: "Producto agregado con éxito", product });
   } catch (error) {
-    console.log("Error al agregar el producto:", error);
+    req.logger.info("Error al agregar el producto:", error);
     res.status(500).json({ error: "Error al agregar el producto" });
   }
 });
@@ -95,7 +95,7 @@ router.put("/:productId", async (req, res) => {
     );
     res.json({ message: "Producto actualizado con éxito", product });
   } catch (error) {
-    console.log("Error al actualizar el producto:", error);
+    req.logger.info("Error al actualizar el producto:", error);
     res.status(500).json({ error: "Error al actualizar el producto" });
   }
 });
@@ -110,7 +110,7 @@ router.delete("/:productId", async (req, res) => {
       res.status(404).json({ error: "Producto no encontrado" });
     }
   } catch (error) {
-    console.log("Error al eliminar el producto:", error);
+    req.logger.info("Error al eliminar el producto:", error);
     res.status(500).json({ error: "Error al eliminar el producto" });
   }
 });

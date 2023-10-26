@@ -2,7 +2,7 @@
   import CONFIG from "../config/config.js";
   import {createDBError} from "../Error/dbError.js"
 
-  export const dbConnect = async () => {
+  export const dbConnect = async (req,res) => {
     mongoose
       .connect(CONFIG.DB_ECOMMERCE, {
         useNewUrlParser: true,
