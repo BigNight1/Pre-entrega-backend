@@ -6,7 +6,6 @@ import CartManager from "../dao/Controller/cartController.js";
 import isAuthenticated from "../middleware/autenticacion.js";
 import checkUserRole from "../middleware/roles.js";
 import requireAuth from "../middleware/requireAuth.js";
-import { addLogger } from "../middleware/logger.js";
 
 const router = Router();
 const cartManager = new CartManager();
