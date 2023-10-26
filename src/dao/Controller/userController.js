@@ -1,7 +1,7 @@
 import CartManager from "./cartController.js";
 import userModel from "../schemas/userSchema.js";
 import RegisterDTO from "../../dtos/sessionDTOs/RegisterDTO.js";
-import CustomError from "../../Error/customError.js";
+import CustomError from "../../Error/CustomError.js";
 import EErrors from "../../Error/enums.js";
 import { generateUserErrorInfo } from "../../Error/info.js";
 import { RegisterError } from "../../Error/registerError.js";
