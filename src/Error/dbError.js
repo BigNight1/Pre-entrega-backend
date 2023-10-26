@@ -1,4 +1,4 @@
-import CustomError from "./customError.js";
+import CustomError from "./CustomError.js";
 import EErrors from "./enums.js";
 
 export const createDBError=(message,cause)=>{
