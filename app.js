@@ -6,6 +6,9 @@ import path from "path";
 import passport from "passport";
 import session from "express-session";
 import cors from "cors"
+import swaggerJsDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
+
 // Importaciones Locales
 import cartRoutes from "./src/routes/cartRoutes.js";
 import productRoutes from "./src/routes/productRoutes.js";
@@ -17,11 +20,8 @@ import { dbConnect } from "./src/DataBase/mongodb.js";
 import CONFIG from "./src/config/config.js";
 import mockingRoutes from "./src/routes/mockingRoutes.js";
 import error from "./src/middleware/errors.js";
-import swaggerJsDoc from "swagger-jsdoc";
-import swaggerUiExpress from "swagger-ui-express";
-import { addLogger } from "./src/middleware/logger.js";
 import { __dirname } from "./src/dirname.js";
-
+import { addLogger } from "./src/logger.js";
 
 const configureExpress = () => {
   const app = express();
