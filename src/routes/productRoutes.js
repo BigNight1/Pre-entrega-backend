@@ -74,7 +74,6 @@ router.post("/", async (req, res) => {
 
     res.status(201).json({ message: "Producto agregado con éxito", product });
   } catch (error) {
-    req.logger.info("Error al agregar el producto:", error);
     res.status(500).json({ error: "Error al agregar el producto" });
   }
 });

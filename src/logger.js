@@ -59,8 +59,9 @@ export const addLogger = (environment) => {
   return (req, res, next) => {
     req.logger =
       environment === "development" ? developmentLogger : productionLogger;
-    req.logger.debug(`-${new Date().toLocaleDateString()}-${req.method} en ${req.url} `)
-    req.logger.info(`-${new Date().toLocaleDateString()}-${req.method} en ${req.url} `)
+    const logMessage = `-${new Date().toLocaleDateString()}-${req.method} en ${req.url}`;
+    req.logger.debug(logMessage);
+    req.logger.info(logMessage);
     next();
   };
 };
