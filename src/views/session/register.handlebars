@@ -1,23 +1,30 @@
-<div>
-  <h1>Registro</h1>
-  <form id="registerForm">
-    <label>Nombre</label>
-    <input name="first_name" />
-    <br />
-    <label>Apellido</label>
-    <input name="last_name" />
-    <br />
-    <label>Email</label>
-    <input name="email" />
-    <br />
-    <label>Edad</label>
-    <input name="age" />
-    <br />
-    <label>Contraseña</label>
-    <input type="password" name="password" />
-    <input type="submit" />
-  </form>
-  <a href="/api/session/github/callback" class="btn btn-primary">Registrarse con GitHub</a>
-  <p>¿Ya tienes una cuenta? <a href="/login">Ingresa aquí</a></p>
-</div>
+<head>
+  <link type="text/css" rel="stylesheet" href="css/register.css" />
+</head>
+<body>
+
+  <div class="box">
+    <div class="cajaregister">
+      <h1>Registro</h1>
+      <form class="formulario" id="registerForm">
+        <label>Nombre</label>
+        <input name="first_name" />
+        <label>Apellido</label>
+        <input name="last_name" />
+        <label>Email</label>
+        <input name="email" />
+        <label>Edad</label>
+        <input name="age" />
+        <label>Contraseña</label>
+        <input type="password" name="password" />
+        <input type="submit" value="Create" />
+      </form>
+      <div class="github_register"><a href="/api/session/github/callback" class="btn btn-primary">Registrarse
+        con GitHub</a></div>
+      
+      <p>¿Ya tienes una cuenta? <a href="/login">Ingresa aquí</a></p></div>
+  </div>
+
+</body>
+
 <script src="/js/register.js"></script>

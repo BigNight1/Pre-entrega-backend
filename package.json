@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "node app.js",
+    "dev": "node  app.js",
     "start": "node app.js",
     "build": "node --exec ./node_modules/.bin/ts-node app",
     "test": "mocha 'src/test/**.test.js' -r dotenv/config --exit"
@@ -26,6 +26,7 @@
     "mongo": "^0.1.0",
     "mongoose": "^7.3.2",
     "mongoose-paginate-v2": "^1.7.31",
+    "nodemailer": "^6.9.7",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "socket.io": "^4.7.1",

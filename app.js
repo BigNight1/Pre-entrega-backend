@@ -21,7 +21,7 @@ import CONFIG from "./src/config/config.js";
 import mockingRoutes from "./src/routes/mockingRoutes.js";
 import error from "./src/middleware/errors.js";
 import { __dirname } from "./src/dirname.js";
-import { addLogger } from "./src/logger.js";
+import { addLogger } from "./src/middleware/logger.js";
 
 const configureExpress = () => {
   const app = express();
@@ -48,6 +48,7 @@ const configureExpress = () => {
     express.static(path.join(__dirname + "/public"))
   );
   app.use("/", express.static(path.join(__dirname + "/public")));
+  // hacer cambio a express.static  
   app.use(addLogger(CONFIG.NODE_ENV))//Usando Pruebas de errores con Logger
   app.use(cors())//Usando restricciones con Cors 
   return app;
@@ -68,7 +69,6 @@ const swaggerOptions = {
   },
   apis: ["./src/docs/*.yaml"],
 };
-
 const spec = swaggerJsDoc(swaggerOptions);
 
 const configurePassport = (app) => {

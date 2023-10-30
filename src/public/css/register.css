@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background-image:url(../image/background.png);
+}
+
+.cajaregister {
+  border: 1px solid black;
+  padding: 16px;
+  color: white;
+}
+
+.cajaregister h1 {
+  display: flex;
+  justify-content: center;
+}
+
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.formulario input {
+  margin: 5px 0px;
+  border-radius: 7px;
+}
+
+.github_register {
+    display: flex;
+    justify-content: center;
+}
