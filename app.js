@@ -43,11 +43,8 @@ const configureExpress = () => {
   );
   // Rutas estáticas
   app.use(error); //Probando Middleware de Errores
-  app.use(
-    "/realtimeproducts",
-    express.static(path.join(__dirname + "/public"))
-  );
-  app.use("/", express.static(path.join(__dirname + "/public")));
+  
+  app.use(express.static(path.join(__dirname + "/public")));
   // hacer cambio a express.static  
   app.use(addLogger(CONFIG.NODE_ENV))//Usando Pruebas de errores con Logger
   app.use(cors())//Usando restricciones con Cors 
