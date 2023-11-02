@@ -5,7 +5,7 @@ import CustomError from "../../Error/CustomError.js";
 import EErrors from "../../Error/enums.js";
 import { generateUserErrorInfo } from "../../Error/info.js";
 import { RegisterError } from "../../Error/registerError.js";
-import { createHash } from "../../middleware/security.js";
+import { createHash, generateToken } from "../../middleware/security.js";
 import { isValidPassword } from "../../middleware/security.js";
 
 const cartManager = new CartManager();
@@ -41,7 +41,7 @@ class UserManager {
         await user.save();
         req.logger.info(`Carrito creado y asociado a usuario: ${user._id}`);
       }
-      req.logger.info("Usuario Creado Con exito y se le asigno un carrito")
+      req.logger.info("Usuario Creado Con exito y se le asigno un carrito");
       res.send({
         status: "success",
         message: "Usuario registrado",
@@ -148,24 +148,16 @@ class UserManager {
     });
   }
 
-  async restartpassword(req, res){
-    const { email, password } = req.body;
-    if (!email || !password)
-      return res
-        .status(400)
-        .send({ status: "error", error: "Incomplete Values" });
+  async restartpassword(req, res) {
+    const { email } = req.body;
+
     const user = await userModel.findOne({ email });
-    if (!user)
-      return res.status(404).send({ status: "error", error: "Not user found" });
-    const newHashedPassword = createHash(password);
-    await userModel.updateOne(
-      { _id: user._id },
-      { $set: { password: newHashedPassword } }
-    );
-  
-    res.send({ status: "success", message: "Contraseña restaurada" });
-  };
-  
+    if (!user) {
+      return res.status(404).send({status:"error",error:"Usuario no encontrado"});
+    }
+
+     const resetToker = generateToken(user)
+  }
 }
 
 export default UserManager;

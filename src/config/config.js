@@ -1,15 +1,18 @@
-import dotenv from "dotenv"
-
+import dotenv from "dotenv";
 
 dotenv.config();
 
+const CONFIG = {
+  port: process.env.port || 3015,
+  DB_ECOMMERCE: process.env.DB_ECOMMERCE || "error db",
+  clientID: process.env.clientID || "Iv1.5e07bb792c8a3b76",
+  clientSecret: process.env.clientSecret || "b76779a99cb40930302f4e6ff5a9a8cc31dfda44",
+  NODE_ENV: process.env.NODE_ENV || "development",
+  mailing: {
+    SERVICE: process.env.MAILING_SERVICE,
+    USER: process.env.MAILING_USER,
+    PASSWORD: process.env.MAILING_PASSWORD,
+  },
+};
 
-const CONFIG={
-    port: process.env.port || 3015,
-    DB_ECOMMERCE: process.env.DB_ECOMMERCE || "error db",
-    clientID: process.env.clientID || "Iv1.5e07bb792c8a3b76",
-    clientSecret: process.env.clientSecret || "b76779a99cb40930302f4e6ff5a9a8cc31dfda44",
-    NODE_ENV: process.env.NODE_ENV || "development"
-}
-
-export default CONFIG
+export default CONFIG;
