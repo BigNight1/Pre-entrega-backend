@@ -7,8 +7,11 @@ import { generateUserErrorInfo } from "../../Error/info.js";
 import { RegisterError } from "../../Error/registerError.js";
 import { createHash, generateToken } from "../../middleware/security.js";
 import { isValidPassword } from "../../middleware/security.js";
+import MailingService from "../../services/mailing.js";
 
 const cartManager = new CartManager();
+
+const mailingService = new MailingService()
 
 class UserManager {
   async registerUser(req, res) {
@@ -157,6 +160,8 @@ class UserManager {
     }
 
      const resetToker = generateToken(user)
+
+     await mailingService.sendSimpleMail
   }
 }
 
