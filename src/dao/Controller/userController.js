@@ -161,6 +161,8 @@ class UserManager {
 
      const resetToker = generateToken(user)
 
+     const resetLink  = `http://localhost:8080/`
+
      await mailingService.sendSimpleMail
   }
 }
