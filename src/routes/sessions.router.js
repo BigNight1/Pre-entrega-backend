@@ -17,6 +17,8 @@ router.post("/logout", userManager.logoutUser);
 
 router.post("/restartpassword", userManager.restartpassword);
 
+router.get ("/restablecer-contraseña:token")
+
 router.get(
   "/github",
   passport.authenticate("github", { scope: ["user:email"] })

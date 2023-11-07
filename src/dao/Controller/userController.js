@@ -7,11 +7,8 @@ import { generateUserErrorInfo } from "../../Error/info.js";
 import { RegisterError } from "../../Error/registerError.js";
 import { createHash, generateToken } from "../../middleware/security.js";
 import { isValidPassword } from "../../middleware/security.js";
-import MailingService from "../../services/mailing.js";
 
 const cartManager = new CartManager();
-
-const mailingService = new MailingService()
 
 class UserManager {
   async registerUser(req, res) {
@@ -151,20 +148,21 @@ class UserManager {
     });
   }
 
-  async restartpassword(req, res) {
-    const { email } = req.body;
+    async restartpassword(req, res) {
+      const { email } = req.body;
 
-    const user = await userModel.findOne({ email });
-    if (!user) {
-      return res.status(404).send({status:"error",error:"Usuario no encontrado"});
+      const user = await userModel.findOne({ email });
+
+      if (!user) {
+        return res
+          .status(404)
+          .send({ status: "error", error: "Usuario no encontrado" });
+      }
+      const token = generateToken(user);
+      const ResetUrl = `http://${req.headers.host}/restablecer-contraseña/${token}`;
+
+      console.log(ResetUrl);
     }
-
-     const resetToker = generateToken(user)
-
-     const resetLink  = `http://localhost:8080/`
-
-     await mailingService.sendSimpleMail
-  }
 }
 
 export default UserManager;

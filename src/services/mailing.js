@@ -12,14 +12,5 @@ export default class MailingService {
       },
     });
   }
-  sendSimpleMail = async ({ from, to, subject, html, attachments = [] }) => {
-    let result = await this.client.sendMail({
-      from,
-      to,
-      subject,
-      html,
-      attachments,
-    });
-    return result;
-  };
+//  cambiar este codigo 
 }
