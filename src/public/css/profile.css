@@ -58,6 +58,8 @@ button{
 
 .small-icon{
     height: 3rem;
+    cursor: pointer;
+
 }
 
 .button-products{

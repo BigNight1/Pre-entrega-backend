@@ -20,8 +20,9 @@ import { dbConnect } from "./src/DataBase/mongodb.js";
 import CONFIG from "./src/config/config.js";
 import mockingRoutes from "./src/routes/mockingRoutes.js";
 import error from "./src/middleware/errors.js";
-import { __dirname } from "./src/dirname.js";
+import { __dirname } from "./src/utils/dirname.js";
 import { addLogger } from "./src/middleware/logger.js";
+
 
 const configureExpress = () => {
   const app = express();
@@ -34,7 +35,7 @@ const configureExpress = () => {
       },
     })
   );
-  app.set("views", path.resolve(__dirname + "/views"));
+  app.set("views", path.join(__dirname + "../../views"));
   app.set("view engine", "handlebars");
   app.use(express.json());
   // Configura express-session
@@ -44,11 +45,12 @@ const configureExpress = () => {
   // Rutas estáticas
   app.use(error); //Probando Middleware de Errores
   
-  app.use(express.static(path.join(__dirname + "/public")));
+  app.use(express.static(path.join(__dirname + "../../public")));
   // hacer cambio a express.static  
   app.use(addLogger(CONFIG.NODE_ENV))//Usando Pruebas de errores con Logger
   app.use(cors())//Usando restricciones con Cors 
   return app;
+  
 };
 
 const swaggerOptions = {
@@ -86,7 +88,7 @@ const startServer = (app) => {
   app.use("/", viewRouter);
   app.use("/api/session", sessionRouter);
   app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
-
+ 
   server.listen(CONFIG.port, () => {
     console.log(`Servidor en funcionamiento en el puerto ${CONFIG.port}`);
   });

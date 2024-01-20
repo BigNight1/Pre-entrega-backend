@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "node  app.js",
+    "dev": "nodemon -e js,json,handlebars  app.js",
     "start": "node app.js",
     "build": "node --exec ./node_modules/.bin/ts-node app",
     "test": "mocha 'src/test/**.test.js' -r dotenv/config --exit"
@@ -38,7 +38,10 @@
   "devDependencies": {
     "chai": "^4.3.10",
     "mocha": "^10.2.0",
-    "nodemon": "^3.0.1",
+    "nodemon": "^3.0.3",
     "supertest": "^6.3.3"
-  }
+  },
+  "nodemonConfig": {
+    "ext": "js,json,handlebars"
+}
 }

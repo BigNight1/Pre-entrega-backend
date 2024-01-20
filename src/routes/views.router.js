@@ -38,7 +38,7 @@ router.get("/products", async (req, res) => {
   const isAuthenticated = req.session.user ? true : false;
   const isAdmin = req.session.isAdmin || false; // Agregar isAdmin
   const page = req.query.page || 1;
-  const limit = req.query.limit || 6;
+  const limit = req.query.limit || 8;
   const { docs, hasPrevPage, hasNextPage, nextPage, prevPage } =
     await productModel.paginate({}, { limit, page, lean: true });
   const products = docs;

@@ -109,7 +109,7 @@ p {
   margin: 10px;
   text-align: center;
   background-color: #f9f9f9;
-  border-radius: 5px;
+  border-radius: 15px;
   transition: border-color 0.3s ease-in-out;
 }
 

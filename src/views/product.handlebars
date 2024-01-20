@@ -11,14 +11,16 @@
   </head>
   <body>
     <div class="config">
+
       <div class="create-product">
         {{#if isAdmin}}
           <a href="/realtimeproducts" class="custom-button">Crear Producto</a>
         {{/if}}
       </div>
 
-      <div class="Space">
+      <a href="/chat" class="custom-button">Ir al Chat</a>
 
+      <div class="Space">
         {{#if isAuthenticated}}
           <div class="cart">
             <i class="fas fa-shopping-cart icon-cart" id="carritoid"></i>
@@ -32,13 +34,11 @@
     </div>
     <div>
       <h1>Lista de Productos</h1>
-
-
     <div class="container-fluid text-center">
-    <a href="/chat" class="custom-button">Ir al Chat</a>
+    
   <div class="row">
     {{#each products}}
-    <div class="col-md-4 producto-medium col-sm-6 ">
+    <div class="col-md-4 producto-medium col-sm-6 col-xl-3">
       <div class="producto"> 
         <div class="producto-img">
           <img

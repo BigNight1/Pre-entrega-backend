@@ -7,22 +7,24 @@
     <div class="cajaregister">
       <h1>Registro</h1>
       <form class="formulario" id="registerForm">
-        <label>Nombre</label>
-        <input name="first_name" />
-        <label>Apellido</label>
-        <input name="last_name" />
-        <label>Email</label>
-        <input name="email" />
-        <label>Edad</label>
-        <input name="age" />
-        <label>Contraseña</label>
-        <input type="password" name="password" />
-        <input type="submit" value="Create" />
+        <label class="text-uppercase fw-medium">Nombre</label>
+        <input name="first_name"  placeholder="Nombre"/>
+        <label class="text-uppercase fw-medium">Apellido</label>
+        <input name="last_name"  placeholder="Apellido"/>
+        <label class="text-uppercase fw-medium">Email</label>
+        <input name="email"  placeholder="Email"/>
+        <label class="text-uppercase fw-medium">Edad</label>
+        <input name="age"  placeholder="Edad"/>
+        <label class="text-uppercase fw-medium">Contraseña</label>
+        <input type="password" name="password" placeholder="Contraseña" />
       </form>
+      <div>
+        <input type="submit" value="Create" class="card-crear"/>
+      </div>
       <div class="github_register"><a href="/api/session/github/callback" class="btn btn-primary">Registrarse
         con GitHub</a></div>
       
-      <p>¿Ya tienes una cuenta? <a href="/login">Ingresa aquí</a></p></div>
+      <p class="text-center">¿Ya tienes una cuenta? <a href="/login">Ingresa aquí</a></p></div>
   </div>
 
 </body>
