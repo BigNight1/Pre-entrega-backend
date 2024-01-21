@@ -11,7 +11,7 @@ const initPassport = () => {
       {
         clientID: CONFIG.clientID,
         clientSecret: CONFIG.clientSecret,
-        callbackURL: "http://localhost:8080/api/session/github/callback",
+        callbackURL: "http://ecommerce/api/session/github/callback",
       },
       async (accessToken, refreshToken, profile, cb) => {
         const existingUser = await GithubUser.findOne({
