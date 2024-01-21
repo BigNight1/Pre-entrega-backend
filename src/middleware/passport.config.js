@@ -3,7 +3,6 @@ import GitHubStrategy from "passport-github2";
 import GithubUser from "../dao/schemas/githubuserSchema.js";
 import CONFIG from "../config/config.js";
 
-
 const initPassport = () => {
   passport.use(
     "github",
@@ -11,7 +10,8 @@ const initPassport = () => {
       {
         clientID: CONFIG.clientID,
         clientSecret: CONFIG.clientSecret,
-        callbackURL: "http://ecommerce/api/session/github/callback",
+        callbackURL:
+          "https://ecommerce-ugl8.onrender.com/api/session/github/callback",
       },
       async (accessToken, refreshToken, profile, cb) => {
         const existingUser = await GithubUser.findOne({
@@ -50,4 +50,3 @@ passport.deserializeUser(async (id, done) => {
 });
 
 export default initPassport;
-
