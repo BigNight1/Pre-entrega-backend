@@ -137,15 +137,20 @@ class UserManager {
   }
 
   async logoutUser(req, res) {
-    req.session.destroy((err) => {
+    req.logout((err) => {
       if (err) {
-        req.logger.info("Error in logging out", err);
-        return res
-          .status(500)
-          .send({ status: "error", message: "Error al Cerrar la sesión" });
+        // Manejar el error
+        return res.status(500).send({ status: "error", message: "Error al cerrar sesión" });
       }
-      res.send({ status: "success", message: "Sesion Cerrada exitosamente" });
+      req.session.destroy((err) => {
+        if (err) {
+          // Manejar el error
+          return res.status(500).send({ status: "error", message: "Error al cerrar sesión" });
+        }
+        res.send({ status: "success", message: "Sesión cerrada exitosamente" });
+      });
     });
+    
   }
 
     async restartpassword(req, res) {
