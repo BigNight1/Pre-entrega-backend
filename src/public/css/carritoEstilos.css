@@ -39,11 +39,16 @@ h2 {
 }
 
 .product-item {
+  display: flex;
+  justify-content: space-between;
   margin: 0 0 20px;
-  padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-info {
+  padding: 10px 20px;
 }
 
 .product-info h4 {
@@ -94,7 +99,7 @@ a:hover {
   text-decoration: underline;
 }
 
-.volver{
+.volver {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -111,4 +116,18 @@ a:hover {
   flex-grow: 1; /* El título ocupará todo el espacio disponible */
   font-size: 28px;
   text-align: center; /* Centrar el texto horizontalmente */
+}
+
+.botoncancelar {
+  border: none;
+  font-weight: 700;
+  height: 100%;
+  color: rgb(0, 0, 0);
+  padding: 8px 12px; /* Ajusta el espacio interno del botón */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  transition: background-color 0.6s; /* Agrega una transición suave al color de fondo */
+}
+
+.botoncancelar:hover {
+  background-color: #ff0000; /* Cambia el color de fondo al pasar el mouse sobre el botón */
 }

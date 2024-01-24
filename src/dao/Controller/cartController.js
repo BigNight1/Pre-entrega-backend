@@ -4,7 +4,7 @@ class CartManager {
   async createCart(userId) {
     console.log("Creando un nuevo carrito...");
     try {
-      return await cartModel.create({user: userId, products: []});
+      return await cartModel.create({ user: userId, products: [] });
     } catch (error) {
       console.log("Error al crear el carrito:", error);
       return null;
@@ -84,12 +84,14 @@ class CartManager {
   async removeFromCart(cartId, productId) {
     try {
       const cart = await cartModel.findById(cartId);
-      if (!cart) {
+
+      if (!cart || !cart.products) {
         return false;
       }
 
       const productIndex = cart.products.findIndex(
-        (product) => product._id.toString() === productId
+        (product) =>
+          product && product.product && product.product.toString() === productId
       );
 
       if (productIndex === -1) {
@@ -101,8 +103,8 @@ class CartManager {
 
       return true;
     } catch (error) {
-      console.log("Error al eliminar el producto del carrito:", error);
-      return null;
+      console.error("Error al eliminar el producto del carrito:", error);
+      return false;
     }
   }
 }

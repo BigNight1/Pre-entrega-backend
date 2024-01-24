@@ -1,12 +1,18 @@
-// Agrega un evento clic a todos los botones "Agregar al Carrito"
 const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
+const carritoLink = document.getElementById("carritoid");
+
 addToCartButtons.forEach((button) => {
   button.addEventListener("click", addToCart);
 });
 
+// Agrega un evento clic al enlace "Ir al Carrito"
+if (carritoLink) {
+  carritoLink.addEventListener("click", redirectToCart);
+}
+
 // Función para agregar un producto al carrito
 async function addToCart(event) {
-  // Obtener el ID del producto y el ID del carrito desde los atributos del botón
+  // Obtener el ID del producto
   const productId = event.target.getAttribute("data-product-id");
   // Obtén el ID del carrito desde el localStorage
   const cartId = localStorage.getItem("cartId");
@@ -35,27 +41,24 @@ async function addToCart(event) {
       // Error al agregar el producto al carrito
       alert("Tienes que estar Logeado ");
       window.location.href = "/login"; // Redirige al usuario a la página de inicio de sesión
-      
     }
   } catch (error) {
     console.error("Error al agregar el producto al carrito:", error);
   }
 }
 
- // Agrega un evento clic al enlace "Ir al Carrito"
- const carritoLink = document.getElementById("carritoid");
- carritoLink.addEventListener("click", redirectToCart);
-    
- // Función para redirigir al carrito
+// Función para redirigir al carrito
 function redirectToCart(event) {
   // Evita que el enlace funcione como una URL normal
   event.preventDefault();
-  
-  const cartId = localStorage.getItem('cartId');
-  
+
+  const cartId = localStorage.getItem("cartId");
+
   if (!cartId) {
     // Si el ID del carrito no se encuentra en el localStorage, muestra un mensaje de error
-    alert("No se encontró el ID del carrito. Asegúrate de que el usuario esté logeado.");
+    alert(
+      "No se encontró el ID del carrito. Asegúrate de que el usuario esté logeado."
+    );
   } else {
     const cartUrl = `carts/${cartId}`;
     window.location.href = cartUrl;

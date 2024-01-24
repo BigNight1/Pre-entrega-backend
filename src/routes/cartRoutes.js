@@ -135,7 +135,6 @@ router.post("/:cartId/purchase", async (req, res) => {
         });
       }
     }
-    // Después de completar la compra, elimina todos los productos del carrito
     cart.products = [];
 
     const purchaser = cart.user;
@@ -160,22 +159,27 @@ router.post("/:cartId/purchase", async (req, res) => {
   }
 });
 
+// para eliminar el producto del carrito
+
 router.delete("/:cartId/products/:productId", async (req, res) => {
-  const { cartId, productId } = req.params;
-  const cart = await cartManager.getCartById(cartId);
-  const productExists = await cartManager.removeFromCart(cartId, productId);
+  try {
+    const { cartId, productId } = req.params;
+    const cart = await cartManager.getCartById(cartId);
 
-  if (!cart) {
-    return res.status(404).json({ error: "Carrito no encontrado" });
+    if (!cart) {
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
+
+    const productRemoved = await cartManager.removeFromCart(cartId, productId);
+
+    if (!productRemoved) {
+      return res.status(404).json({ error: "Producto no encontrado en el carrito" });
+    }
+    res.json({ message: "Producto eliminado del carrito" });
+  } catch (error) {
+    console.error("Error al eliminar el producto del carrito:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
-
-  if (!productExists) {
-    return res
-      .status(404)
-      .json({ error: "Producto no encontrado en el carrito" });
-  }
-
-  res.json({ message: "Producto eliminado del carrito" });
 });
 
 router.delete("/:cartId", async (req, res) => {

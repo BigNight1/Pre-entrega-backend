@@ -1,40 +1,48 @@
-<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" rel="stylesheet" href="/css/carritoEstilos.css"/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link type="text/css" rel="stylesheet" href="/css/carritoEstilos.css" />
+    <script src="/socket.io/socket.io.js"></script>
     <title>Detalles del Carrito</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-    <div class="volver">
+      <div class="volver">
         <a href="/products">Volver a la tienda</a>
-    </div>
-    <h1 class="titulo">Detalles del Carrito</h1>
-</header>
-
+      </div>
+    </header>
 
     <section class="product-list">
-        <h3>Productos en el carrito:</h3>
+      <h3>Productos en el carrito:</h3>
+      <div>
         <ul class="product-items">
-            {{#if productDetails.length}}
-                {{#each productDetails}}
-                    <li class="product-item">
-                        <div class="product-info">
-                            <h4>{{productDetails.name}}</h4>
-                            <p class="product-category">{{productDetails.category}}</p>
-                            <p class="product-price">$ {{productDetails.price}}</p>
-                            <p class="product-quantity">Cantidad: {{quantity}}</p>
-                        </div>
-                    </li>
-                {{/each}}
-            {{else}}
-                <li class="empty-cart-message">No hay productos en el carrito.</li>
-            {{/if}}
+          {{#if productDetails.length}}
+            {{#each productDetails}}
+              <li class="product-item">
+                <div class="product-info">
+                  <h4>{{productDetails.name}}</h4>
+                  <p class="product-category">{{productDetails.category}}</p>
+                  <p class="product-price">$ {{productDetails.price}}</p>
+                  <p class="product-quantity">Cantidad: {{quantity}}</p>
+                </div>
+                <div>
+                  <button
+                    class="botoncancelar"
+                    id="deleteProduct"
+                    data-product-id="{{productDetails._id}}"
+                  >Eliminar</button>
+                </div>
+              </li>
+            {{/each}}
+          {{else}}
+            <li class="empty-cart-message">No hay productos en el carrito.</li>
+          {{/if}}
         </ul>
+      </div>
+      <button id="FinishPurchase">Terminar la compra</button>
     </section>
+    <script type="text/javascript" src="/js/purchaseFinish.js"></script>
 
-    
-</body>
+  </body>
 </html>

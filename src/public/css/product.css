@@ -48,10 +48,12 @@ p {
 .config {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .Space {
   display: flex;
+  gap: 1rem;
   justify-content: flex-end;
 }
 
@@ -66,16 +68,17 @@ p {
 }
 
 .add-button button {
-  border: 1px solid;
+  border: none;
   border-radius: 10px;
   padding: 5px;
   background-color: #007bff;
   color: white;
+  font-weight: 600;
 }
 
 .add-button button:hover {
-  color: rgb(138, 153, 73);
-  font-weight: 700;
+  color: white;
+  background-color: #2968c8;
 }
 
 .cart {
@@ -83,9 +86,8 @@ p {
   align-items: center;
 }
 
-.icon-cart {
+.icon {
   font-size: 2rem;
-  padding-right: 0.5rem;
   cursor: pointer;
 }
 

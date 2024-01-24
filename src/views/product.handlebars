@@ -23,12 +23,12 @@
       <div class="Space">
         {{#if isAuthenticated}}
           <div class="cart">
-            <i class="fas fa-shopping-cart icon-cart" id="carritoid"></i>
+            <i class="fas fa-shopping-cart icon" id="carritoid"></i>
           </div>
-          <a href="/profile" class="custom-button">Profile</a>
+          <a href="/profile" class="icon"><i class="fa-solid fa-user"></i></a>
 
         {{else}}
-          <a href="/login" class="custom-button">Login</a>
+          <a href="/login" class="icon"><i class="fa-solid fa-user"></i></a>
         {{/if}}
       </div>
     </div>
@@ -43,7 +43,7 @@
         <div class="producto-img">
           <img
             class="img-fluid"
-            src="https://res.cloudinary.com/dviah6ohx/image/upload/v1683161571/Polos/Polo_de_Star_War_iwfhog.webp"
+            src="https://res.cloudinary.com/dviah6ohx/image/upload/v1706056183/Polos/Polo_de_Star_War_iwfhog_ediqye.png"
             alt="Producto"
           />
         </div>
@@ -51,7 +51,7 @@
         <span>S/{{price}}</span>
         <p>Category: {{category}}</p>
         <div class="add-button">
-          <button class="add-to-cart-button" data-product-id="{{_id}}">Agregar al Carrito</button>
+          <button class="add-to-cart-button" data-product-id="{{_id}}">Comprar Ahora</button>
         </div>
       </div>
     </div>
@@ -75,5 +75,6 @@
           >Siguiente</button></a>
       {{/if}}</div>
     <script type="text/javascript" src="js/addproduct.js"></script>
+
   </body>
 </html>
