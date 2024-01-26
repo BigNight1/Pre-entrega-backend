@@ -1,9 +1,12 @@
 const BotonPurchase = document.getElementById("FinishPurchase");
-const DeleteProduct = document.getElementById("deleteProduct");
+const DeleteProduct = document.querySelectorAll(".botoncancelar")
 
 BotonPurchase.addEventListener("click", Finish);
+
 if (DeleteProduct) {
-  DeleteProduct.addEventListener("click", Delete);
+  DeleteProduct.forEach((button) => {
+    button.addEventListener("click", Delete);
+  });
 }
 
 async function Finish() {
@@ -32,9 +35,6 @@ async function Delete(event) {
   const cartId = localStorage.getItem("cartId");
   const productId = event.target.getAttribute("data-product-id");
 
-  console.log("ID del Carrito:", cartId);
-  console.log("ID del Producto a Eliminar:", productId);
-
   try {
     const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
       method: "DELETE",
@@ -43,7 +43,13 @@ async function Delete(event) {
       },
     });
     if (response.ok) {
-      alert("Se elimino el producto");
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Producto Eliminado",
+        showConfirmButton: false,
+        timer: 1000
+      });
     }
   } catch (error) {
     console.error("Error en la Compra", error);

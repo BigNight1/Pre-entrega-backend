@@ -131,3 +131,13 @@ a:hover {
 .botoncancelar:hover {
   background-color: #ff0000; /* Cambia el color de fondo al pasar el mouse sobre el botón */
 }
+
+.PushPrice {
+  display: flex;
+  justify-content: space-between;
+}
+
+.PushPrice h2 {
+  text-transform: uppercase;
+  font-weight: 600;
+}

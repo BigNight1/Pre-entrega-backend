@@ -1,4 +1,7 @@
 import { cartModel } from "../schemas/cartSchema.js";
+import ProductManager from "./productoController.js";
+
+const productmanager = new ProductManager()
 
 class CartManager {
   async createCart(userId) {
@@ -107,6 +110,22 @@ class CartManager {
       return false;
     }
   }
+
+  async calculateTotalPrice(products) {
+    let totalPrice = 0;
+
+    for (const cartProduct of products) {
+      const { product, quantity } = cartProduct;
+      const productObject = await productmanager.getProductById(product);
+
+      if (productObject) {
+        totalPrice += productObject.price * quantity;
+      }
+    }
+
+    return totalPrice;
+  }
+
 }
 
 export default CartManager;

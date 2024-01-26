@@ -1,6 +1,7 @@
 const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
 const carritoLink = document.getElementById("carritoid");
 
+
 addToCartButtons.forEach((button) => {
   button.addEventListener("click", addToCart);
 });
@@ -36,11 +37,24 @@ async function addToCart(event) {
 
     if (response.ok) {
       // Producto agregado exitosamente al carrito
-      alert("Producto agregado al carrito correctamente");
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Se Agrego el producto",
+        showConfirmButton: false,
+        timer: 1000
+      });
+
     } else {
       // Error al agregar el producto al carrito
-      alert("Tienes que estar Logeado ");
-      window.location.href = "/login"; // Redirige al usuario a la página de inicio de sesión
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Tienes que estas Logeado",
+      });
+      setTimeout(() => {
+        window.location.href = "/login"; 
+      }, 1500);
     }
   } catch (error) {
     console.error("Error al agregar el producto al carrito:", error);

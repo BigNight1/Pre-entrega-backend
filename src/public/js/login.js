@@ -22,14 +22,25 @@ form.addEventListener("submit", async (e) => {
       const { name, cart } = responseData.payload;
       // Cuando el usuario inicia sesión y obtienes el ID del carrito, guárdalo en el localStorage
       localStorage.setItem("cartId", cart);
-      window.location.replace("/products");
-      alert(`Bienvenido ${name} y tu carrito es ${cart}`);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `Bienvenido ${name}`,
+        showConfirmButton: false,
+        timer: 1100,
+      });
+      setTimeout(() => {
+        window.location.replace("/products");
+      }, 1150);
     } else {
       alert(
         "Inicio de sesión exitoso, pero no se pudo obtener el nombre del usuario."
       );
     }
   } else if (response.status === 400) {
-    alert("Datos Inválidos");
+    Swal.fire({
+      icon: "error",
+      title: "Datos Incorrectos",
+    });
   }
 });

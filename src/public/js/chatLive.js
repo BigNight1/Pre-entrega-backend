@@ -8,13 +8,18 @@ socket.on("receiveMessage", (message) => {
 });
 
 const chatForm = document.getElementById("chatForm");
+const messageInput = document.getElementById("message");
+
 chatForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  const user = document.getElementById("user").value;
-  const message = document.getElementById("message").value;
 
+  const message = messageInput.value;
+
+  // Obtén el nombre de usuario desde el data-attribute del formulario
+  const user = chatForm.getAttribute("data-username");
+
+  // Emite el mensaje al servidor
   socket.emit("sendMessage", { sender: user, content: message });
 
-  document.getElementById("user").value = "";
-  document.getElementById("message").value = "";
+  messageInput.value = "";
 });

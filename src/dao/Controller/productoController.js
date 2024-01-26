@@ -91,6 +91,16 @@ class ProductManager {
       return null;
     }
   }
+
+  async getProductByName(productName) {
+    try {
+      const product = await productModel.findOne({ name: productName }).lean();
+      return product;
+    } catch (error) {
+      console.log("Error al obtener el producto por nombre:", error);
+      return null;
+    }
+  }
 }
 
 export default ProductManager;

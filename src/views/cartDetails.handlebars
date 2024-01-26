@@ -6,7 +6,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <title>Detalles del Carrito</title>
   </head>
-  <body>
+  <body> 
     <header>
       <div class="volver">
         <a href="/products">Volver a la tienda</a>
@@ -23,13 +23,13 @@
                 <div class="product-info">
                   <h4>{{productDetails.name}}</h4>
                   <p class="product-category">{{productDetails.category}}</p>
-                  <p class="product-price">$ {{productDetails.price}}</p>
+                  <p class="product-price">S/ {{productDetails.price}}</p>
                   <p class="product-quantity">Cantidad: {{quantity}}</p>
                 </div>
                 <div>
                   <button
                     class="botoncancelar"
-                    id="deleteProduct"
+                    id="deleteProduct_{{productDetails._id}}"
                     data-product-id="{{productDetails._id}}"
                   >Eliminar</button>
                 </div>
@@ -40,9 +40,13 @@
           {{/if}}
         </ul>
       </div>
-      <button id="FinishPurchase">Terminar la compra</button>
+      <div class="PushPrice">
+        <h2>Total: {{totalPrice}}</h2>
+        <button id="FinishPurchase">Terminar la compra</button>
+      </div>
+
     </section>
     <script type="text/javascript" src="/js/purchaseFinish.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.all.min.js"></script>
   </body>
 </html>

@@ -52,18 +52,15 @@ router.get("/products", async (req, res) => {
     prevPage,
   });
 });
-router.get(
-  "/realtimeproducts",
-  isAuthenticated,
-  checkUserRole("admin"),
+router.get("/realtimeproducts",isAuthenticated,checkUserRole("admin"),
   async (req, res) => {
     const productos = await productManager.getAllProducts();
     res.render("realTimeProducts", { productos });
   }
 );
-router.get("/chat", async (req, res) => {
+router.get("/chat",isAuthenticated, async (req, res) => {
   const messages = await messageManager.getMessages();
-  res.render("chat", { messages });
+  res.render("chat", { messages , user: req.session.user,});
 });
 
 router.get("/carts/:cartId", requireAuth, async (req, res) => {
@@ -84,9 +81,12 @@ router.get("/carts/:cartId", requireAuth, async (req, res) => {
     };
   });
 
+   // Calcular el precio total
+   const totalPrice = await cartManager.calculateTotalPrice(cart.products);
+
   const productDetails = await Promise.all(productDetailsPromises);
 
-  res.render("cartDetails", { cart, productDetails });
+  res.render("cartDetails", { cart, productDetails ,totalPrice});
 });
 
 router.get("/loggerTest", (req, res) => {

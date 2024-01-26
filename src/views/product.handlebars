@@ -18,50 +18,54 @@
         {{/if}}
       </div>
 
-      <a href="/chat" class="custom-button">Ir al Chat</a>
-
       <div class="Space">
         {{#if isAuthenticated}}
-          <div class="cart">
-            <i class="fas fa-shopping-cart icon" id="carritoid"></i>
+          <div class="chat">
+            <a href="/chat" aria-label="Abrir chat">
+              <i class="fa-solid fa-comment icon"></i>
+            </a>
           </div>
-          <a href="/profile" class="icon"><i class="fa-solid fa-user"></i></a>
+          <div class="cart">
+            <i class="fas fa-shopping-cart icon" id="carritoid" aria-label="Ir al Carrito"></i>
+          </div>
+          <a href="/profile" class="icon Profile"><i class="fa-solid fa-user"></i></a>
 
         {{else}}
-          <a href="/login" class="icon"><i class="fa-solid fa-user"></i></a>
+          <a href="/login" class="icon login"><i class="fa-solid fa-user"></i></a>
         {{/if}}
       </div>
     </div>
     <div>
       <h1>Lista de Productos</h1>
-    <div class="container-fluid text-center">
-    
-  <div class="row">
-    {{#each products}}
-    <div class="col-md-4 producto-medium col-sm-6 col-xl-3">
-      <div class="producto"> 
-        <div class="producto-img">
-          <img
-            class="img-fluid"
-            src="https://res.cloudinary.com/dviah6ohx/image/upload/v1706056183/Polos/Polo_de_Star_War_iwfhog_ediqye.png"
-            alt="Producto"
-          />
-        </div>
-        <h5>{{name}}</h5>
-        <span>S/{{price}}</span>
-        <p>Category: {{category}}</p>
-        <div class="add-button">
-          <button class="add-to-cart-button" data-product-id="{{_id}}">Comprar Ahora</button>
+      <div class="container-fluid text-center">
+
+        <div class="row">
+          {{#each products}}
+            <div class="col-md-4 producto-medium col-sm-6 col-xl-3">
+              <div class="producto">
+                <div class="producto-img">
+                  <img
+                    class="img-fluid"
+                    src="https://res.cloudinary.com/dviah6ohx/image/upload/v1706056183/Polos/Polo_de_Star_War_iwfhog_ediqye.png"
+                    alt="Producto"
+                  />
+                </div>
+                <h5>{{name}}</h5>
+                <span>S/{{price}}</span>
+                <p>Category: {{category}}</p>
+                <p>Stock: {{stock}}</p>
+                <div class="add-button">
+                  <button
+                    class="add-to-cart-button"
+                    data-product-id="{{_id}}"
+                  >Comprar Ahora</button>
+                </div>
+              </div>
+            </div>
+          {{/each}}
         </div>
       </div>
     </div>
-    {{/each}}
-  </div>
-</div>
-    </div>
-
-    
-        
 
     <div class="botton-following p-3">{{#if hasPrevPage}}
         <a href="/products?page={{prevPage}}"><button
@@ -75,6 +79,8 @@
           >Siguiente</button></a>
       {{/if}}</div>
     <script type="text/javascript" src="js/addproduct.js"></script>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.all.min.js"
+    ></script>
   </body>
 </html>

@@ -43,5 +43,5 @@
   },
   "nodemonConfig": {
     "ext": "js,json,handlebars"
-}
+  }
 }
