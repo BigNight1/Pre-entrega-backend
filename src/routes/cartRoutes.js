@@ -93,6 +93,13 @@ router.post("/:cartId/products/:productId", requireAuth, async (req, res) => {
       return res.status(404).json({ error: "Producto no encontrado" });
     }
 
+    if (quantityToAdd > product.stock) {
+      console.log("No hay suficiente stock disponible");
+      return res
+        .status(400)
+        .json({ error: "no hay suficiente stock disponible" });
+    }
+
     const existingProductIndex = cart.products.findIndex(
       (cartProduct) => cartProduct.product.toString() === productId
     );
@@ -135,17 +142,15 @@ router.post("/:cartId/purchase", async (req, res) => {
         });
       }
     }
+
     cart.products = [];
 
     const purchaser = cart.user;
 
-    const ticket = await TicketController.createTicket(
-      purchaser,
-      totalAmount
-    );
+    const ticket = await TicketController.createTicket(purchaser, totalAmount);
 
     await cart.save();
-    req.logger.info("Compra finalizada con éxito")
+    req.logger.info("Compra finalizada con éxito");
     console.log("Compra finalizada con éxito");
 
     res.json({
@@ -173,7 +178,9 @@ router.delete("/:cartId/products/:productId", async (req, res) => {
     const productRemoved = await cartManager.removeFromCart(cartId, productId);
 
     if (!productRemoved) {
-      return res.status(404).json({ error: "Producto no encontrado en el carrito" });
+      return res
+        .status(404)
+        .json({ error: "Producto no encontrado en el carrito" });
     }
     res.json({ message: "Producto eliminado del carrito" });
   } catch (error) {

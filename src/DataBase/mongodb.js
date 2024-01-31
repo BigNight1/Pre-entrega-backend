@@ -4,7 +4,7 @@
 
   export const dbConnect = async (req,res) => {
     mongoose
-      .connect(CONFIG.DB_ECOMMERCE, {
+      .connect(CONFIG.DataBase.DB_ECOMMERCE, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       })

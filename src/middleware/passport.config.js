@@ -8,8 +8,8 @@ const initPassport = () => {
     "github",
     new GitHubStrategy(
       {
-        clientID: CONFIG.clientID,
-        clientSecret: CONFIG.clientSecret,
+        clientID: CONFIG.GitHub.clientID,
+        clientSecret: CONFIG.GitHub.clientSecret,
         callbackURL:
           "https://ecommerce-ugl8.onrender.com/api/session/github/callback",
       },

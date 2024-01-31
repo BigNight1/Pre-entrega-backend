@@ -2,7 +2,6 @@ const form = document.getElementById("registerForm");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-
   const data = new FormData(form);
   const obj = {};
   data.forEach((value, key) => (obj[key] = value));
@@ -17,7 +16,16 @@ form.addEventListener("submit", (e) => {
     .then((result) => result.json())
     .then((json) => {
       if (json.status === "success") {
-        alert("Usuario Creado");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Usuario Creado",
+          showConfirmButton: false,
+          timer: 1000
+        });
+        setTimeout(() => {
+          window.location.href = "/login"
+        }, 1200);
       }
     })
     .catch((error) => {

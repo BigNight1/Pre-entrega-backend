@@ -16,16 +16,13 @@ export const TicketController = {
       const { product, quantity } = cartProduct;
       const productObject = await productmanager.getProductById(product);
 
-      if (!productObject || productObject.stock <= quantity) {
+      if (!productObject || productObject.stock < quantity) {
         throw new Error(`No hay suficiente stock para: ${productObject?.name}`);
       }
 
       const productPrice = productObject.price;
       totalAmount += productPrice * quantity;
 
-      // Actualiza el stock del producto
-      productObject.stock -= quantity;
-      await productObject.save();
     }
 
     return totalAmount;

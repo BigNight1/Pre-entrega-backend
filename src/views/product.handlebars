@@ -54,12 +54,17 @@
                 <span>S/{{price}}</span>
                 <p>Category: {{category}}</p>
                 <p>Stock: {{stock}}</p>
+
+                {{#if stock}}
                 <div class="add-button">
                   <button
                     class="add-to-cart-button"
                     data-product-id="{{_id}}"
                   >Comprar Ahora</button>
                 </div>
+                {{else}}
+                <p>No hay Stock</p>
+                {{/if}}
               </div>
             </div>
           {{/each}}

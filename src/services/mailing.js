@@ -4,13 +4,12 @@ import CONFIG from "../config/config.js";
 export default class MailingService {
   constructor() {
     this.client = mailer.createTestAccount({
-      service: CONFIG.mailing.SERVICE,
+      service: CONFIG.Mailing.SERVICE,
       port: 587,
       auth: {
-        user: CONFIG.mailing.USER,
-        pass: CONFIG.mailing.PASSWORD,
+        user: CONFIG.Mailing.USER,
+        pass: CONFIG.Mailing.PASSWORD,
       },
     });
   }
-//  cambiar este codigo 
 }

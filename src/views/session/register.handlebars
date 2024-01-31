@@ -8,25 +8,29 @@
       <h1>Registro</h1>
       <form class="formulario" id="registerForm">
         <label class="text-uppercase fw-medium">Nombre</label>
-        <input name="first_name"  placeholder="Nombre"/>
+        <input name="first_name" placeholder="Nombre" required/>
         <label class="text-uppercase fw-medium">Apellido</label>
-        <input name="last_name"  placeholder="Apellido"/>
+        <input name="last_name" placeholder="Apellido" required/>
         <label class="text-uppercase fw-medium">Email</label>
-        <input name="email"  placeholder="Email"/>
+        <input name="email" placeholder="Email" required/>
         <label class="text-uppercase fw-medium">Edad</label>
-        <input name="age"  placeholder="Edad"/>
+        <input name="age" placeholder="Edad" required/>
         <label class="text-uppercase fw-medium">Contraseña</label>
-        <input type="password" name="password" placeholder="Contraseña" />
+        <input type="password" name="password" placeholder="Contraseña" required/>
+        <input type="submit" value="Create" class="card-crear"  />
       </form>
-      <div>
-        <input type="submit" value="Create" class="card-crear"/>
-      </div>
-      <div class="github_register"><a href="/api/session/github/callback" class="btn btn-primary">Registrarse
-        con GitHub</a></div>
-      
-      <p class="text-center">¿Ya tienes una cuenta? <a href="/login">Ingresa aquí</a></p></div>
+
+      <div class="github_register"><a
+          href="/api/session/github/callback"
+          class="btn btn-primary"
+        >Registrarse con GitHub</a></div>
+
+      <p class="text-center">¿Ya tienes una cuenta?
+        <a href="/login">Ingresa aquí</a></p></div>
   </div>
 
+  <script src="/js/register.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.all.min.js"
+  ></script>
 </body>
-
-<script src="/js/register.js"></script>
