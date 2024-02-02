@@ -5,10 +5,12 @@ import CustomError from "../../Error/CustomError.js";
 import EErrors from "../../Error/enums.js";
 import { generateUserErrorInfo } from "../../Error/info.js";
 import { RegisterError } from "../../Error/registerError.js";
-import { createHash, generateToken } from "../../middleware/security.js";
+import { createHash, generateResetToken } from "../../middleware/security.js";
 import { isValidPassword } from "../../middleware/security.js";
+import MailingService from "../../services/mailing.js";
 
 const cartManager = new CartManager();
+const mailingService = new MailingService();
 
 class UserManager {
   async registerUser(req, res) {
@@ -140,34 +142,122 @@ class UserManager {
     req.logout((err) => {
       if (err) {
         // Manejar el error
-        return res.status(500).send({ status: "error", message: "Error al cerrar sesión" });
+        return res
+          .status(500)
+          .send({ status: "error", message: "Error al cerrar sesión" });
       }
       req.session.destroy((err) => {
         if (err) {
           // Manejar el error
-          return res.status(500).send({ status: "error", message: "Error al cerrar sesión" });
+          return res
+            .status(500)
+            .send({ status: "error", message: "Error al cerrar sesión" });
         }
         res.send({ status: "success", message: "Sesión cerrada exitosamente" });
       });
     });
-    
   }
 
-    async restartpassword(req, res) {
-      const { email } = req.body;
+  async forgotPassword(req, res) {
+    const { email } = req.body;
 
+    try {
       const user = await userModel.findOne({ email });
-
       if (!user) {
-        return res
-          .status(404)
-          .send({ status: "error", error: "Usuario no encontrado" });
+        return res.status(404).json({ error: "Usuario no encontrado" });
       }
-      const token = generateToken(user);
-      const ResetUrl = `http://${req.headers.host}/restablecer-contraseña/${token}`;
 
-      console.log(ResetUrl);
+      const resetToken = generateResetToken(user._id);
+
+      user.resetToken = resetToken;
+      user.resetTokenExpires = new Date(Date.now() + 3600000);
+      await user.save();
+
+      const resetPasswordLink = `http://${req.headers.host}/changePassword/${resetToken}`;
+
+      const htmlContent = `
+  <html>
+    <head>
+      <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          background-color: #f4f4f4;
+        }
+        h1 {
+          color: #007bff;
+        }
+        p {
+          color: #333;
+        }
+        .button {
+          display: inline-block;
+          font-size: 16px;
+          padding: 10px 20px;
+          text-decoration: none;
+          background-color: #4CAF50;
+          color: white;
+          border-radius: 5px;
+          cursor: pointer;
+          font-weight: 600;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Restablecer Contraseña</h1>
+      <p>Haz clic en el siguiente botón para restablecer tu contraseña:</p>
+      <a href="${resetPasswordLink}" class="button">Restablecer Contraseña</a>
+    </body>
+  </html>
+`;
+
+      const correoEnviado = await mailingService.sendEmail(
+        user.email,
+        "Restablecer Contraseña",
+        htmlContent
+      );
+
+      if (correoEnviado) {
+        return res
+          .status(200)
+          .json({ message: "Correo electrónico enviado para restablecer" });
+      } else {
+        // Manejar el error si no se pudo enviar el correo
+        return res
+          .status(500)
+          .json({ error: "Error al enviar el correo electrónico" });
+      }
+    } catch (error) {
+      console.error(
+        "Error al solicitar restablecimiento de contraseña:",
+        error
+      );
+      res.status(500).json({ error: "Error interno del servidor" });
     }
+  }
+
+  async changePassword(req, res) {
+    const token = req.params.token;
+    const { newPassword } = req.body;
+
+    try {
+      const user = await userModel.findOne({
+        resetToken: token,
+        resetTokenExpires: { $gt: new Date() },
+      });
+      if (!user) {
+        return res.status(400).json({ error: "Token invalido o expirado" });
+      }
+
+      user.password = createHash(newPassword);
+      user.resetToken = undefined;
+      user.resetTokenExpires = undefined;
+      await user.save();
+      res.status(200).json({ message: "Contraseña cambiada exitosamente" });
+    } catch (error) {
+      console.error("Error al cambiar la contraseña: ", error);
+      res.status(500).json({ error: "Error interno del servidor" });
+    }
+  }
 }
 
 export default UserManager;

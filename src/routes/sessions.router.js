@@ -15,18 +15,13 @@ router.post("/login", userManager.loginUser);
 
 router.post("/logout", userManager.logoutUser);
 
-router.post("/restartpassword", userManager.restartpassword);
+router.post("/forgotpassword", userManager.forgotPassword);
 
-router.get ("/restablecer-contraseña:token")
+router.put("/changePassword/:token", userManager.changePassword)
 
-router.get(
-  "/github",
-  passport.authenticate("github", { scope: ["user:email"] })
-);
+router.get("/github",passport.authenticate("github", { scope: ["user:email"] }));
 
-router.get(
-  "/github/callback",
-  passport.authenticate("github", { failureRedirect: "/login" }),
+router.get("/github/callback",passport.authenticate("github", { failureRedirect: "/login" }),
   function (req, res) {
     req.session.user = req.user;
     if (req.user && req.user.role === "admin") {
@@ -40,3 +35,6 @@ router.get(
 );
 
 export default router;
+
+
+// falta ahcer mas cambios en el put y recibir el token 

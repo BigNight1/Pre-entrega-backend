@@ -26,9 +26,13 @@ router.get("/profile", (req, res) => {
   });
 });
 
-router.get("/restartpassword", (req, res) => {
-  res.render("session/restartpassword");
+router.get("/forgotpassword", (req, res) => {
+  res.render("session/forgotpassword");
 });
+
+router.get("/changePassword/:token",(req,res)=>{
+  res.render("session/changePassword")
+})
 
 router.get("/", (req, res) => {
   res.redirect("/products");

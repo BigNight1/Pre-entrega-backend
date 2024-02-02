@@ -82,12 +82,12 @@ const startServer = (app) => {
   setupWebSocket(server);
 
   // Rutas del grupo
+  app.use("/", viewRouter);
   app.use("/api/mock", mockingRoutes);
+  app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
   app.use("/api/products", productRoutes);
   app.use("/api/carts", cartRoutes);
-  app.use("/", viewRouter);
   app.use("/api/session", sessionRouter);
-  app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(spec));
  
   server.listen(CONFIG.port, () => {
     console.log(`Servidor en funcionamiento en el puerto ${CONFIG.port}`);
