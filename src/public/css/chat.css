@@ -1,59 +1,59 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 0;
-    height: 90vh;
+  font-family: "Arial", sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  height: 90vh;
 }
 
 h1 {
-    text-align: center;
-    color: #075e54;
+  text-align: center;
+  color: #075e54;
 }
 
 #chat {
-    max-width: 600px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #chat p {
-    margin: 10px 0;
-    word-wrap: break-word;
+  margin: 10px 0;
+  word-wrap: break-word;
 }
 
 form {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 20px;
 }
 
 #message {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    margin-right: 10px;
+  width: 50%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  margin-right: 10px;
 }
 
 button {
-    padding: 10px 15px;
-    background-color: #128C7E;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  padding: 10px 15px;
+  background-color: #128c7e;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 button a {
-    text-decoration: none;
-    color: #fff;
+  text-decoration: none;
+  color: #fff;
 }
 
 button:hover {
-    background-color: #075e54;
+  background-color: #075e54;
 }
